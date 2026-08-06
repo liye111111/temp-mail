@@ -1,0 +1,33 @@
+{
+  "name": "getopeninbox",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "config": "node scripts/render-config.mjs",
+    "typecheck": "tsc --noEmit",
+    "check": "npm run config && npm run typecheck",
+    "cf:verify": "node scripts/cloudflare.mjs verify",
+    "cf:provision": "node scripts/cloudflare.mjs provision",
+    "cf:email-routing": "node scripts/cloudflare.mjs email-routing",
+    "db:migrate:local": "npm run config && wrangler d1 migrations apply getopeninbox-db --local --config .generated/api.wrangler.jsonc",
+    "db:migrate:remote": "node scripts/cloudflare.mjs migrate",
+    "deploy": "node scripts/cloudflare.mjs deploy",
+    "deploy:force": "node scripts/cloudflare.mjs deploy --confirm",
+    "dev:api": "npm run config && wrangler dev --config .generated/api.wrangler.jsonc",
+    "dev:web": "npm run config && wrangler dev --config .generated/web.wrangler.jsonc"
+  },
+  "dependencies": {
+    "jose": "^6.2.8",
+    "postal-mime": "^2.7.5"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20260804.1",
+    "typescript": "^5.9.2",
+    "wrangler": "^4.118.0"
+  },
+  "allowScripts": {
+    "esbuild@0.28.1": true,
+    "workerd@1.20260730.1": true
+  }
+}

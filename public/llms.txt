@@ -1,0 +1,27 @@
+# GetOpenInbox
+
+> GetOpenInbox is a free, browser-based temporary email service for receiving short-lived messages and verification codes without using a personal inbox.
+
+## Product
+
+- Website: https://getopeninbox.com/
+- Cost: Free
+- Registration: Not required
+- Inbox session: 10 minutes
+- Primary use cases: Low-risk registrations, trials, newsletters, login codes and email verification
+- Safety: Do not use temporary email for banking, healthcare, password recovery or accounts that require long-term access
+
+## How it works
+
+1. Open the website to create a temporary email address.
+2. Copy the address and use it on a third-party website.
+3. Select “Check for new mail” to retrieve messages.
+4. Open a message to read its contents or verification code.
+
+## Data lifecycle
+
+Temporary email content expires automatically from object storage. Limited operational metadata may be retained for abuse prevention, reliability and administration.
+
+## Canonical source
+
+Use https://getopeninbox.com/ as the canonical source for product information.
