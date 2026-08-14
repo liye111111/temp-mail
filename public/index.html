@@ -3,8 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Free Temporary Email Address — GetOpenInbox</title>
-    <meta name="description" content="Create a free disposable email address instantly with GetOpenInbox. No registration required. Receive verification codes while keeping your personal inbox private." />
+    <title>Free Temporary Email with Security Checks — GetOpenInbox</title>
+    <meta name="description" content="Create a free temporary inbox with built-in SPF, DKIM and DMARC checks, suspicious-link detection and a raw email header viewer. No registration required." />
+    <meta name="keywords" content="temporary email, email security check, SMTP email authentication check, email header analyzer, SPF checker, DKIM checker, DMARC checker, raw email viewer, incoming email risk analysis" />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <meta name="theme-color" content="#197c4d" />
     <link rel="canonical" href="https://getopeninbox.com/" />
@@ -12,13 +13,13 @@
     <link rel="alternate" hreflang="x-default" href="https://getopeninbox.com/" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="GetOpenInbox" />
-    <meta property="og:title" content="Free Temporary Email Address — GetOpenInbox" />
-    <meta property="og:description" content="Create a free disposable inbox instantly. No registration required." />
+    <meta property="og:title" content="Free Temporary Email with Security Checks — GetOpenInbox" />
+    <meta property="og:description" content="Receive temporary email with SPF, DKIM, DMARC and suspicious-link checks, plus a raw email source viewer." />
     <meta property="og:url" content="https://getopeninbox.com/" />
     <meta property="og:locale" content="en_US" />
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="Free Temporary Email Address — GetOpenInbox" />
-    <meta name="twitter:description" content="Create a free disposable inbox instantly. No registration required." />
+    <meta name="twitter:title" content="Free Temporary Email with Security Checks — GetOpenInbox" />
+    <meta name="twitter:description" content="A disposable inbox with email authentication checks and raw header inspection." />
     <link rel="stylesheet" href="/site.min.css" />
   </head>
   <body>
@@ -27,8 +28,8 @@
       <meta itemprop="url" content="https://getopeninbox.com/" />
       <section class="hero">
         <div class="brand">GetOpenInbox</div>
-        <h1>Free temporary email address</h1>
-        <p class="lead" itemprop="description">Get a disposable inbox instantly. No registration, no personal email, less spam.</p>
+        <h1>Free temporary email with security checks</h1>
+        <p class="lead" itemprop="description">Get a disposable inbox instantly, inspect SPF, DKIM and DMARC results, and view raw email headers. No registration required.</p>
         <div class="address-card">
           <div>
             <span class="label">YOUR TEMPORARY EMAIL</span>
@@ -66,7 +67,17 @@
         <div class="steps">
           <article><strong>1</strong><h3>Copy your address</h3><p>A temporary address is created when you open this page. No account or personal details are required.</p></article>
           <article><strong>2</strong><h3>Use it online</h3><p>Enter the address when a website asks for email, including for sign-ups and verification codes.</p></article>
-          <article><strong>3</strong><h3>Check your inbox</h3><p>Select the check button to retrieve incoming messages and open the email you need.</p></article>
+          <article><strong>3</strong><h3>Check the message</h3><p>Open incoming mail to review its risk score, authentication results, suspicious-link warnings and raw source.</p></article>
+        </div>
+      </section>
+
+      <section class="content-section" aria-labelledby="email-security-checks">
+        <span class="eyebrow">BUILT-IN ANALYSIS</span>
+        <h2 id="email-security-checks">Incoming email security and SMTP authentication results</h2>
+        <div class="benefits">
+          <article><h3>SPF, DKIM and DMARC results</h3><p>Review authentication results reported in the received headers and see whether common sender-verification checks passed, failed or were unavailable.</p></article>
+          <article><h3>Suspicious-link and sender checks</h3><p>See warnings for sender-domain mismatches, shortened URLs, IP-address links, Punycode domains and potentially dangerous attachment names.</p></article>
+          <article><h3>Raw email source viewer</h3><p>Inspect the original RFC 5322 message source, including delivery headers and MIME structure, directly from the authenticated inbox session.</p></article>
         </div>
       </section>
 
@@ -87,6 +98,7 @@
         <details><summary>Do I need to register?</summary><p>No. GetOpenInbox creates an address immediately without asking for an account, password or personal email address.</p></details>
         <details><summary>How long does the inbox remain active?</summary><p>The current inbox session is active for 10 minutes. Create a new address when the timer expires.</p></details>
         <details><summary>Should I use it for sensitive accounts?</summary><p>No. Temporary email is not suitable for banking, healthcare, password recovery or any account you may need to recover later.</p></details>
+        <details><summary>Does the security score guarantee that an email is safe?</summary><p>No. The score explains common authentication, sender, link and attachment signals. A low-risk result cannot prove that the sender or message content is trustworthy.</p></details>
       </section>
     </main>
 

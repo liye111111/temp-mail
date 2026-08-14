@@ -51,18 +51,36 @@ h2 { margin: 0; font-size: 22px; letter-spacing: -.025em; }
 .message { display: grid; grid-template-columns: 1fr auto; gap: 8px 20px; width: 100%; padding: 18px 26px; border-radius: 0; border-bottom: 1px solid #edf0ed; text-align: left; color: #27322b; background: white; }
 .message:hover { background: #f8faf8; }
 .message small { color: #7a867e; }
+.message-heading { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.message-heading strong { overflow: hidden; text-overflow: ellipsis; }
+.risk-badge { display: inline-flex; flex: none; align-items: center; border-radius: 999px; padding: 4px 8px; font-size: 11px; font-weight: 800; line-height: 1; text-transform: uppercase; }
+.risk-badge.low { color: #17633f; background: #e4f4e9; }
+.risk-badge.medium { color: #8a4b08; background: #fff0d5; }
+.risk-badge.high { color: #a12424; background: #fde4e4; }
 .code { color: #197c4d; font-family: ui-monospace, monospace; font-size: 17px; }
 dialog { width: min(700px, calc(100% - 32px)); border: 0; border-radius: 18px; padding: 28px; box-shadow: 0 30px 90px rgba(0,0,0,.25); }
 dialog::backdrop { background: rgba(16, 27, 20, .48); }
 .close { float: right; color: #516057; background: transparent; padding: 0; font-size: 30px; }
 .mail-body { white-space: pre-wrap; line-height: 1.6; color: #36423a; }
 .mail-preview { clear: both; padding-top: 10px; }
+.security-report { clear: both; margin: 20px 0 8px; padding: 16px; border: 1px solid #dfe6df; border-radius: 12px; background: #f8faf8; }
+.security-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.security-heading h3 { margin: 0; font-size: 16px; }
+.security-report p { margin: 10px 0 0; color: #526158; }
+.security-report ul { margin: 12px 0; padding-left: 20px; color: #526158; }
+.security-report li + li { margin-top: 6px; }
+.security-report li.high { color: #a12424; }
+.security-report li.medium { color: #8a4b08; }
+.security-report small { display: block; margin-top: 12px; color: #748078; }
+.authentication-results { font-family: ui-monospace, monospace; font-size: 12px; text-transform: uppercase; }
+.authentication-results a { color: #146d43; text-decoration-thickness: 1px; text-underline-offset: 3px; }
 .mail-preview-toolbar { display: flex; gap: 8px; margin-bottom: 12px; border-bottom: 1px solid #e2e8e3; }
 .preview-tab { padding: 10px 12px; border-radius: 8px 8px 0 0; color: #526158; background: transparent; box-shadow: none; }
 .preview-tab.active { color: #146d43; background: #eaf5ee; }
 .preview-tab:disabled { cursor: not-allowed; opacity: .4; }
 .mail-html-frame { display: block; width: 100%; min-height: 420px; border: 1px solid #dfe6df; border-radius: 12px; background: #fff; }
-.mail-html-frame[hidden], .mail-body[hidden] { display: none; }
+.mail-raw { max-height: 520px; margin: 0; padding: 16px; overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; border: 1px solid #dfe6df; border-radius: 12px; color: #d7e6dc; background: #17211b; font: 12px/1.55 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+.mail-html-frame[hidden], .mail-body[hidden], .mail-raw[hidden] { display: none; }
 footer { padding: 24px 20px 40px; text-align: center; color: #89928c; font-size: 12px; }
 @media (max-width: 700px) { .steps, .benefits { grid-template-columns: 1fr; } }
 @media (max-width: 560px) { main { padding-top: 30px; } .address-card button { padding: 12px 14px; } .inbox header { align-items: flex-start; flex-direction: column; gap: 16px; padding: 18px; } .check-mail { width: 100%; } .message { padding: 16px 18px; } .content-section { padding: 22px 18px; } }

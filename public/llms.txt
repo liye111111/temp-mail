@@ -1,6 +1,6 @@
 # GetOpenInbox
 
-> GetOpenInbox is a free, browser-based temporary email service for receiving short-lived messages and verification codes without using a personal inbox.
+> GetOpenInbox is a free, browser-based temporary email service with built-in email authentication checks, incoming-message risk analysis and raw email source inspection.
 
 ## Product
 
@@ -9,14 +9,20 @@
 - Registration: Not required
 - Inbox session: 10 minutes
 - Primary use cases: Low-risk registrations, trials, newsletters, login codes and email verification
+- Security features: SPF, DKIM and DMARC result display; sender-domain consistency checks; suspicious-link and attachment-name warnings; raw RFC 5322 message viewer
+- Scope: These lightweight checks explain common signals but do not guarantee that a message or sender is safe
 - Safety: Do not use temporary email for banking, healthcare, password recovery or accounts that require long-term access
 
 ## How it works
 
 1. Open the website to create a temporary email address.
 2. Copy the address and use it on a third-party website.
-3. Select “Check for new mail” to retrieve messages.
-4. Open a message to read its contents or verification code.
+3. The inbox checks automatically for incoming messages.
+4. Open a message to read it, review its authentication and risk report, or inspect its raw source.
+
+## Email security analysis
+
+GetOpenInbox reports SPF, DKIM and DMARC results found in received headers and checks common sender, link and attachment warning signs. It is an incoming email and header analyzer, not a full SMTP server, open-relay, TLS or port scanner.
 
 ## Data lifecycle
 

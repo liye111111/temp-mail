@@ -5,7 +5,7 @@ const env = loadEnv();
 requireEnv(env, ["CLOUDFLARE_ACCOUNT_ID", "CLOUDFLARE_API_TOKEN"]);
 const childEnv = { ...process.env, ...env };
 const action = process.argv[2];
-const confirmed = process.argv.includes("--confirm") || env.DEPLOY_CONFIRM === "true";
+const confirmed = process.argv.includes("--confirm") || process.env.DEPLOY_CONFIRM === "true" || env.DEPLOY_CONFIRM === "true";
 
 function run(command, args, options = {}) {
   const result = spawnSync(command, args, { stdio: "inherit", env: childEnv, ...options });

@@ -20,7 +20,7 @@ export interface BaseEnv {
 }
 
 export interface EmailEnv extends BaseEnv {
-  EMAIL_QUEUE?: Queue<{ messageId: string; rawKey: string }>;
+  EMAIL_QUEUE?: Queue<{ messageId: string; rawKey: string; envelopeFrom?: string }>;
 }
 
 export interface WebEnv {
@@ -36,6 +36,7 @@ export interface InboxRow {
 
 export interface MessageRow {
   id: string;
+  raw_object_key: string;
   sender: string | null;
   envelope_from: string | null;
   subject: string | null;
@@ -45,4 +46,7 @@ export interface MessageRow {
   parsed_object_key: string | null;
   text_body: string | null;
   html_body: string | null;
+  risk_score: number | null;
+  risk_level: string | null;
+  security_report: string | null;
 }

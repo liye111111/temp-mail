@@ -41,7 +41,7 @@ async function listMessages(request: Request, env: BaseEnv, inboxId: string): Pr
   const inbox = await getInbox(env, inboxId);
   if (!inbox) return json({ error: "inbox_expired" }, 410);
   const result = await env.DB.prepare(
-    "SELECT id, sender, envelope_from, subject, verification_code, status, received_at, parsed_object_key, NULL AS text_body, NULL AS html_body FROM messages WHERE inbox_id = ? ORDER BY received_at DESC LIMIT ?",
+    "SELECT id, sender, envelope_from, subject, verification_code, status, received_at, parsed_object_key, NULL AS text_body, NULL AS html_body, risk_score, risk_level, NULL AS security_report FROM messages WHERE inbox_id = ? ORDER BY received_at DESC LIMIT ?",
   ).bind(inboxId, Number(env.MAX_MESSAGES_PER_INBOX)).all<MessageRow>();
   return json({ inbox, messages: result.results });
 }
@@ -49,7 +49,7 @@ async function listMessages(request: Request, env: BaseEnv, inboxId: string): Pr
 async function getMessage(request: Request, env: BaseEnv, inboxId: string, messageId: string): Promise<Response> {
   if (!(await authorize(request, env, inboxId))) return json({ error: "unauthorized" }, 401);
   const message = await env.DB.prepare(
-    "SELECT id, sender, envelope_from, subject, verification_code, status, received_at, parsed_object_key, text_body, html_body FROM messages WHERE id = ? AND inbox_id = ?",
+    "SELECT id, sender, envelope_from, subject, verification_code, status, received_at, raw_object_key, parsed_object_key, text_body, html_body, risk_score, risk_level, security_report FROM messages WHERE id = ? AND inbox_id = ?",
   ).bind(messageId, inboxId).first<MessageRow>();
   if (!message) return json({ error: "message_not_found" }, 404);
   let body: { text?: string; html?: string } = {};
@@ -60,7 +60,32 @@ async function getMessage(request: Request, env: BaseEnv, inboxId: string, messa
     body = { text: message.text_body ?? "", html: message.html_body ?? "" };
   }
   if (body.html) body.html = sanitizeEmailHtml(body.html);
-  return json({ ...message, body });
+  let security = null;
+  if (message.security_report) {
+    try { security = JSON.parse(message.security_report); } catch { security = null; }
+  }
+  const rawAvailable = Boolean(message.raw_object_key && env.MAIL_BUCKET);
+  const { security_report: _securityReport, raw_object_key: _rawObjectKey, ...publicMessage } = message;
+  return json({ ...publicMessage, security, raw_available: rawAvailable, body });
+}
+
+async function getRawMessage(request: Request, env: BaseEnv, inboxId: string, messageId: string): Promise<Response> {
+  if (!(await authorize(request, env, inboxId))) return json({ error: "unauthorized" }, 401);
+  const message = await env.DB.prepare(
+    "SELECT raw_object_key FROM messages WHERE id = ? AND inbox_id = ?",
+  ).bind(messageId, inboxId).first<{ raw_object_key: string }>();
+  if (!message) return json({ error: "message_not_found" }, 404);
+  if (!message.raw_object_key || !env.MAIL_BUCKET) return json({ error: "raw_unavailable" }, 404);
+  const object = await env.MAIL_BUCKET.get(message.raw_object_key);
+  if (!object) return json({ error: "raw_unavailable" }, 404);
+  return new Response(object.body, {
+    headers: {
+      "content-type": "text/plain; charset=utf-8",
+      "content-length": String(object.size),
+      "content-disposition": "inline",
+      etag: object.httpEtag,
+    },
+  });
 }
 
 async function deleteInbox(request: Request, env: BaseEnv, inboxId: string): Promise<Response> {
@@ -123,9 +148,12 @@ export default {
       } else if (request.method === "POST" && url.pathname === "/v1/inboxes") {
         response = await createInbox(env);
       } else {
+        const rawMessageMatch = url.pathname.match(/^\/v1\/inboxes\/([^/]+)\/messages\/([^/]+)\/raw$/);
         const messageMatch = url.pathname.match(/^\/v1\/inboxes\/([^/]+)\/messages\/([^/]+)$/);
         const inboxMatch = url.pathname.match(/^\/v1\/inboxes\/([^/]+)(?:\/messages)?$/);
-        if (request.method === "GET" && messageMatch) {
+        if (request.method === "GET" && rawMessageMatch) {
+          response = await getRawMessage(request, env, rawMessageMatch[1], rawMessageMatch[2]);
+        } else if (request.method === "GET" && messageMatch) {
           response = await getMessage(request, env, messageMatch[1], messageMatch[2]);
         } else if (request.method === "GET" && inboxMatch && url.pathname.endsWith("/messages")) {
           response = await listMessages(request, env, inboxMatch[1]);

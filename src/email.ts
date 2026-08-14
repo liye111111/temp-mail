@@ -1,5 +1,6 @@
 import type { EmailEnv, InboxRow } from "./types";
 import PostalMime from "postal-mime";
+import { inspectMail } from "./mail-security";
 
 function extractCode(subject: string, text: string): string | null {
   const match = `${subject}\n${text}`.match(/(?:^|\D)(\d{4,8})(?:\D|$)/);
@@ -60,11 +61,12 @@ export default {
       const text = truncateUtf8(email.text ?? "", maxBodyBytes);
       const html = truncateUtf8(email.html ?? "", maxBodyBytes);
       const sender = email.from?.address ?? email.from?.name ?? null;
+      const security = inspectMail(email, message.from);
       await env.DB.prepare(
-        "INSERT INTO messages (id, inbox_id, envelope_from, envelope_to, sender, subject, verification_code, raw_object_key, size_bytes, status, received_at, parsed_at, text_body, html_body) VALUES (?, ?, ?, ?, ?, ?, ?, '', ?, 'ready', ?, ?, ?, ?)",
+        "INSERT INTO messages (id, inbox_id, envelope_from, envelope_to, sender, subject, verification_code, raw_object_key, size_bytes, status, received_at, parsed_at, text_body, html_body, risk_score, risk_level, security_report) VALUES (?, ?, ?, ?, ?, ?, ?, '', ?, 'ready', ?, ?, ?, ?, ?, ?, ?)",
       ).bind(
         messageId, inbox.id, message.from, recipient, sender, subject, extractCode(subject, text),
-        message.rawSize, now, now, text, html,
+        message.rawSize, now, now, text, html, security.riskScore, security.riskLevel, JSON.stringify(security),
       ).run();
       return;
     }
@@ -88,6 +90,6 @@ export default {
     await env.DB.prepare(
       "INSERT INTO messages (id, inbox_id, envelope_from, envelope_to, raw_object_key, size_bytes, status, received_at) VALUES (?, ?, ?, ?, ?, ?, 'pending', ?)",
     ).bind(messageId, inbox.id, message.from, recipient, rawKey, object?.size ?? null, Math.floor(Date.now() / 1000)).run();
-    await env.EMAIL_QUEUE.send({ messageId, rawKey });
+    await env.EMAIL_QUEUE.send({ messageId, rawKey, envelopeFrom: message.from });
   },
 };
