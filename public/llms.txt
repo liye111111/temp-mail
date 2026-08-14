@@ -22,6 +22,10 @@
 
 Temporary email content expires automatically from object storage. Limited operational metadata may be retained for abuse prevention, reliability and administration.
 
+## Published resources
+
+No long-form resources are published yet.
+
 ## Canonical source
 
-Use https://getopeninbox.com/ as the canonical source for product information.
+Use https://getopeninbox.com/ and the URLs listed above as canonical sources.

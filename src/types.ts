@@ -25,6 +25,7 @@ export interface EmailEnv extends BaseEnv {
 
 export interface WebEnv {
   ASSETS: Fetcher;
+  CANONICAL_HOSTNAME: string;
 }
 
 export interface InboxRow {

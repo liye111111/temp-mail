@@ -33,7 +33,7 @@ const d1 = [{ binding: env.D1_BINDING, database_name: env.D1_DATABASE_NAME, data
 const r2 = useR2 ? [{ binding: env.R2_BINDING, bucket_name: env.R2_BUCKET_NAME }] : [];
 
 const configs = {
-  web: { ...base, name: env.WEB_WORKER_NAME, main: "../src/web.ts", assets: { directory: "../public", binding: "ASSETS", run_worker_first: true }, routes: [{ pattern: env.WEB_HOSTNAME, custom_domain: true }] },
+  web: { ...base, name: env.WEB_WORKER_NAME, main: "../src/web.ts", vars: { CANONICAL_HOSTNAME: env.WEB_HOSTNAME }, assets: { directory: "../public", binding: "ASSETS", run_worker_first: true }, routes: [{ pattern: env.WEB_HOSTNAME, custom_domain: true }, ...(env.WWW_HOSTNAME ? [{ pattern: env.WWW_HOSTNAME, custom_domain: true }] : [])] },
   api: { ...base, name: env.API_WORKER_NAME, main: "../src/api.ts", vars, d1_databases: d1, ...(useR2 ? { r2_buckets: r2 } : {}), routes: [{ pattern: env.API_HOSTNAME, custom_domain: true }, ...(env.ADMIN_HOSTNAME ? [{ pattern: env.ADMIN_HOSTNAME, custom_domain: true }] : [])], triggers: { crons: [env.CLEANUP_CRON] } },
   email: { ...base, name: env.EMAIL_WORKER_NAME, main: "../src/email.ts", vars, d1_databases: d1, ...(useR2 ? { r2_buckets: r2, queues: { producers: [{ binding: env.EMAIL_QUEUE_BINDING, queue: env.EMAIL_QUEUE_NAME }] } } : {}) },
   consumer: { ...base, name: env.QUEUE_WORKER_NAME, main: "../src/consumer.ts", vars, d1_databases: d1, r2_buckets: r2, queues: { consumers: [{ queue: env.EMAIL_QUEUE_NAME, max_batch_size: Number(env.QUEUE_MAX_BATCH_SIZE), max_batch_timeout: Number(env.QUEUE_MAX_BATCH_TIMEOUT_SECONDS), max_retries: Number(env.QUEUE_MAX_RETRIES), dead_letter_queue: env.EMAIL_DEAD_LETTER_QUEUE_NAME }] } },

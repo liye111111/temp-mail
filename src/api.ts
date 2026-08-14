@@ -2,6 +2,7 @@ import { corsHeaders, json } from "./http";
 import { createSessionToken, randomId, verifySessionToken } from "./security";
 import type { BaseEnv, InboxRow, MessageRow } from "./types";
 import { adminHtml, adminJs, authenticateAdmin, getAdminMessage, listAdminInboxes, listAdminMessages } from "./admin";
+import { sanitizeEmailHtml } from "./mail-html";
 
 function bearer(request: Request): string {
   const value = request.headers.get("authorization") ?? "";
@@ -58,6 +59,7 @@ async function getMessage(request: Request, env: BaseEnv, inboxId: string, messa
   } else {
     body = { text: message.text_body ?? "", html: message.html_body ?? "" };
   }
+  if (body.html) body.html = sanitizeEmailHtml(body.html);
   return json({ ...message, body });
 }
 
@@ -142,6 +144,7 @@ export default {
     headers.set("x-content-type-options", "nosniff");
     headers.set("cache-control", "no-store");
     headers.set("referrer-policy", "no-referrer");
+    headers.set("strict-transport-security", "max-age=31536000; includeSubDomains");
     headers.set("content-security-policy", "default-src 'self'; script-src 'self'; style-src 'unsafe-inline'; base-uri 'none'; frame-ancestors 'none'; form-action 'none'");
     return new Response(response.body, { status: response.status, headers });
   },

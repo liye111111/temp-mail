@@ -17,7 +17,6 @@ export default {
         const parsedKey = `parsed/${queued.body.messageId}.json`;
         const body = {
           text: email.text ?? "",
-          // HTML is retained for future sanitization but is not rendered by the MVP UI.
           html: email.html ?? "",
         };
         await env.MAIL_BUCKET.put(parsedKey, JSON.stringify(body), {

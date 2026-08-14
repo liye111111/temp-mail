@@ -1,11 +1,14 @@
 // Versioned asset path avoids stale edge-cache entries after deployments.
 const API = "https://api.getopeninbox.com";
-const state = { inbox: null, countdownTimer: null, checkCooldownTimer: null, pendingRefreshTimer: null };
+const AUTO_POLL_INTERVAL_MS = 5000;
+const AUTO_POLL_MAX_ATTEMPTS = 30;
+const state = { inbox: null, countdownTimer: null, checkCooldownTimer: null, autoPollTimer: null, autoPollAttempts: 0, autoPollGeneration: 0, inboxVersion: 0 };
 const address = document.querySelector("#address");
 const copy = document.querySelector("#copy");
 const expires = document.querySelector("#expires");
 const messages = document.querySelector("#messages");
 const checkMail = document.querySelector("#check-mail");
+const pollStatus = document.querySelector("#poll-status");
 const dialog = document.querySelector("#message-dialog");
 const detail = document.querySelector("#message-detail");
 
@@ -14,7 +17,8 @@ function auth() { return { authorization: `Bearer ${state.inbox.token}` }; }
 async function createInbox() {
   clearInterval(state.countdownTimer);
   clearInterval(state.checkCooldownTimer);
-  clearTimeout(state.pendingRefreshTimer);
+  stopAutoPolling();
+  state.inboxVersion += 1;
   address.textContent = "Creating your inbox…";
   copy.disabled = true;
   const response = await fetch(`${API}/v1/inboxes`, { method: "POST" });
@@ -23,22 +27,32 @@ async function createInbox() {
   sessionStorage.setItem("getopeninbox", JSON.stringify(state.inbox));
   address.textContent = state.inbox.address;
   copy.disabled = false;
+  checkMail.textContent = "Check for new mail";
+  checkMail.disabled = false;
   updateCountdown();
   state.countdownTimer = setInterval(updateCountdown, 1000);
+  startAutoPolling();
 }
 
 function updateCountdown() {
   if (!state.inbox) return;
   const remaining = Math.max(0, state.inbox.expiresAt - Math.floor(Date.now() / 1000));
   expires.textContent = remaining ? `Expires in ${Math.floor(remaining / 60)}:${String(remaining % 60).padStart(2, "0")}` : "Inbox expired";
-  if (!remaining) { clearInterval(state.countdownTimer); checkMail.disabled = true; }
+  if (!remaining) {
+    clearInterval(state.countdownTimer);
+    stopAutoPolling();
+    pollStatus.textContent = "This inbox has expired.";
+    checkMail.textContent = "Inbox expired";
+    checkMail.disabled = true;
+  }
 }
 
-async function refresh(background = false, pendingAttempt = 0) {
-  if (!state.inbox) return;
+async function refresh(background = false) {
+  if (!state.inbox) return null;
+  const inboxId = state.inbox.id;
+  const inboxVersion = state.inboxVersion;
   const cooldownUntil = Date.now() + 5000;
   if (!background) {
-    clearTimeout(state.pendingRefreshTimer);
     checkMail.disabled = true;
     checkMail.textContent = "Checking…";
   }
@@ -47,22 +61,72 @@ async function refresh(background = false, pendingAttempt = 0) {
     response = await fetch(`${API}/v1/inboxes/${state.inbox.id}/messages`, { headers: auth() });
   } catch {
     if (!background) startCheckCooldown(cooldownUntil, "Try again");
-    return;
+    return { ok: false, hasReady: false };
   }
+  if (inboxVersion !== state.inboxVersion || inboxId !== state.inbox?.id) return null;
   if (!response.ok) {
     if (!background) startCheckCooldown(cooldownUntil, "Try again");
-    return;
+    return { ok: false, hasReady: false };
   }
   const data = await response.json();
   const readyLabel = data.messages.length ? `Check again · ${data.messages.length} found` : "No mail yet · Check again";
   if (!background) startCheckCooldown(cooldownUntil, readyLabel);
-  if (!data.messages.length) return;
-  renderMessages(data.messages);
-  const hasPending = data.messages.some((mail) => mail.status === "pending");
-  if (hasPending && pendingAttempt < 5) {
-    clearTimeout(state.pendingRefreshTimer);
-    state.pendingRefreshTimer = setTimeout(() => refresh(true, pendingAttempt + 1), 2000);
+  if (data.messages.length) renderMessages(data.messages);
+  return { ok: true, hasReady: data.messages.some((mail) => mail.status !== "pending") };
+}
+
+function stopAutoPolling(clearAttention = true) {
+  clearTimeout(state.autoPollTimer);
+  state.autoPollTimer = null;
+  state.autoPollGeneration += 1;
+  if (clearAttention) {
+    pollStatus.classList.remove("attention");
+    checkMail.classList.remove("attention");
   }
+}
+
+function startAutoPolling() {
+  stopAutoPolling();
+  state.autoPollAttempts = 0;
+  pollStatus.textContent = "Automatically checking for new mail…";
+  scheduleAutoPoll();
+}
+
+function scheduleAutoPoll() {
+  clearTimeout(state.autoPollTimer);
+  state.autoPollTimer = setTimeout(runAutoPoll, AUTO_POLL_INTERVAL_MS);
+}
+
+async function runAutoPoll() {
+  if (!state.inbox || state.inbox.expiresAt <= Math.floor(Date.now() / 1000)) {
+    stopAutoPolling();
+    return;
+  }
+  if (document.hidden || !navigator.onLine) {
+    scheduleAutoPoll();
+    return;
+  }
+
+  const inboxVersion = state.inboxVersion;
+  const autoPollGeneration = state.autoPollGeneration;
+  state.autoPollAttempts += 1;
+  const result = await refresh(true);
+  if (inboxVersion !== state.inboxVersion || autoPollGeneration !== state.autoPollGeneration) return;
+  if (result?.hasReady) {
+    stopAutoPolling();
+    pollStatus.textContent = "New mail received.";
+    return;
+  }
+  if (state.autoPollAttempts >= AUTO_POLL_MAX_ATTEMPTS) {
+    stopAutoPolling(false);
+    pollStatus.textContent = "Automatic checking has paused. Select “Check again now” to keep waiting.";
+    pollStatus.classList.add("attention");
+    checkMail.classList.add("attention");
+    checkMail.textContent = "Check again now";
+    checkMail.disabled = false;
+    return;
+  }
+  scheduleAutoPoll();
 }
 
 function renderMessages(mailItems) {
@@ -115,21 +179,72 @@ async function openMessage(id) {
   title.textContent = mail.subject || "Message";
   const sender = document.createElement("p");
   sender.textContent = `From: ${mail.sender || mail.envelope_from || "Unknown"}`;
-  const body = document.createElement("div");
-  body.className = "mail-body";
-  body.textContent = mail.body?.text || "This message has no plain-text content.";
+  const body = renderMailBody(mail.body);
   detail.append(title, sender, body);
   dialog.showModal();
 }
 
+function renderMailBody(content = {}) {
+  const container = document.createElement("section");
+  container.className = "mail-preview";
+  const text = typeof content.text === "string" ? content.text : "";
+  const html = typeof content.html === "string" ? content.html : "";
+
+  const toolbar = document.createElement("div");
+  toolbar.className = "mail-preview-toolbar";
+  const htmlButton = document.createElement("button");
+  htmlButton.type = "button";
+  htmlButton.className = "preview-tab";
+  htmlButton.textContent = "HTML preview";
+  const textButton = document.createElement("button");
+  textButton.type = "button";
+  textButton.className = "preview-tab";
+  textButton.textContent = "Plain text";
+  toolbar.append(htmlButton, textButton);
+
+  const textBody = document.createElement("div");
+  textBody.className = "mail-body";
+  textBody.textContent = text || "This message has no plain-text content.";
+
+  const htmlFrame = document.createElement("iframe");
+  htmlFrame.className = "mail-html-frame";
+  htmlFrame.title = "Sandboxed HTML email preview";
+  htmlFrame.setAttribute("sandbox", "");
+  htmlFrame.referrerPolicy = "no-referrer";
+  htmlFrame.srcdoc = `<!doctype html><html><head><meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src data: cid:; style-src 'unsafe-inline'; font-src 'none'; media-src 'none'; object-src 'none'; frame-src 'none'; form-action 'none'; base-uri 'none'"><style>html{color-scheme:light}body{margin:16px;overflow-wrap:anywhere;font:14px/1.55 system-ui,-apple-system,sans-serif;color:#26322a;background:#fff}img{max-width:100%;height:auto}a{color:#166b43}</style></head><body>${html || "<p>This message has no HTML content.</p>"}</body></html>`;
+
+  const show = (mode) => {
+    const showHtml = mode === "html";
+    htmlFrame.hidden = !showHtml;
+    textBody.hidden = showHtml;
+    htmlButton.classList.toggle("active", showHtml);
+    textButton.classList.toggle("active", !showHtml);
+    htmlButton.setAttribute("aria-pressed", String(showHtml));
+    textButton.setAttribute("aria-pressed", String(!showHtml));
+  };
+  htmlButton.addEventListener("click", () => show("html"));
+  textButton.addEventListener("click", () => show("text"));
+  if (!html) htmlButton.disabled = true;
+  if (!text) textButton.disabled = true;
+
+  container.append(toolbar, htmlFrame, textBody);
+  show(html ? "html" : "text");
+  return container;
+}
+
 copy.addEventListener("click", async () => { await navigator.clipboard.writeText(state.inbox.address); copy.textContent = "Copied"; setTimeout(() => { copy.textContent = "Copy"; }, 1200); });
 document.querySelector("#new-inbox").addEventListener("click", createInbox);
-checkMail.addEventListener("click", () => refresh(false, 0));
+checkMail.addEventListener("click", async () => {
+  stopAutoPolling();
+  const result = await refresh(false);
+  if (result && !result.hasReady) startAutoPolling();
+});
 document.querySelector("#close-dialog").addEventListener("click", () => dialog.close());
 
 try {
   const saved = JSON.parse(sessionStorage.getItem("getopeninbox"));
   if (saved?.expiresAt > Math.floor(Date.now() / 1000)) {
     state.inbox = saved; address.textContent = saved.address; copy.disabled = false; updateCountdown(); state.countdownTimer = setInterval(updateCountdown, 1000);
+    startAutoPolling();
   } else createInbox();
 } catch { createInbox(); }

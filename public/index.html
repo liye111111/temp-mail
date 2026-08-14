@@ -19,19 +19,12 @@
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="Free Temporary Email Address — GetOpenInbox" />
     <meta name="twitter:description" content="Create a free disposable inbox instantly. No registration required." />
-    <link rel="stylesheet" href="/styles-20260806.css?v=seo-geo-1" />
+    <link rel="stylesheet" href="/site.min.css" />
   </head>
   <body>
-    <main itemscope itemtype="https://schema.org/WebApplication">
+    <main itemscope itemtype="https://schema.org/WebSite">
       <meta itemprop="name" content="GetOpenInbox" />
       <meta itemprop="url" content="https://getopeninbox.com/" />
-      <meta itemprop="applicationCategory" content="UtilitiesApplication" />
-      <meta itemprop="operatingSystem" content="Any operating system with a modern web browser" />
-      <meta itemprop="isAccessibleForFree" content="true" />
-      <div itemprop="offers" itemscope itemtype="https://schema.org/Offer">
-        <meta itemprop="price" content="0" />
-        <meta itemprop="priceCurrency" content="USD" />
-      </div>
       <section class="hero">
         <div class="brand">GetOpenInbox</div>
         <h1>Free temporary email address</h1>
@@ -54,6 +47,7 @@
           <div>
             <span class="eyebrow">INBOX</span>
             <h2>Incoming messages</h2>
+            <p id="poll-status" class="poll-status" aria-live="polite">Automatically checking for new mail…</p>
           </div>
           <button id="check-mail" class="check-mail" type="button">Check for new mail</button>
         </header>
@@ -76,6 +70,16 @@
         </div>
       </section>
 
+      <section class="content-section" aria-labelledby="why-use-temp-mail">
+        <span class="eyebrow">PRIVACY BY DEFAULT</span>
+        <h2 id="why-use-temp-mail">Why use a temporary email address?</h2>
+        <div class="benefits">
+          <article><h3>Keep routine sign-ups separate</h3><p>Use a disposable address for newsletters, product trials, downloads and other short-term registrations. Your personal inbox stays reserved for people and services you trust.</p></article>
+          <article><h3>Receive codes without an account</h3><p>GetOpenInbox works in a modern browser and does not ask you to create a profile. Copy the generated address, use it on another site and return here to check for the message.</p></article>
+          <article><h3>Use temporary mail responsibly</h3><p>Anyone with access to an inbox session may be able to read its messages. Never use temporary email for banking, healthcare, confidential documents or accounts that you may need to recover later.</p></article>
+        </div>
+      </section>
+
       <section class="content-section faq" aria-labelledby="faq">
         <span class="eyebrow">FAQ</span>
         <h2 id="faq">Temporary email questions</h2>
@@ -92,6 +96,6 @@
     </dialog>
 
     <footer>Temporary email content expires automatically from object storage. Do not use this service for sensitive information.</footer>
-    <script src="/app-20260806.js" type="module"></script>
+    <script src="/app.min.js" type="module"></script>
   </body>
 </html>
