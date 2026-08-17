@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How to Analyze an Email Header Step by Step — GetOpenInbox</title>
+  <meta name="description" content="Learn how to read an email header, trace delivery hops, interpret authentication results, and identify warning signs without overclaiming certainty.">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+  <meta name="theme-color" content="#197c4d">
+  <link rel="canonical" href="https://getopeninbox.com/developers/analyze-email-headers/">
+  <link rel="alternate" hreflang="en" href="https://getopeninbox.com/developers/analyze-email-headers/">
+  <link rel="alternate" hreflang="x-default" href="https://getopeninbox.com/developers/analyze-email-headers/">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="GetOpenInbox">
+  <meta property="og:title" content="How to Analyze an Email Header Step by Step — GetOpenInbox">
+  <meta property="og:description" content="Learn how to read an email header, trace delivery hops, interpret authentication results, and identify warning signs without overclaiming certainty.">
+  <meta property="og:url" content="https://getopeninbox.com/developers/analyze-email-headers/">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary">
+  <link rel="stylesheet" href="/content.min.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@context":"https://schema.org","@type":"Article","headline":"How to Analyze an Email Header Step by Step","description":"Learn how to read an email header, trace delivery hops, interpret authentication results, and identify warning signs without overclaiming certainty.","datePublished":"2026-08-17","dateModified":"2026-08-17","author":{"@type":"Organization","name":"GetOpenInbox"},"publisher":{"@type":"Organization","name":"GetOpenInbox","url":"https://getopeninbox.com/"},"mainEntityOfPage":"https://getopeninbox.com/developers/analyze-email-headers/"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://getopeninbox.com/"},{"@type":"ListItem","position":2,"name":"Developers","item":"https://getopeninbox.com/developers/"},{"@type":"ListItem","position":3,"name":"How to Analyze an Email Header Step by Step","item":"https://getopeninbox.com/developers/analyze-email-headers/"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Can an email header prove who sent a message?","acceptedAnswer":{"@type":"Answer","text":"No. Headers provide useful routing and authentication evidence, but individual fields can be forged and a compromised authenticated account can still send harmful mail."}},{"@type":"Question","name":"Which Received header should I read first?","acceptedAnswer":{"@type":"Answer","text":"Read the Received chain from the bottom upward to follow the message from earlier hops toward the final receiving system."}}]}]}</script>
+</head>
+<body>
+  <header class="site-header"><a class="brand" href="/">GetOpenInbox</a><nav aria-label="Primary"><a href="/">Temporary inbox</a><a href="/comparisons/">Comparisons</a><a href="/developers/">Developers</a><a href="/guides/">Guides</a><a href="/tools/">Tools</a></nav></header>
+  <main class="content-shell">
+  <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span>›</span><a href="/developers/">Developers</a></nav>
+  <article class="article">
+    <header class="article-header"><span class="eyebrow">Developers</span><h1>How to Analyze an Email Header Step by Step</h1><p class="dek">Learn how to read an email header, trace delivery hops, interpret authentication results, and identify warning signs without overclaiming certainty.</p><time datetime="2026-08-17">Updated 2026-08-17</time></header>
+    <div class="article-body"><p>Email header analysis examines the metadata added as a message moves from the sender to the receiving mailbox. Headers help explain routing, authentication, dates, and identifiers, but they must be interpreted together rather than treating one line as definitive proof.</p>
+<h2>1. Preserve the raw source</h2>
+<p>Use the mailbox provider's “show original” or “view source” feature. Forwarding a message can add or alter headers. If the message was received by GetOpenInbox, open it and use the raw source view.</p>
+<h2>2. Compare visible and technical identities</h2>
+<p>Check the visible <code>From</code> address, the <code>Return-Path</code>, and domains referenced by DKIM and DMARC. Differences can be legitimate—for example, when a delivery provider sends on behalf of a company—but unexplained mismatches deserve attention.</p>
+<h2>3. Trace the Received chain</h2>
+<p>Mail servers prepend <code>Received</code> fields, so the newest hop is normally at the top. Read from the bottom upward. Look for unexpected delays, unfamiliar infrastructure, malformed hostnames, and time-zone inconsistencies. Remember that earlier fields supplied before a trusted receiver handled the message may be forged.</p>
+<h2>4. Read authentication results</h2>
+<p>Locate <code>Authentication-Results</code> added by the receiving system. Review SPF, DKIM, and DMARC outcomes and the domains each check evaluated. A pass means a specific technical check succeeded; it does not guarantee good intent. See <a href="/developers/spf-dkim-dmarc-email-headers/">How to Read SPF, DKIM, and DMARC Results</a>.</p>
+<h2>5. Inspect links and attachments</h2>
+<p>Compare link destinations with the organization the message claims to represent. Be cautious with URL shorteners, IP-address links, Punycode domains, unexpected archives, and executable attachment names. Do not open suspicious content just to investigate it.</p>
+<h2>6. Form a bounded conclusion</h2>
+<p>State what the evidence supports: for example, “DKIM passed for the provider domain, but the visible sender domain did not align.” Avoid conclusions such as “safe” or “definitely forged” unless independent evidence justifies them. Use the <a href="/tools/email-header-analyzer/">online email header analyzer</a> as a starting point, not as a substitute for incident-response tooling.</p>
+</div>
+    <section class="article-faq"><h2>Frequently asked questions</h2><details><summary>Can an email header prove who sent a message?</summary><p>No. Headers provide useful routing and authentication evidence, but individual fields can be forged and a compromised authenticated account can still send harmful mail.</p></details><details><summary>Which Received header should I read first?</summary><p>Read the Received chain from the bottom upward to follow the message from earlier hops toward the final receiving system.</p></details></section>
+  </article>
+  <aside class="related"><h2>Related reading</h2><ul><li><a href="/tools/email-header-analyzer/">Email Header Analyzer — Analyze Email Headers Online</a></li><li><a href="/developers/spf-dkim-dmarc-email-headers/">How to Read SPF, DKIM, and DMARC Results in Email Headers</a></li><li><a href="/developers/temporary-email-for-testing/">Temporary Email for Testing: A Practical Guide for Developers and QA</a></li></ul></aside>
+</main>
+
+  <footer class="site-footer"><p>GetOpenInbox provides temporary email for low-risk, short-term use.</p><a href="/">Create a temporary inbox</a></footer>
+</body>
+</html>

@@ -30,7 +30,18 @@ Temporary email content expires automatically from object storage. Limited opera
 
 ## Published resources
 
-No long-form resources are published yet.
+- [Burner Email vs Temporary Email: What’s the Difference?](https://getopeninbox.com/comparisons/burner-email-vs-temporary-email/): Compare burner email, temporary inboxes, aliases, and secondary accounts by lifespan, privacy, recovery, and appropriate use.
+- [How to Analyze an Email Header Step by Step](https://getopeninbox.com/developers/analyze-email-headers/): Learn how to read an email header, trace delivery hops, interpret authentication results, and identify warning signs without overclaiming certainty.
+- [How to Read SPF, DKIM, and DMARC Results in Email Headers](https://getopeninbox.com/developers/spf-dkim-dmarc-email-headers/): Interpret SPF, DKIM, and DMARC results, understand domain alignment, and learn why authentication passes do not guarantee a safe message.
+- [Temporary Email for Testing: A Practical Guide for Developers and QA](https://getopeninbox.com/developers/temporary-email-for-testing/): Learn where temporary inboxes fit in email testing, what they can validate, and when teams need a dedicated test environment instead.
+- [Is Temporary Email Safe? Privacy, Security, and Common Risks](https://getopeninbox.com/guides/is-temporary-email-safe/): Learn what temporary email can protect, what it cannot hide, and when an expiring inbox is the wrong choice for security or recovery.
+- [What Is a Burner Email? Uses, Benefits, and Limitations](https://getopeninbox.com/guides/what-is-a-burner-email/): Understand what a burner email is, how it differs from a permanent inbox, and when a disposable address is or is not appropriate.
+- [What Is a Disposable Email and How Does It Work?](https://getopeninbox.com/guides/what-is-temporary-email/): Learn how disposable email works, when a temporary inbox is useful, and when you should use a permanent email address instead.
+- [Email Header Analyzer — Analyze Email Headers Online](https://getopeninbox.com/tools/email-header-analyzer/): Receive a message, inspect its raw email headers, and review SPF, DKIM, DMARC, sender, link, and attachment warning signals online.
+- [Comparisons](https://getopeninbox.com/comparisons/): Clear comparisons of disposable email and other privacy tools.
+- [Developers](https://getopeninbox.com/developers/): Technical guides for email routing, testing and Cloudflare Workers.
+- [Guides](https://getopeninbox.com/guides/): Practical guides to temporary email, privacy and safer sign-ups.
+- [Tools](https://getopeninbox.com/tools/): Free tools for email privacy, deliverability and development.
 
 ## Canonical source
 

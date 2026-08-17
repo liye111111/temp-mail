@@ -42,14 +42,22 @@ for (const page of published) {
     TITLE: escapeHtml(page.title), DESCRIPTION: escapeHtml(page.description), UPDATED_AT: page.updatedAt,
     CONTENT: renderMarkdown(page.body), FAQ: faqHtml, RELATED: relatedHtml,
   });
-  const graph = {
+  const article = {
     "@context": "https://schema.org", "@type": "Article", headline: page.title, description: page.description,
     datePublished: page.publishedAt, dateModified: page.updatedAt,
     author: { "@type": "Organization", name: page.author },
     publisher: { "@type": "Organization", name: "GetOpenInbox", url: `${SITE_URL}/` },
     mainEntityOfPage: `${SITE_URL}${page.pathname}`,
   };
-  if (page.faq.length) graph.hasPart = { "@type": "FAQPage", mainEntity: page.faq.map((item) => ({ "@type": "Question", name: item.question, acceptedAnswer: { "@type": "Answer", text: item.answer } })) };
+  const graph = { "@context": "https://schema.org", "@graph": [
+    article,
+    { "@type": "BreadcrumbList", itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
+      { "@type": "ListItem", position: 2, name: CATEGORIES[page.category].label, item: `${SITE_URL}${page.category === "pages" ? "/" : `/${page.category}/`}` },
+      { "@type": "ListItem", position: 3, name: page.title, item: `${SITE_URL}${page.pathname}` },
+    ] },
+  ] };
+  if (page.faq.length) graph["@graph"].push({ "@type": "FAQPage", mainEntity: page.faq.map((item) => ({ "@type": "Question", name: item.question, acceptedAnswer: { "@type": "Answer", text: item.answer } })) });
   const html = shell({ title: `${page.title} — GetOpenInbox`, description: page.description, pathname: page.pathname, body: articleBody, structuredData: `<script type="application/ld+json">${JSON.stringify(graph).replace(/</g, "\\u003c")}</script>` });
   writePage(path.join("public", page.pathname, "index.html"), html, { title: page.title, description: page.description, pathname: page.pathname, updatedAt: page.updatedAt, category: page.category });
 }

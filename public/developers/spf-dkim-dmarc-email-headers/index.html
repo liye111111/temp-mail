@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How to Read SPF, DKIM, and DMARC Results in Email Headers — GetOpenInbox</title>
+  <meta name="description" content="Interpret SPF, DKIM, and DMARC results, understand domain alignment, and learn why authentication passes do not guarantee a safe message.">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+  <meta name="theme-color" content="#197c4d">
+  <link rel="canonical" href="https://getopeninbox.com/developers/spf-dkim-dmarc-email-headers/">
+  <link rel="alternate" hreflang="en" href="https://getopeninbox.com/developers/spf-dkim-dmarc-email-headers/">
+  <link rel="alternate" hreflang="x-default" href="https://getopeninbox.com/developers/spf-dkim-dmarc-email-headers/">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="GetOpenInbox">
+  <meta property="og:title" content="How to Read SPF, DKIM, and DMARC Results in Email Headers — GetOpenInbox">
+  <meta property="og:description" content="Interpret SPF, DKIM, and DMARC results, understand domain alignment, and learn why authentication passes do not guarantee a safe message.">
+  <meta property="og:url" content="https://getopeninbox.com/developers/spf-dkim-dmarc-email-headers/">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary">
+  <link rel="stylesheet" href="/content.min.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@context":"https://schema.org","@type":"Article","headline":"How to Read SPF, DKIM, and DMARC Results in Email Headers","description":"Interpret SPF, DKIM, and DMARC results, understand domain alignment, and learn why authentication passes do not guarantee a safe message.","datePublished":"2026-08-17","dateModified":"2026-08-17","author":{"@type":"Organization","name":"GetOpenInbox"},"publisher":{"@type":"Organization","name":"GetOpenInbox","url":"https://getopeninbox.com/"},"mainEntityOfPage":"https://getopeninbox.com/developers/spf-dkim-dmarc-email-headers/"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://getopeninbox.com/"},{"@type":"ListItem","position":2,"name":"Developers","item":"https://getopeninbox.com/developers/"},{"@type":"ListItem","position":3,"name":"How to Read SPF, DKIM, and DMARC Results in Email Headers","item":"https://getopeninbox.com/developers/spf-dkim-dmarc-email-headers/"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Does SPF passing mean an email is safe?","acceptedAnswer":{"@type":"Answer","text":"No. SPF validates an authorized sending path for an envelope domain. It does not judge message content or the sender's intent."}},{"@type":"Question","name":"Can DMARC pass when SPF fails?","acceptedAnswer":{"@type":"Answer","text":"Yes. DMARC can pass when either aligned SPF or aligned DKIM passes, subject to the domain's alignment policy."}}]}]}</script>
+</head>
+<body>
+  <header class="site-header"><a class="brand" href="/">GetOpenInbox</a><nav aria-label="Primary"><a href="/">Temporary inbox</a><a href="/comparisons/">Comparisons</a><a href="/developers/">Developers</a><a href="/guides/">Guides</a><a href="/tools/">Tools</a></nav></header>
+  <main class="content-shell">
+  <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span>›</span><a href="/developers/">Developers</a></nav>
+  <article class="article">
+    <header class="article-header"><span class="eyebrow">Developers</span><h1>How to Read SPF, DKIM, and DMARC Results in Email Headers</h1><p class="dek">Interpret SPF, DKIM, and DMARC results, understand domain alignment, and learn why authentication passes do not guarantee a safe message.</p><time datetime="2026-08-17">Updated 2026-08-17</time></header>
+    <div class="article-body"><p>SPF, DKIM, and DMARC are related email-authentication mechanisms, but they answer different questions. Read their results with the evaluated domains and alignment—not just the words <code>pass</code> or <code>fail</code>.</p>
+<h2>SPF: was the sending server authorized?</h2>
+<p>SPF checks whether the connecting mail server is permitted to send for the envelope sender domain. A forwarded message may fail SPF even when the original message was legitimate. SPF does not validate the visible <code>From</code> address by itself and does not inspect message intent.</p>
+<h2>DKIM: did a valid domain sign the message?</h2>
+<p>DKIM uses a cryptographic signature and a DNS-published key to verify that signed parts of a message were not changed after signing. Check the signing domain (<code>d=</code>). A valid signature proves control of that signing domain's key, not that the visible brand is trustworthy.</p>
+<h2>DMARC: does an authenticated domain align with From?</h2>
+<p>DMARC evaluates whether an SPF-authenticated or DKIM-signing domain aligns with the visible <code>From</code> domain. It also lets a domain publish a handling policy. A DMARC pass requires at least one aligned authentication path; both SPF and DKIM do not have to pass.</p>
+<h2>Common result meanings</h2>
+<table>
+<thead>
+<tr>
+<th>Result</th>
+<th>General meaning</th>
+<th>Important limitation</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>pass</code></td>
+<td>The evaluated check succeeded</td>
+<td>Does not prove safe content or intent</td>
+</tr>
+<tr>
+<td><code>fail</code></td>
+<td>The check did not satisfy its policy</td>
+<td>Can result from misconfiguration or forwarding</td>
+</tr>
+<tr>
+<td><code>softfail</code></td>
+<td>SPF indicates the sender is probably unauthorized</td>
+<td>Still requires context</td>
+</tr>
+<tr>
+<td><code>neutral</code> / <code>none</code></td>
+<td>No decisive policy or usable result</td>
+<td>Not equivalent to pass</td>
+</tr>
+<tr>
+<td><code>temperror</code></td>
+<td>A temporary evaluation problem occurred</td>
+<td>May succeed when retried</td>
+</tr>
+<tr>
+<td><code>permerror</code></td>
+<td>The published configuration cannot be evaluated correctly</td>
+<td>Domain owner may need to fix DNS</td>
+</tr>
+</tbody></table>
+<p>Use <a href="/developers/analyze-email-headers/">email header analysis</a> to evaluate routing, identity, links, and context around these results. GetOpenInbox displays authentication results reported in received headers; it does not guarantee that a passing message is trustworthy.</p>
+</div>
+    <section class="article-faq"><h2>Frequently asked questions</h2><details><summary>Does SPF passing mean an email is safe?</summary><p>No. SPF validates an authorized sending path for an envelope domain. It does not judge message content or the sender&#39;s intent.</p></details><details><summary>Can DMARC pass when SPF fails?</summary><p>Yes. DMARC can pass when either aligned SPF or aligned DKIM passes, subject to the domain&#39;s alignment policy.</p></details></section>
+  </article>
+  <aside class="related"><h2>Related reading</h2><ul><li><a href="/tools/email-header-analyzer/">Email Header Analyzer — Analyze Email Headers Online</a></li><li><a href="/developers/analyze-email-headers/">How to Analyze an Email Header Step by Step</a></li><li><a href="/developers/temporary-email-for-testing/">Temporary Email for Testing: A Practical Guide for Developers and QA</a></li></ul></aside>
+</main>
+
+  <footer class="site-footer"><p>GetOpenInbox provides temporary email for low-risk, short-term use.</p><a href="/">Create a temporary inbox</a></footer>
+</body>
+</html>

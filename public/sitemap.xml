@@ -1,4 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://getopeninbox.com/</loc><lastmod>2026-08-14</lastmod></url>
+  <url><loc>https://getopeninbox.com/comparisons/burner-email-vs-temporary-email/</loc><lastmod>2026-08-17</lastmod></url>
+  <url><loc>https://getopeninbox.com/developers/analyze-email-headers/</loc><lastmod>2026-08-17</lastmod></url>
+  <url><loc>https://getopeninbox.com/developers/spf-dkim-dmarc-email-headers/</loc><lastmod>2026-08-17</lastmod></url>
+  <url><loc>https://getopeninbox.com/developers/temporary-email-for-testing/</loc><lastmod>2026-08-17</lastmod></url>
+  <url><loc>https://getopeninbox.com/guides/is-temporary-email-safe/</loc><lastmod>2026-08-17</lastmod></url>
+  <url><loc>https://getopeninbox.com/guides/what-is-a-burner-email/</loc><lastmod>2026-08-17</lastmod></url>
+  <url><loc>https://getopeninbox.com/guides/what-is-temporary-email/</loc><lastmod>2026-08-17</lastmod></url>
+  <url><loc>https://getopeninbox.com/tools/email-header-analyzer/</loc><lastmod>2026-08-17</lastmod></url>
+  <url><loc>https://getopeninbox.com/comparisons/</loc><lastmod>2026-08-17</lastmod></url>
+  <url><loc>https://getopeninbox.com/developers/</loc><lastmod>2026-08-17</lastmod></url>
+  <url><loc>https://getopeninbox.com/guides/</loc><lastmod>2026-08-17</lastmod></url>
+  <url><loc>https://getopeninbox.com/tools/</loc><lastmod>2026-08-17</lastmod></url>
 </urlset>
