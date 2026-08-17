@@ -5,6 +5,8 @@ GetOpenInbox 是面向海外用户的免费临时邮箱服务。用户无需注�
 ## 项目文档
 
 - [产品需求与实施计划](docs/product-requirements.md)
+- [SEO Keyword Planner API](docs/seo-keyword-planner.md)
+- [SEO/GEO 内容生成目的与流程](docs/seo-geo-content-workflow.md)
 
 ## 当前阶段
 

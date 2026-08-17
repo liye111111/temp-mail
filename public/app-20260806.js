@@ -61,18 +61,22 @@ async function refresh(background = false) {
     response = await fetch(`${API}/v1/inboxes/${state.inbox.id}/messages`, { headers: auth() });
   } catch {
     if (!background) startCheckCooldown(cooldownUntil, "Try again");
-    return { ok: false, hasReady: false };
+    return { ok: false, hasMessages: false, hasPending: false };
   }
   if (inboxVersion !== state.inboxVersion || inboxId !== state.inbox?.id) return null;
   if (!response.ok) {
     if (!background) startCheckCooldown(cooldownUntil, "Try again");
-    return { ok: false, hasReady: false };
+    return { ok: false, hasMessages: false, hasPending: false };
   }
   const data = await response.json();
   const readyLabel = data.messages.length ? `Check again · ${data.messages.length} found` : "No mail yet · Check again";
   if (!background) startCheckCooldown(cooldownUntil, readyLabel);
   if (data.messages.length) renderMessages(data.messages);
-  return { ok: true, hasReady: data.messages.some((mail) => mail.status !== "pending") };
+  return {
+    ok: true,
+    hasMessages: data.messages.length > 0,
+    hasPending: data.messages.some((mail) => mail.status === "pending"),
+  };
 }
 
 function stopAutoPolling(clearAttention = true) {
@@ -112,7 +116,7 @@ async function runAutoPoll() {
   state.autoPollAttempts += 1;
   const result = await refresh(true);
   if (inboxVersion !== state.inboxVersion || autoPollGeneration !== state.autoPollGeneration) return;
-  if (result?.hasReady) {
+  if (result?.ok && result.hasMessages && !result.hasPending) {
     stopAutoPolling();
     pollStatus.textContent = "New mail received.";
     return;
@@ -285,7 +289,7 @@ function renderMailBody(content = {}, rawUrl = null) {
   const htmlFrame = document.createElement("iframe");
   htmlFrame.className = "mail-html-frame";
   htmlFrame.title = "Sandboxed HTML email preview";
-  htmlFrame.setAttribute("sandbox", "");
+  htmlFrame.setAttribute("sandbox", "allow-popups allow-popups-to-escape-sandbox");
   htmlFrame.referrerPolicy = "no-referrer";
   htmlFrame.srcdoc = `<!doctype html><html><head><meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src data: cid:; style-src 'unsafe-inline'; font-src 'none'; media-src 'none'; object-src 'none'; frame-src 'none'; form-action 'none'; base-uri 'none'"><style>html{color-scheme:light}body{margin:16px;overflow-wrap:anywhere;font:14px/1.55 system-ui,-apple-system,sans-serif;color:#26322a;background:#fff}img{max-width:100%;height:auto}a{color:#166b43}</style></head><body>${html || "<p>This message has no HTML content.</p>"}</body></html>`;
 
@@ -336,7 +340,7 @@ document.querySelector("#new-inbox").addEventListener("click", createInbox);
 checkMail.addEventListener("click", async () => {
   stopAutoPolling();
   const result = await refresh(false);
-  if (result && !result.hasReady) startAutoPolling();
+  if (result && (!result.ok || !result.hasMessages || result.hasPending)) startAutoPolling();
 });
 document.querySelector("#close-dialog").addEventListener("click", () => dialog.close());
 

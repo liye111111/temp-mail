@@ -100,14 +100,6 @@ async function deleteInbox(request: Request, env: BaseEnv, inboxId: string): Pro
 
 async function cleanup(env: BaseEnv): Promise<void> {
   const now = Math.floor(Date.now() / 1000);
-  if (env.DELETE_EXPIRED_D1_DATA !== "false") {
-    const expired = await env.DB.prepare(
-      "SELECT m.raw_object_key, m.parsed_object_key FROM messages m JOIN inboxes i ON i.id = m.inbox_id WHERE i.expires_at <= ? LIMIT 500",
-    ).bind(now).all<{ raw_object_key: string; parsed_object_key: string | null }>();
-    const keys = expired.results.flatMap((row) => [row.raw_object_key, row.parsed_object_key].filter(Boolean) as string[]);
-    if (keys.length && env.MAIL_BUCKET) await env.MAIL_BUCKET.delete(keys);
-    await env.DB.prepare("DELETE FROM inboxes WHERE expires_at <= ?").bind(now).run();
-  }
   await env.DB.prepare("DELETE FROM mail_rate_limits WHERE updated_at < ?").bind(now - 86400).run();
 }
 

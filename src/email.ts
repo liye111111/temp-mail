@@ -23,10 +23,10 @@ export default {
   async email(message: ForwardableEmailMessage, env: EmailEnv): Promise<void> {
     const recipient = message.to.toLowerCase();
     const inbox = await env.DB.prepare(
-      "SELECT id, address, expires_at FROM inboxes WHERE address = ? AND expires_at > ?",
-    ).bind(recipient, Math.floor(Date.now() / 1000)).first<InboxRow>();
+      "SELECT id, address, expires_at FROM inboxes WHERE address = ?",
+    ).bind(recipient).first<InboxRow>();
     if (!inbox) {
-      message.setReject("Unknown or expired temporary inbox");
+      message.setReject("Unknown temporary inbox");
       return;
     }
 

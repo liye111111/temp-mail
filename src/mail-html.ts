@@ -14,14 +14,25 @@ export function sanitizeEmailHtml(value: string): string {
     allowedTags,
     allowedAttributes: {
       "*": ["class", "dir", "style", "title"],
-      a: ["title"],
+      a: ["href", "rel", "target", "title"],
       img: ["alt", "height", "src", "title", "width"],
       td: ["align", "colspan", "rowspan", "valign", "width"],
       th: ["align", "colspan", "rowspan", "valign", "width"],
       table: ["align", "border", "cellpadding", "cellspacing", "width"],
     },
+    allowedSchemes: ["http", "https"],
     allowedSchemesByTag: { img: ["data"] },
     allowProtocolRelative: false,
+    transformTags: {
+      a: (_tagName, attribs) => ({
+        tagName: "a",
+        attribs: {
+          ...attribs,
+          target: "_blank",
+          rel: "noopener noreferrer",
+        },
+      }),
+    },
     disallowedTagsMode: "discard",
     parseStyleAttributes: false,
   });
