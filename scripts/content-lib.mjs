@@ -86,7 +86,7 @@ export function renderMarkdown(markdown) {
   const rendered = marked.parse(markdown, { gfm: true });
   return sanitizeHtml(rendered, {
     allowedTags: ["h2", "h3", "h4", "p", "ul", "ol", "li", "a", "blockquote", "pre", "code", "strong", "em", "hr", "table", "thead", "tbody", "tr", "th", "td"],
-    allowedAttributes: { a: ["href", "title"], code: ["class"] },
+    allowedAttributes: { a: ["href", "title", "rel"], code: ["class"] },
     allowedSchemes: ["http", "https", "mailto"],
     transformTags: {
       a: (tagName, attributes) => {

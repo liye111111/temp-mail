@@ -22,7 +22,7 @@ faq:
     answer: No. It proves delivery to one receiving system, not inbox placement or deliverability across major mailbox providers.
 ---
 
-A temporary inbox is useful for **manual and exploratory email testing**: checking whether a registration message arrives, reading a verification code, inspecting HTML, and reviewing delivery headers without creating another permanent account.
+A temporary inbox is useful for **manual and exploratory email testing**: checking whether a registration message arrives, reading a verification code, inspecting HTML, and reviewing delivery headers without creating another permanent account. Internet message headers and bodies follow the syntax defined by [RFC 5322](https://www.rfc-editor.org/info/rfc5322/), while SMTP transport is specified by [RFC 5321](https://www.rfc-editor.org/info/rfc5321/).
 
 ## What you can test
 
@@ -50,3 +50,10 @@ The current inbox lasts 10 minutes, so it is not suitable for delayed workflows 
 6. Repeat critical tests with representative mailbox providers before release.
 
 Use a dedicated test mailbox platform when you need stable APIs, assertions, long retention, attachments, high volume, or CI concurrency.
+
+## References
+
+- [RFC 5321: Simple Mail Transfer Protocol](https://www.rfc-editor.org/info/rfc5321/) — the IETF standards-track SMTP specification.
+- [RFC 5322: Internet Message Format](https://www.rfc-editor.org/info/rfc5322/) — message header, address, and body syntax.
+- [RFC 8601: Message Header Field for Indicating Message Authentication Status](https://www.rfc-editor.org/info/rfc8601/) — specification for `Authentication-Results` fields.
+- [Cloudflare Email Routing rules and addresses](https://developers.cloudflare.com/email-service/configuration/email-routing-addresses/) — documentation for routing an address or catch-all pattern to an Email Worker.

@@ -23,11 +23,20 @@
     <link rel="stylesheet" href="/site.min.css" />
   </head>
   <body>
+    <header class="site-header">
+      <a class="brand" href="/">GetOpenInbox</a>
+      <nav aria-label="Primary">
+        <a href="/">Temporary inbox</a>
+        <a href="/comparisons/">Comparisons</a>
+        <a href="/developers/">Developers</a>
+        <a href="/guides/">Guides</a>
+        <a href="/tools/">Tools</a>
+      </nav>
+    </header>
     <main itemscope itemtype="https://schema.org/WebSite">
       <meta itemprop="name" content="GetOpenInbox" />
       <meta itemprop="url" content="https://getopeninbox.com/" />
       <section class="hero">
-        <div class="brand">GetOpenInbox</div>
         <h1>Free temporary email with security checks</h1>
         <p class="lead" itemprop="description">Get a disposable inbox instantly, inspect SPF, DKIM and DMARC results, and view raw email headers. No registration required.</p>
         <div class="address-card">
@@ -89,6 +98,27 @@
           <article><h3>Receive codes without an account</h3><p>GetOpenInbox works in a modern browser and does not ask you to create a profile. Copy the generated address, use it on another site and return here to check for the message.</p></article>
           <article><h3>Use temporary mail responsibly</h3><p>Anyone with access to an inbox session may be able to read its messages. Never use temporary email for banking, healthcare, confidential documents or accounts that you may need to recover later.</p></article>
         </div>
+      </section>
+
+      <section class="content-section" aria-labelledby="email-resources">
+        <span class="eyebrow">LEARN AND INVESTIGATE</span>
+        <h2 id="email-resources">Temporary email and email security resources</h2>
+        <p class="lead">Learn when to use a disposable inbox, investigate incoming-message headers, and understand common email authentication results.</p>
+        <div class="benefits">
+          <article>
+            <h3><a href="/guides/">Temporary email guides</a></h3>
+            <p>Understand <a href="/guides/what-is-temporary-email/">how disposable email works</a>, its privacy limits, and whether <a href="/guides/is-temporary-email-safe/">temporary email is safe</a> for your task.</p>
+          </article>
+          <article>
+            <h3><a href="/tools/email-header-analyzer/">Email header analyzer</a></h3>
+            <p>Receive a test message, review its raw source, and examine sender, link, SPF, DKIM, and DMARC warning signals.</p>
+          </article>
+          <article>
+            <h3><a href="/developers/">Developer email testing</a></h3>
+            <p>Use <a href="/developers/temporary-email-for-testing/">temporary email for manual QA</a> and learn <a href="/developers/analyze-email-headers/">how to analyze email headers</a> step by step.</p>
+          </article>
+        </div>
+        <p>Not sure which address type fits your needs? Compare <a href="/comparisons/burner-email-vs-temporary-email/">burner email, temporary inboxes, aliases, and permanent accounts</a>.</p>
       </section>
 
       <section class="content-section faq" aria-labelledby="faq">

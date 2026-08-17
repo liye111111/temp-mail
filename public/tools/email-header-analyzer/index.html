@@ -26,7 +26,7 @@
   <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span>›</span><a href="/tools/">Tools</a></nav>
   <article class="article">
     <header class="article-header"><span class="eyebrow">Tools</span><h1>Email Header Analyzer — Analyze Email Headers Online</h1><p class="dek">Receive a message, inspect its raw email headers, and review SPF, DKIM, DMARC, sender, link, and attachment warning signals online.</p><time datetime="2026-08-17">Updated 2026-08-17</time></header>
-    <div class="article-body"><p>GetOpenInbox provides an <strong>online email header analyzer for messages received by a temporary inbox</strong>. It displays raw RFC 5322 source, reported SPF, DKIM, and DMARC results, and common sender, link, and attachment-name warning signals.</p>
+    <div class="article-body"><p>GetOpenInbox provides an <strong>online email header analyzer for messages received by a temporary inbox</strong>. It displays raw source using the message format defined by <a href="https://www.rfc-editor.org/info/rfc5322/" rel="noopener noreferrer">RFC 5322</a>, reported SPF, DKIM, and DMARC results, and common sender, link, and attachment-name warning signals.</p>
 <p><a href="/">Create a temporary inbox to analyze an incoming message</a>.</p>
 <h2>How to use the analyzer</h2>
 <ol>
@@ -48,6 +48,13 @@
 <h2>What the analyzer does not do</h2>
 <p>The tool does not accept arbitrary pasted headers, scan mailbox accounts, test SMTP ports, or guarantee that a message is safe. Authentication passes can coexist with phishing or a compromised sender. A warning may also have a legitimate explanation.</p>
 <p>For careful interpretation, follow the <a href="/developers/analyze-email-headers/">step-by-step email header analysis guide</a> and the explanation of <a href="/developers/spf-dkim-dmarc-email-headers/">SPF, DKIM, and DMARC results</a>.</p>
+<h2>References</h2>
+<ul>
+<li><a href="https://www.rfc-editor.org/info/rfc5322/" rel="noopener noreferrer">RFC 5322: Internet Message Format</a> — message and header-field syntax.</li>
+<li><a href="https://www.rfc-editor.org/info/rfc8601/" rel="noopener noreferrer">RFC 8601: Authentication-Results</a> — how receiving systems record authentication results.</li>
+<li><a href="https://www.rfc-editor.org/info/rfc7208/" rel="noopener noreferrer">RFC 7208: SPF</a>, <a href="https://www.rfc-editor.org/info/rfc6376/" rel="noopener noreferrer">RFC 6376: DKIM</a>, and <a href="https://www.rfc-editor.org/info/rfc9989/" rel="noopener noreferrer">RFC 9989: DMARC</a> — the relevant authentication standards.</li>
+<li><a href="https://developers.cloudflare.com/email-service/configuration/email-routing-addresses/" rel="noopener noreferrer">Cloudflare Email Routing</a> — routing documentation for the underlying inbound-email platform.</li>
+</ul>
 </div>
     <section class="article-faq"><h2>Frequently asked questions</h2><details><summary>How do I analyze an email header with GetOpenInbox?</summary><p>Create a temporary inbox, send the test message to it, open the message, and review the authentication report and raw source.</p></details><details><summary>Does GetOpenInbox analyze headers pasted from another mailbox?</summary><p>No. The current tool analyzes messages received by your active GetOpenInbox session rather than arbitrary pasted headers.</p></details><details><summary>Can the analyzer prove that an email is safe?</summary><p>No. It explains common technical signals and warnings, but no automated header check can guarantee sender identity or harmless content.</p></details></section>
   </article>

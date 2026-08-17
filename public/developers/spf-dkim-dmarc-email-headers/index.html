@@ -26,7 +26,7 @@
   <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span>›</span><a href="/developers/">Developers</a></nav>
   <article class="article">
     <header class="article-header"><span class="eyebrow">Developers</span><h1>How to Read SPF, DKIM, and DMARC Results in Email Headers</h1><p class="dek">Interpret SPF, DKIM, and DMARC results, understand domain alignment, and learn why authentication passes do not guarantee a safe message.</p><time datetime="2026-08-17">Updated 2026-08-17</time></header>
-    <div class="article-body"><p>SPF, DKIM, and DMARC are related email-authentication mechanisms, but they answer different questions. Read their results with the evaluated domains and alignment—not just the words <code>pass</code> or <code>fail</code>.</p>
+    <div class="article-body"><p>SPF, DKIM, and DMARC are related email-authentication mechanisms defined by <a href="https://www.rfc-editor.org/info/rfc7208/" rel="noopener noreferrer">RFC 7208</a>, <a href="https://www.rfc-editor.org/info/rfc6376/" rel="noopener noreferrer">RFC 6376</a>, and the current DMARC specification, <a href="https://www.rfc-editor.org/info/rfc9989/" rel="noopener noreferrer">RFC 9989</a>. They answer different questions. Read their results with the evaluated domains and alignment—not just the words <code>pass</code> or <code>fail</code>.</p>
 <h2>SPF: was the sending server authorized?</h2>
 <p>SPF checks whether the connecting mail server is permitted to send for the envelope sender domain. A forwarded message may fail SPF even when the original message was legitimate. SPF does not validate the visible <code>From</code> address by itself and does not inspect message intent.</p>
 <h2>DKIM: did a valid domain sign the message?</h2>
@@ -74,6 +74,13 @@
 </tr>
 </tbody></table>
 <p>Use <a href="/developers/analyze-email-headers/">email header analysis</a> to evaluate routing, identity, links, and context around these results. GetOpenInbox displays authentication results reported in received headers; it does not guarantee that a passing message is trustworthy.</p>
+<h2>References</h2>
+<ul>
+<li><a href="https://www.rfc-editor.org/info/rfc7208/" rel="noopener noreferrer">RFC 7208: Sender Policy Framework (SPF)</a> — authorization of sending hosts for envelope domains.</li>
+<li><a href="https://www.rfc-editor.org/info/rfc6376/" rel="noopener noreferrer">RFC 6376: DomainKeys Identified Mail (DKIM) Signatures</a> — domain-level cryptographic message signatures.</li>
+<li><a href="https://www.rfc-editor.org/info/rfc9989/" rel="noopener noreferrer">RFC 9989: Domain-Based Message Authentication, Reporting, and Conformance (DMARC)</a> — the current DMARC standard, which obsoletes RFC 7489 and RFC 9091.</li>
+<li><a href="https://www.rfc-editor.org/info/rfc8601/" rel="noopener noreferrer">RFC 8601: Authentication-Results</a> — standardized header syntax for reporting authentication outcomes.</li>
+</ul>
 </div>
     <section class="article-faq"><h2>Frequently asked questions</h2><details><summary>Does SPF passing mean an email is safe?</summary><p>No. SPF validates an authorized sending path for an envelope domain. It does not judge message content or the sender&#39;s intent.</p></details><details><summary>Can DMARC pass when SPF fails?</summary><p>Yes. DMARC can pass when either aligned SPF or aligned DKIM passes, subject to the domain&#39;s alignment policy.</p></details></section>
   </article>

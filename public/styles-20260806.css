@@ -8,6 +8,11 @@
 
 * { box-sizing: border-box; }
 body { margin: 0; min-height: 100vh; }
+a { color: #16784a; }
+.site-header { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 20px max(24px, calc((100% - 980px) / 2)); background: #fff; border-bottom: 1px solid #dfe6df; }
+.site-header .brand { font-size: 20px; font-weight: 850; text-decoration: none; }
+.site-header nav { display: flex; gap: 18px; flex-wrap: wrap; }
+.site-header nav a { font-size: 14px; font-weight: 700; text-decoration: none; }
 main { width: min(920px, calc(100% - 32px)); margin: 0 auto; padding: 56px 0 32px; }
 .hero { text-align: center; }
 .brand { color: #16784a; font-weight: 800; letter-spacing: -.03em; font-size: 20px; }
@@ -83,4 +88,5 @@ dialog::backdrop { background: rgba(16, 27, 20, .48); }
 .mail-html-frame[hidden], .mail-body[hidden], .mail-raw[hidden] { display: none; }
 footer { padding: 24px 20px 40px; text-align: center; color: #89928c; font-size: 12px; }
 @media (max-width: 700px) { .steps, .benefits { grid-template-columns: 1fr; } }
+@media (max-width: 640px) { .site-header { align-items: flex-start; flex-direction: column; } }
 @media (max-width: 560px) { main { padding-top: 30px; } .address-card button { padding: 12px 14px; } .inbox header { align-items: flex-start; flex-direction: column; gap: 16px; padding: 18px; } .check-mail { width: 100%; } .message { padding: 16px 18px; } .content-section { padding: 22px 18px; } }

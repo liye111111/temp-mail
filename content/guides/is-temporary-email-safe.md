@@ -53,3 +53,11 @@ Never use a temporary address for banking, healthcare, government services, lega
 5. Close the session when finished and assume expired content cannot be recovered.
 
 If those limitations fit your task, you can [create a temporary inbox](/). Otherwise, compare temporary email with a longer-lived [alias or secondary account](/comparisons/burner-email-vs-temporary-email/).
+
+For broader anti-phishing guidance, CISA recommends treating unexpected requests, links, and attachments cautiously and reporting suspicious messages rather than interacting with them.
+
+## References
+
+- [CISA Secure Our World](https://www.cisa.gov/secure-our-world) — official phishing-recognition and account-security guidance.
+- [Disposable email address](https://en.wikipedia.org/wiki/Disposable_email_address) — general background on disposable addressing.
+- [RFC 5322: Internet Message Format](https://www.rfc-editor.org/info/rfc5322/) — authoritative Internet email message and mailbox syntax.

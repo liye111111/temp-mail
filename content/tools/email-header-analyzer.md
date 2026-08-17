@@ -24,7 +24,7 @@ faq:
     answer: No. It explains common technical signals and warnings, but no automated header check can guarantee sender identity or harmless content.
 ---
 
-GetOpenInbox provides an **online email header analyzer for messages received by a temporary inbox**. It displays raw RFC 5322 source, reported SPF, DKIM, and DMARC results, and common sender, link, and attachment-name warning signals.
+GetOpenInbox provides an **online email header analyzer for messages received by a temporary inbox**. It displays raw source using the message format defined by [RFC 5322](https://www.rfc-editor.org/info/rfc5322/), reported SPF, DKIM, and DMARC results, and common sender, link, and attachment-name warning signals.
 
 [Create a temporary inbox to analyze an incoming message](/).
 
@@ -51,3 +51,10 @@ The inbox session currently lasts 10 minutes. Use non-sensitive test data and an
 The tool does not accept arbitrary pasted headers, scan mailbox accounts, test SMTP ports, or guarantee that a message is safe. Authentication passes can coexist with phishing or a compromised sender. A warning may also have a legitimate explanation.
 
 For careful interpretation, follow the [step-by-step email header analysis guide](/developers/analyze-email-headers/) and the explanation of [SPF, DKIM, and DMARC results](/developers/spf-dkim-dmarc-email-headers/).
+
+## References
+
+- [RFC 5322: Internet Message Format](https://www.rfc-editor.org/info/rfc5322/) — message and header-field syntax.
+- [RFC 8601: Authentication-Results](https://www.rfc-editor.org/info/rfc8601/) — how receiving systems record authentication results.
+- [RFC 7208: SPF](https://www.rfc-editor.org/info/rfc7208/), [RFC 6376: DKIM](https://www.rfc-editor.org/info/rfc6376/), and [RFC 9989: DMARC](https://www.rfc-editor.org/info/rfc9989/) — the relevant authentication standards.
+- [Cloudflare Email Routing](https://developers.cloudflare.com/email-service/configuration/email-routing-addresses/) — routing documentation for the underlying inbound-email platform.

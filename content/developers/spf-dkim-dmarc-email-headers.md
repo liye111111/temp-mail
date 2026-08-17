@@ -22,7 +22,7 @@ faq:
     answer: Yes. DMARC can pass when either aligned SPF or aligned DKIM passes, subject to the domain's alignment policy.
 ---
 
-SPF, DKIM, and DMARC are related email-authentication mechanisms, but they answer different questions. Read their results with the evaluated domains and alignment—not just the words `pass` or `fail`.
+SPF, DKIM, and DMARC are related email-authentication mechanisms defined by [RFC 7208](https://www.rfc-editor.org/info/rfc7208/), [RFC 6376](https://www.rfc-editor.org/info/rfc6376/), and the current DMARC specification, [RFC 9989](https://www.rfc-editor.org/info/rfc9989/). They answer different questions. Read their results with the evaluated domains and alignment—not just the words `pass` or `fail`.
 
 ## SPF: was the sending server authorized?
 
@@ -48,3 +48,10 @@ DMARC evaluates whether an SPF-authenticated or DKIM-signing domain aligns with 
 | `permerror` | The published configuration cannot be evaluated correctly | Domain owner may need to fix DNS |
 
 Use [email header analysis](/developers/analyze-email-headers/) to evaluate routing, identity, links, and context around these results. GetOpenInbox displays authentication results reported in received headers; it does not guarantee that a passing message is trustworthy.
+
+## References
+
+- [RFC 7208: Sender Policy Framework (SPF)](https://www.rfc-editor.org/info/rfc7208/) — authorization of sending hosts for envelope domains.
+- [RFC 6376: DomainKeys Identified Mail (DKIM) Signatures](https://www.rfc-editor.org/info/rfc6376/) — domain-level cryptographic message signatures.
+- [RFC 9989: Domain-Based Message Authentication, Reporting, and Conformance (DMARC)](https://www.rfc-editor.org/info/rfc9989/) — the current DMARC standard, which obsoletes RFC 7489 and RFC 9091.
+- [RFC 8601: Authentication-Results](https://www.rfc-editor.org/info/rfc8601/) — standardized header syntax for reporting authentication outcomes.

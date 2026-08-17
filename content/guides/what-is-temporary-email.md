@@ -25,7 +25,7 @@ faq:
     answer: No. It can keep your personal address away from one website, but it does not hide all browser, network, device, or account activity.
 ---
 
-A **disposable email address** is a short-lived inbox used in place of a personal or work address. It is useful when you need to receive a low-risk message—such as a newsletter confirmation, trial link, download notice, or test email—without adding another sender to your permanent inbox.
+A **disposable email address** is a short-lived inbox used in place of a personal or work address. The general concept is also described in Wikipedia's overview of [disposable email addressing](https://en.wikipedia.org/wiki/Disposable_email_address). It is useful when you need to receive a low-risk message—such as a newsletter confirmation, trial link, download notice, or test email—without adding another sender to your permanent inbox.
 
 ## How a disposable inbox works
 
@@ -57,3 +57,9 @@ For a closer look at the tradeoffs, read [Is Temporary Email Safe?](/guides/is-t
 A disposable inbox is designed to expire. An email alias normally forwards mail to an inbox you control and can remain useful for months or years. A permanent account supports recovery, identity, and ongoing conversations. Choose based on how long you need access and how damaging it would be to lose the messages.
 
 Use temporary email for brief, low-risk tasks; use an alias for ongoing separation; use a permanent address for important relationships and accounts.
+
+## References
+
+- [RFC 5322: Internet Message Format](https://www.rfc-editor.org/info/rfc5322/) — the IETF standards-track specification for Internet message syntax and email address structure.
+- [Disposable email address](https://en.wikipedia.org/wiki/Disposable_email_address) — a general overview of disposable addressing terminology and approaches.
+- [Cloudflare Email Routing rules and addresses](https://developers.cloudflare.com/email-service/configuration/email-routing-addresses/) — documentation for the routing system used by GetOpenInbox.

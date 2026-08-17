@@ -26,7 +26,7 @@
   <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span>›</span><a href="/developers/">Developers</a></nav>
   <article class="article">
     <header class="article-header"><span class="eyebrow">Developers</span><h1>Temporary Email for Testing: A Practical Guide for Developers and QA</h1><p class="dek">Learn where temporary inboxes fit in email testing, what they can validate, and when teams need a dedicated test environment instead.</p><time datetime="2026-08-17">Updated 2026-08-17</time></header>
-    <div class="article-body"><p>A temporary inbox is useful for <strong>manual and exploratory email testing</strong>: checking whether a registration message arrives, reading a verification code, inspecting HTML, and reviewing delivery headers without creating another permanent account.</p>
+    <div class="article-body"><p>A temporary inbox is useful for <strong>manual and exploratory email testing</strong>: checking whether a registration message arrives, reading a verification code, inspecting HTML, and reviewing delivery headers without creating another permanent account. Internet message headers and bodies follow the syntax defined by <a href="https://www.rfc-editor.org/info/rfc5322/" rel="noopener noreferrer">RFC 5322</a>, while SMTP transport is specified by <a href="https://www.rfc-editor.org/info/rfc5321/" rel="noopener noreferrer">RFC 5321</a>.</p>
 <h2>What you can test</h2>
 <ul>
 <li>Whether an application submits an email and the message reaches an external receiver.</li>
@@ -49,6 +49,13 @@
 <li>Repeat critical tests with representative mailbox providers before release.</li>
 </ol>
 <p>Use a dedicated test mailbox platform when you need stable APIs, assertions, long retention, attachments, high volume, or CI concurrency.</p>
+<h2>References</h2>
+<ul>
+<li><a href="https://www.rfc-editor.org/info/rfc5321/" rel="noopener noreferrer">RFC 5321: Simple Mail Transfer Protocol</a> — the IETF standards-track SMTP specification.</li>
+<li><a href="https://www.rfc-editor.org/info/rfc5322/" rel="noopener noreferrer">RFC 5322: Internet Message Format</a> — message header, address, and body syntax.</li>
+<li><a href="https://www.rfc-editor.org/info/rfc8601/" rel="noopener noreferrer">RFC 8601: Message Header Field for Indicating Message Authentication Status</a> — specification for <code>Authentication-Results</code> fields.</li>
+<li><a href="https://developers.cloudflare.com/email-service/configuration/email-routing-addresses/" rel="noopener noreferrer">Cloudflare Email Routing rules and addresses</a> — documentation for routing an address or catch-all pattern to an Email Worker.</li>
+</ul>
 </div>
     <section class="article-faq"><h2>Frequently asked questions</h2><details><summary>Can temporary email be used in automated tests?</summary><p>It may help with manual or exploratory tests, but reliable automation needs a documented API, deterministic isolation, and controlled retention. Do not automate against an undocumented browser flow.</p></details><details><summary>Does receiving a test message prove deliverability?</summary><p>No. It proves delivery to one receiving system, not inbox placement or deliverability across major mailbox providers.</p></details></section>
   </article>

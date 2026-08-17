@@ -22,7 +22,7 @@ faq:
     answer: Use a permanent email account you control. Neither an expiring inbox nor an abandoned burner account is appropriate for recovery.
 ---
 
-**Burner email** is a broad term for an address intended for limited use. **Temporary email** usually means an automatically generated inbox that expires after a short period. A temporary address can be a burner address, but a manually created secondary account can also be described as a burner.
+**Burner email** is a broad, informal term for an address intended for limited use. **Temporary email** usually means an automatically generated inbox that expires after a short period. A temporary address can be a burner address, but a manually created secondary account can also be described as a burner. For background, see the overviews of [disposable email addresses](https://en.wikipedia.org/wiki/Disposable_email_address) and [email aliases](https://en.wikipedia.org/wiki/Email_alias).
 
 ## Quick comparison
 
@@ -44,3 +44,9 @@ Use an alias when you want to identify which service shared an address, disable 
 ## The deciding question
 
 Ask: **What happens if I lose this address and every message in it?** If the answer involves money, identity, confidential information, or an account you value, do not use temporary email. If nothing important is lost, a [temporary inbox](/) may be the simpler choice.
+
+## References
+
+- [Disposable email address](https://en.wikipedia.org/wiki/Disposable_email_address) — overview of disposable-address models.
+- [Email alias](https://en.wikipedia.org/wiki/Email_alias) — overview of aliases that deliver to another mailbox.
+- [RFC 5322: Internet Message Format](https://www.rfc-editor.org/info/rfc5322/) — authoritative email message and address syntax.

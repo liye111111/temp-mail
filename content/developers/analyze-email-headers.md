@@ -22,7 +22,7 @@ faq:
     answer: Read the Received chain from the bottom upward to follow the message from earlier hops toward the final receiving system.
 ---
 
-Email header analysis examines the metadata added as a message moves from the sender to the receiving mailbox. Headers help explain routing, authentication, dates, and identifiers, but they must be interpreted together rather than treating one line as definitive proof.
+Email header analysis examines the metadata added as a message moves from the sender to the receiving mailbox. [RFC 5322](https://www.rfc-editor.org/info/rfc5322/) defines the Internet message format and header-field syntax; [RFC 5321](https://www.rfc-editor.org/info/rfc5321/) defines SMTP transport. Headers help explain routing, authentication, dates, and identifiers, but they must be interpreted together rather than treating one line as definitive proof.
 
 ## 1. Preserve the raw source
 
@@ -38,7 +38,7 @@ Mail servers prepend `Received` fields, so the newest hop is normally at the top
 
 ## 4. Read authentication results
 
-Locate `Authentication-Results` added by the receiving system. Review SPF, DKIM, and DMARC outcomes and the domains each check evaluated. A pass means a specific technical check succeeded; it does not guarantee good intent. See [How to Read SPF, DKIM, and DMARC Results](/developers/spf-dkim-dmarc-email-headers/).
+Locate `Authentication-Results` added by the receiving system. Its registered format is defined by [RFC 8601](https://www.rfc-editor.org/info/rfc8601/). Review SPF, DKIM, and DMARC outcomes and the domains each check evaluated. A pass means a specific technical check succeeded; it does not guarantee good intent. See [How to Read SPF, DKIM, and DMARC Results](/developers/spf-dkim-dmarc-email-headers/).
 
 ## 5. Inspect links and attachments
 
@@ -47,3 +47,10 @@ Compare link destinations with the organization the message claims to represent.
 ## 6. Form a bounded conclusion
 
 State what the evidence supports: for example, “DKIM passed for the provider domain, but the visible sender domain did not align.” Avoid conclusions such as “safe” or “definitely forged” unless independent evidence justifies them. Use the [online email header analyzer](/tools/email-header-analyzer/) as a starting point, not as a substitute for incident-response tooling.
+
+## References
+
+- [RFC 5321: Simple Mail Transfer Protocol](https://www.rfc-editor.org/info/rfc5321/) — SMTP transport and trace information.
+- [RFC 5322: Internet Message Format](https://www.rfc-editor.org/info/rfc5322/) — message structure and header-field definitions.
+- [RFC 8601: Authentication-Results](https://www.rfc-editor.org/info/rfc8601/) — standardized syntax for recording message-authentication results.
+- [CISA Secure Our World](https://www.cisa.gov/secure-our-world) — official guidance on recognizing phishing and handling suspicious messages.
