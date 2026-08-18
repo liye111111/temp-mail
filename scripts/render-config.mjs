@@ -10,12 +10,21 @@ requireEnv(env, [
 
 const useR2 = env.USE_R2 === "true";
 if (useR2) requireEnv(env, ["R2_BUCKET_NAME", "EMAIL_QUEUE_NAME", "EMAIL_DEAD_LETTER_QUEUE_NAME"]);
+const inboxDomains = (env.INBOX_DOMAINS || env.INBOX_DOMAIN).split(",")
+  .map((domain) => domain.trim().toLowerCase().replace(/\.$/, ""))
+  .filter(Boolean);
+const domainPattern = /^(?=.{1,253}$)(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/;
+if (!inboxDomains.length || inboxDomains.some((domain) => !domainPattern.test(domain))) {
+  throw new Error("INBOX_DOMAINS contains an invalid domain");
+}
+const normalizedInboxDomains = [...new Set(inboxDomains)].join(",");
 
 fs.mkdirSync(".generated", { recursive: true });
 const base = { compatibility_date: "2026-08-05", account_id: env.CLOUDFLARE_ACCOUNT_ID };
 const vars = {
   APP_BASE_URL: env.APP_BASE_URL,
   INBOX_DOMAIN: env.INBOX_DOMAIN,
+  INBOX_DOMAINS: normalizedInboxDomains,
   INBOX_TTL_SECONDS: env.INBOX_TTL_SECONDS,
   MAX_MESSAGES_PER_INBOX: env.MAX_MESSAGES_PER_INBOX,
   MAX_MESSAGE_SIZE_BYTES: env.MAX_MESSAGE_SIZE_BYTES,

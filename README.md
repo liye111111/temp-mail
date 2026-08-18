@@ -37,7 +37,7 @@ node scripts/cloudflare.mjs migrate --confirm
 node scripts/cloudflare.mjs deploy --confirm
 ```
 
-自动部署脚本默认受 `DEPLOY_CONFIRM=false` 保护。生产部署完成后，还需要在 `myopeninbox365.cloud` 的 Email Routing 中，将 Catch-all 指向 `getopeninbox-email` Worker。
+自动部署脚本默认受 `DEPLOY_CONFIRM=false` 保护。每个收件域名都必须在 Cloudflare Email Routing 中将 Catch-all 指向 `getopeninbox-email` Worker。运行时通过逗号分隔的 `INBOX_DOMAINS` 配置域名池；API 会随机选择一个域名生成地址，`INBOX_DOMAIN` 作为未配置域名池时的兼容回退值。
 
 当前 `.env` 默认使用 `USE_R2=false` 的 D1-only 验证模式：Email Worker 直接解析邮件，正文截断后写入 D1，不要求启用 R2，也不会部署 Queue Consumer。完成验证并启用 R2 后，将其改为 `true`，再次执行资源创建、迁移和部署即可切换到完整架构。
 

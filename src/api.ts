@@ -13,16 +13,35 @@ async function authorize(request: Request, env: BaseEnv, inboxId: string): Promi
   return verifySessionToken(bearer(request), inboxId, env.SESSION_HMAC_SECRET);
 }
 
+function configuredInboxDomains(env: BaseEnv): string[] {
+  const values = (env.INBOX_DOMAINS || env.INBOX_DOMAIN).split(",")
+    .map((domain) => domain.trim().toLowerCase().replace(/\.$/, ""))
+    .filter(Boolean);
+  const domains = [...new Set(values)];
+  const domainPattern = /^(?=.{1,253}$)(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/;
+  if (!domains.length || domains.some((domain) => !domainPattern.test(domain))) {
+    throw new Error("INBOX_DOMAINS contains an invalid domain");
+  }
+  return domains;
+}
+
+function selectInboxDomain(env: BaseEnv): string {
+  const domains = configuredInboxDomains(env);
+  const random = crypto.getRandomValues(new Uint32Array(1))[0];
+  return domains[random % domains.length];
+}
+
 async function createInbox(env: BaseEnv): Promise<Response> {
   const now = Math.floor(Date.now() / 1000);
   const ttl = Number(env.INBOX_TTL_SECONDS);
   const id = crypto.randomUUID();
   const localPart = randomId(9);
-  const address = `${localPart}@${env.INBOX_DOMAIN}`;
+  const domain = selectInboxDomain(env);
+  const address = `${localPart}@${domain}`;
   const expiresAt = now + ttl;
   await env.DB.prepare(
     "INSERT INTO inboxes (id, address, local_part, domain, created_at, expires_at) VALUES (?, ?, ?, ?, ?, ?)",
-  ).bind(id, address, localPart, env.INBOX_DOMAIN, now, expiresAt).run();
+  ).bind(id, address, localPart, domain, now, expiresAt).run();
   return json({
     id,
     address,

@@ -3,6 +3,7 @@ export interface BaseEnv {
   MAIL_BUCKET?: R2Bucket;
   APP_BASE_URL: string;
   INBOX_DOMAIN: string;
+  INBOX_DOMAINS: string;
   INBOX_TTL_SECONDS: string;
   MAX_MESSAGES_PER_INBOX: string;
   MAX_MESSAGE_SIZE_BYTES: string;
