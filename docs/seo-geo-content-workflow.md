@@ -54,7 +54,7 @@
 
 ### 步骤 2：使用 Keyword Planner API 扩展关键词
 
-按照 [SEO Keyword Planner API](seo-keyword-planner.md) 的说明，为每个种子词获取关键词建议。鉴权 Token 仅通过本地环境变量提供，不得写入内容文件或提交到 Git。
+按照 [SEO Keyword Planner](seo-keyword-planner.md) 的说明，为每个种子词获取关键词建议（优先 Google Ads 直连；`b-jwt` 代理备用）。鉴权凭证仅通过本地环境变量提供，不得写入内容文件或提交到 Git。
 
 记录以下信息（以 API 实际返回字段为准）：
 

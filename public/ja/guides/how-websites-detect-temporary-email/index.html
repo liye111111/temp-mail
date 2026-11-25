@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>サイトは一時メールをどう検出する？登録が拒否される理由 — GetOpenInbox</title>
+  <meta name="description" content="使い捨てアドレスを見分ける主な信号（ブロックリスト、DNS/MX、行動）と、一時メールが向かない場面を解説します。">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+  <meta name="theme-color" content="#197c4d">
+  <link rel="canonical" href="https://getopeninbox.com/ja/guides/how-websites-detect-temporary-email/">
+  <link rel="alternate" hreflang="en" href="https://getopeninbox.com/guides/how-websites-detect-temporary-email/">
+  <link rel="alternate" hreflang="ja" href="https://getopeninbox.com/ja/guides/how-websites-detect-temporary-email/">
+  <link rel="alternate" hreflang="zh-CN" href="https://getopeninbox.com/zh/guides/how-websites-detect-temporary-email/">
+  <link rel="alternate" hreflang="x-default" href="https://getopeninbox.com/guides/how-websites-detect-temporary-email/">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="GetOpenInbox">
+  <meta property="og:title" content="サイトは一時メールをどう検出する？登録が拒否される理由 — GetOpenInbox">
+  <meta property="og:description" content="使い捨てアドレスを見分ける主な信号（ブロックリスト、DNS/MX、行動）と、一時メールが向かない場面を解説します。">
+  <meta property="og:url" content="https://getopeninbox.com/ja/guides/how-websites-detect-temporary-email/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://getopeninbox.com/og.jpg">
+  <meta property="og:image:alt" content="GetOpenInbox">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://getopeninbox.com/og.jpg">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
+  <link rel="stylesheet" href="/content.min.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@context":"https://schema.org","@type":"Article","inLanguage":"ja","headline":"サイトは一時メールをどう検出する？登録が拒否される理由","description":"使い捨てアドレスを見分ける主な信号（ブロックリスト、DNS/MX、行動）と、一時メールが向かない場面を解説します。","datePublished":"2026-11-25","dateModified":"2026-11-25","author":{"@type":"Organization","name":"GetOpenInbox"},"publisher":{"@type":"Organization","name":"GetOpenInbox","url":"https://getopeninbox.com/"},"mainEntityOfPage":"https://getopeninbox.com/ja/guides/how-websites-detect-temporary-email/"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"ホーム","item":"https://getopeninbox.com/ja/"},{"@type":"ListItem","position":2,"name":"ガイド","item":"https://getopeninbox.com/ja/guides/"},{"@type":"ListItem","position":3,"name":"サイトは一時メールをどう検出する？登録が拒否される理由","item":"https://getopeninbox.com/ja/guides/how-websites-detect-temporary-email/"}]}]}</script>
+</head>
+<body>
+  <header class="site-header"><a class="brand" href="/ja/">GetOpenInbox</a><nav aria-label="Primary"><a href="/ja/">一時受信箱</a><a href="/ja/guides/">ガイド</a><a href="/ja/comparisons/">比較</a><a href="/ja/developers/">開発者向け</a><a href="/ja/tools/">ツール</a><label class="language-picker"><span hidden>Language</span><select class="language-select" aria-label="Language"><option value="en">English</option><option value="ja">日本語</option><option value="zh">中文</option></select></label></nav></header>
+  <main class="content-shell">
+  <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/ja/">ホーム</a><span>›</span><a href="/ja/guides/">ガイド</a></nav>
+  <article class="article">
+    <header class="article-header"><span class="eyebrow">ガイド</span><h1>サイトは一時メールをどう検出する？登録が拒否される理由</h1><p class="dek">使い捨てアドレスを見分ける主な信号（ブロックリスト、DNS/MX、行動）と、一時メールが向かない場面を解説します。</p><time datetime="2026-11-25">更新日 2026-11-25</time></header>
+    <div class="article-body"><p>多くのサイトは、受信箱の中身ではなく、<strong>ドメインのブロックリスト</strong>、<strong>DNS/MXの特徴</strong>（共有MXを含む）、<strong>登録時の行動</strong>で一時メールを判定します。使い捨てアドレスは登録時に拒否されることがあります。アカウントや復旧が重要な用途では恒久的なメールを使ってください。</p>
+<h2>サイトが気にする理由</h2>
+<p>登録フォームは大量登録や自動化の標的になります。既知の使い捨てドメインを弾くのは安価な最初の制御であり、完全な本人確認ではありません。製品方針で使い捨てメールを禁じている場合、正当なユーザーやQAでも拒否されます。</p>
+<h2>信号1：ドメインのブロックリスト</h2>
+<p>多くのアプリは <code>@</code> 以降のドメインを、既知の使い捨て提供者の一覧と照合します。<a href="https://github.com/disposable-email-domains/disposable-email-domains" rel="noopener noreferrer">disposable-email-domains</a> のような公開リストが製品や検証APIに取り込まれることがあります。ヒットは「よく使い捨てとして使われる／報告された」という証拠であり、あなたが悪意あることやメール本文が危険であることを証明しません。新規ドメインの遅れや、エイリアスの誤検知もあり得ます。</p>
+<h2>信号2：DNSとMX</h2>
+<p>受信できるドメインかをDNSで確認します。使えるMXがない、<a href="https://www.rfc-editor.org/info/rfc7505" rel="noopener noreferrer">null MX</a>（設定で「メールを受け取らない」と宣言）、多数の無関係ドメインでMXホストを共有している、といった結果は拒否の材料になります。これらは公開DNS上のパターンであり、一時受信箱の中身を読むものではありません。</p>
+<h2>信号3：登録行動</h2>
+<p>ドメインが普通でも、短時間の大量登録、機械的なローカル部、自動化らしいクライアントなどをスコアすることがあります。回避を試みるのではなく、許可されたテスト用メールや自分で管理する恒久アドレスを使うのが正当な対応です。</p>
+<h2>あなたにとっての意味</h2>
+<p>低リスクの一回限りの登録でサイトが受け入れるなら一時メールは使えることがあります。明日も必要なアカウント、銀行・医療・行政、使い捨てを明示的に拒否する製品のQAでは使わないでください。拒否されたら別の使い捨てドメインを探すより、そのサービス用の恒久アドレスへ切り替えてください。詳細なリスクは<a href="/ja/guides/is-temporary-email-safe/">一時メールは安全？</a>を参照してください。</p>
+<h2>GetOpenInboxの位置づけ</h2>
+<p><a href="/ja/">GetOpenInbox</a>は登録なしで短い低リスク用途のアドレスを提供します。<strong>現在のセッションは約10分</strong>で、期限後は使えない前提です。届いたメールのSPF・DKIM・DMARCは送信者の手がかりにはなりますが、他サイトが登録を受け入れる保証にはなりません。第三者サイトでの受理、完全な匿名性、期限後の復旧は約束しません。</p>
+<p>拒否されたときの正当な次の一手は、ドメイン拒否かを確認し、必要なアカウントには恒久アドレスを使い、QAではチームの許可リストを使うことです。条件が合うときだけ<a href="/ja/">一時受信箱を開いてください</a>。</p>
+</div>
+    
+  </article>
+  <aside class="related"><h2>関連記事</h2><ul><li><a href="/ja/guides/is-temporary-email-safe/">一時メールは安全？プライバシーと主なリスク</a></li><li><a href="/ja/guides/what-is-temporary-email/">使い捨てメールとは？仕組みと使い方</a></li><li><a href="/ja/guides/how-long-does-temporary-email-last/">一時メールはどのくらい使えますか？</a></li><li><a href="/ja/developers/temporary-email-for-testing/">テスト用一時メール：開発者とQAの実践ガイド</a></li></ul></aside>
+</main>
+
+  <footer class="site-footer"><p>GetOpenInboxは、低リスクで短期間の用途に一時メールを提供します。</p><a href="/ja/">一時受信箱を作成</a></footer>
+  <script src="/language.min.js" type="module"></script>
+</body>
+</html>
