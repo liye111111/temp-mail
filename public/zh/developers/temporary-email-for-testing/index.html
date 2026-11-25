@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>用于测试的临时邮箱：开发与 QA 实用指南 — GetOpenInbox</title>
+  <meta name="description" content="了解临时收件箱可以验证哪些邮件流程，以及何时需要专用测试环境。">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+  <meta name="theme-color" content="#197c4d">
+  <link rel="canonical" href="https://getopeninbox.com/zh/developers/temporary-email-for-testing/">
+  <link rel="alternate" hreflang="en" href="https://getopeninbox.com/developers/temporary-email-for-testing/">
+  <link rel="alternate" hreflang="ja" href="https://getopeninbox.com/ja/developers/temporary-email-for-testing/">
+  <link rel="alternate" hreflang="zh-CN" href="https://getopeninbox.com/zh/developers/temporary-email-for-testing/">
+  <link rel="alternate" hreflang="x-default" href="https://getopeninbox.com/developers/temporary-email-for-testing/">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="GetOpenInbox">
+  <meta property="og:title" content="用于测试的临时邮箱：开发与 QA 实用指南 — GetOpenInbox">
+  <meta property="og:description" content="了解临时收件箱可以验证哪些邮件流程，以及何时需要专用测试环境。">
+  <meta property="og:url" content="https://getopeninbox.com/zh/developers/temporary-email-for-testing/">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:image" content="https://getopeninbox.com/og.jpg">
+  <meta property="og:image:alt" content="GetOpenInbox">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://getopeninbox.com/og.jpg">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
+  <link rel="stylesheet" href="/content.min.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@context":"https://schema.org","@type":"Article","inLanguage":"zh-CN","headline":"用于测试的临时邮箱：开发与 QA 实用指南","description":"了解临时收件箱可以验证哪些邮件流程，以及何时需要专用测试环境。","datePublished":"2026-08-17","dateModified":"2026-08-17","author":{"@type":"Organization","name":"GetOpenInbox"},"publisher":{"@type":"Organization","name":"GetOpenInbox","url":"https://getopeninbox.com/"},"mainEntityOfPage":"https://getopeninbox.com/zh/developers/temporary-email-for-testing/"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://getopeninbox.com/zh/"},{"@type":"ListItem","position":2,"name":"开发者","item":"https://getopeninbox.com/zh/developers/"},{"@type":"ListItem","position":3,"name":"用于测试的临时邮箱：开发与 QA 实用指南","item":"https://getopeninbox.com/zh/developers/temporary-email-for-testing/"}]}]}</script>
+</head>
+<body>
+  <header class="site-header"><a class="brand" href="/zh/">GetOpenInbox</a><nav aria-label="Primary"><a href="/zh/">临时邮箱</a><a href="/zh/guides/">指南</a><a href="/zh/comparisons/">对比</a><a href="/zh/developers/">开发者</a><a href="/zh/tools/">工具</a><label class="language-picker"><span hidden>Language</span><select class="language-select" aria-label="Language"><option value="en">English</option><option value="ja">日本語</option><option value="zh">中文</option></select></label></nav></header>
+  <main class="content-shell">
+  <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/zh/">首页</a><span>›</span><a href="/zh/developers/">开发者</a></nav>
+  <article class="article">
+    <header class="article-header"><span class="eyebrow">开发者</span><h1>用于测试的临时邮箱：开发与 QA 实用指南</h1><p class="dek">了解临时收件箱可以验证哪些邮件流程，以及何时需要专用测试环境。</p><time datetime="2026-08-17">更新于 2026-08-17</time></header>
+    <div class="article-body"><p>临时收件箱适合<strong>手动和探索性邮件测试</strong>：确认注册邮件是否送达、验证码和 HTML 是否正确，以及投递邮件头记录了什么。</p>
+<h2>可以测试什么</h2>
+<ul>
+<li>应用提交邮件后能否到达外部收件系统。</li>
+<li>发件人、主题、文本、HTML、链接和验证码是否正确。</li>
+<li>收件方记录的 SPF、DKIM 和 DMARC 结果。</li>
+<li>原始邮件头是否暴露意外的发送服务或域名对齐问题。</li>
+</ul>
+<p>测试时只使用虚构数据，不要发送生产密钥或个人信息。一次成功送达不能证明邮件在 Gmail、Outlook 和其他服务中都能正常进入收件箱。需要稳定 API、确定性隔离、长期保存、大批量或 CI 并发时，应使用专用邮件测试平台。</p>
+</div>
+    
+  </article>
+  <aside class="related"><h2>相关阅读</h2><ul><li><a href="/zh/developers/analyze-email-headers/">如何逐步分析邮件头</a></li><li><a href="/zh/developers/spf-dkim-dmarc-email-headers/">如何解读邮件头中的 SPF、DKIM 和 DMARC</a></li><li><a href="/zh/guides/what-is-temporary-email/">什么是一次性邮箱？它如何工作？</a></li></ul></aside>
+</main>
+
+  <footer class="site-footer"><p>GetOpenInbox 为低风险、短期用途提供临时邮箱。</p><a href="/zh/">创建临时邮箱</a></footer>
+  <script src="/language.min.js" type="module"></script>
+</body>
+</html>

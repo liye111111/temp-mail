@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>如何解读邮件头中的 SPF、DKIM 和 DMARC — GetOpenInbox</title>
+  <meta name="description" content="了解 SPF、DKIM、DMARC、域名对齐，以及认证通过为何不能保证邮件安全。">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+  <meta name="theme-color" content="#197c4d">
+  <link rel="canonical" href="https://getopeninbox.com/zh/developers/spf-dkim-dmarc-email-headers/">
+  <link rel="alternate" hreflang="en" href="https://getopeninbox.com/developers/spf-dkim-dmarc-email-headers/">
+  <link rel="alternate" hreflang="ja" href="https://getopeninbox.com/ja/developers/spf-dkim-dmarc-email-headers/">
+  <link rel="alternate" hreflang="zh-CN" href="https://getopeninbox.com/zh/developers/spf-dkim-dmarc-email-headers/">
+  <link rel="alternate" hreflang="x-default" href="https://getopeninbox.com/developers/spf-dkim-dmarc-email-headers/">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="GetOpenInbox">
+  <meta property="og:title" content="如何解读邮件头中的 SPF、DKIM 和 DMARC — GetOpenInbox">
+  <meta property="og:description" content="了解 SPF、DKIM、DMARC、域名对齐，以及认证通过为何不能保证邮件安全。">
+  <meta property="og:url" content="https://getopeninbox.com/zh/developers/spf-dkim-dmarc-email-headers/">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:image" content="https://getopeninbox.com/og.jpg">
+  <meta property="og:image:alt" content="GetOpenInbox">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://getopeninbox.com/og.jpg">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
+  <link rel="stylesheet" href="/content.min.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@context":"https://schema.org","@type":"Article","inLanguage":"zh-CN","headline":"如何解读邮件头中的 SPF、DKIM 和 DMARC","description":"了解 SPF、DKIM、DMARC、域名对齐，以及认证通过为何不能保证邮件安全。","datePublished":"2026-08-17","dateModified":"2026-08-17","author":{"@type":"Organization","name":"GetOpenInbox"},"publisher":{"@type":"Organization","name":"GetOpenInbox","url":"https://getopeninbox.com/"},"mainEntityOfPage":"https://getopeninbox.com/zh/developers/spf-dkim-dmarc-email-headers/"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://getopeninbox.com/zh/"},{"@type":"ListItem","position":2,"name":"开发者","item":"https://getopeninbox.com/zh/developers/"},{"@type":"ListItem","position":3,"name":"如何解读邮件头中的 SPF、DKIM 和 DMARC","item":"https://getopeninbox.com/zh/developers/spf-dkim-dmarc-email-headers/"}]}]}</script>
+</head>
+<body>
+  <header class="site-header"><a class="brand" href="/zh/">GetOpenInbox</a><nav aria-label="Primary"><a href="/zh/">临时邮箱</a><a href="/zh/guides/">指南</a><a href="/zh/comparisons/">对比</a><a href="/zh/developers/">开发者</a><a href="/zh/tools/">工具</a><label class="language-picker"><span hidden>Language</span><select class="language-select" aria-label="Language"><option value="en">English</option><option value="ja">日本語</option><option value="zh">中文</option></select></label></nav></header>
+  <main class="content-shell">
+  <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/zh/">首页</a><span>›</span><a href="/zh/developers/">开发者</a></nav>
+  <article class="article">
+    <header class="article-header"><span class="eyebrow">开发者</span><h1>如何解读邮件头中的 SPF、DKIM 和 DMARC</h1><p class="dek">了解 SPF、DKIM、DMARC、域名对齐，以及认证通过为何不能保证邮件安全。</p><time datetime="2026-08-17">更新于 2026-08-17</time></header>
+    <div class="article-body"><p>SPF、DKIM 和 DMARC 是相互关联但回答不同问题的邮件认证机制。阅读结果时要同时查看被评估的域名与对齐关系，而不只是 pass 或 fail。</p>
+<h2>SPF</h2>
+<p>检查连接的邮件服务器是否获准为信封发件人域名发送邮件。转发可能使合法邮件 SPF 失败，它也不会判断邮件内容与意图。</p>
+<h2>DKIM</h2>
+<p>通过加密签名和 DNS 公钥验证签名部分在发送后是否被修改。通过表示相应域名控制签名密钥，但不证明显示品牌可信。</p>
+<h2>DMARC</h2>
+<p>评估通过 SPF 或 DKIM 认证的域名是否与可见 From 域名对齐。只要至少一条对齐的认证路径通过，DMARC 就可以通过。</p>
+<p>pass 只表示特定技术检查成功，不代表内容或意图安全。fail、临时错误和永久错误也可能来自转发、配置问题或临时故障。</p>
+</div>
+    
+  </article>
+  <aside class="related"><h2>相关阅读</h2><ul><li><a href="/zh/tools/email-header-analyzer/">邮件头分析器 — 在线分析原始邮件头</a></li><li><a href="/zh/developers/analyze-email-headers/">如何逐步分析邮件头</a></li><li><a href="/zh/developers/temporary-email-for-testing/">用于测试的临时邮箱：开发与 QA 实用指南</a></li></ul></aside>
+</main>
+
+  <footer class="site-footer"><p>GetOpenInbox 为低风险、短期用途提供临时邮箱。</p><a href="/zh/">创建临时邮箱</a></footer>
+  <script src="/language.min.js" type="module"></script>
+</body>
+</html>

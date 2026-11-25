@@ -10,6 +10,8 @@
     <meta name="theme-color" content="#197c4d" />
     <link rel="canonical" href="https://getopeninbox.com/" />
     <link rel="alternate" hreflang="en" href="https://getopeninbox.com/" />
+    <link rel="alternate" hreflang="ja" href="https://getopeninbox.com/ja/" />
+    <link rel="alternate" hreflang="zh-CN" href="https://getopeninbox.com/zh/" />
     <link rel="alternate" hreflang="x-default" href="https://getopeninbox.com/" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="GetOpenInbox" />
@@ -17,10 +19,31 @@
     <meta property="og:description" content="Receive temporary email with SPF, DKIM, DMARC and suspicious-link checks, plus a raw email source viewer." />
     <meta property="og:url" content="https://getopeninbox.com/" />
     <meta property="og:locale" content="en_US" />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content="https://getopeninbox.com/og.jpg" />
+    <meta property="og:image:width" content="1280" />
+    <meta property="og:image:height" content="720" />
+    <meta property="og:image:alt" content="GetOpenInbox — temporary email with security checks" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Free Temporary Email with Security Checks — GetOpenInbox" />
     <meta name="twitter:description" content="A disposable inbox with email authentication checks and raw header inspection." />
+    <meta name="twitter:image" content="https://getopeninbox.com/og.jpg" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
     <link rel="stylesheet" href="/site.min.css" />
+    <script type="application/ld+json">
+      {"@context":"https://schema.org","@graph":[
+        {"@type":"WebSite","name":"GetOpenInbox","url":"https://getopeninbox.com/","description":"Free temporary email with SPF, DKIM, DMARC checks and raw email header inspection.","inLanguage":["en","ja","zh-CN"]},
+        {"@type":"Organization","name":"GetOpenInbox","url":"https://getopeninbox.com/","logo":"https://getopeninbox.com/apple-touch-icon.png"},
+        {"@type":"FAQPage","mainEntity":[
+          {"@type":"Question","name":"What is a temporary email address?","acceptedAnswer":{"@type":"Answer","text":"It is a short-lived inbox you can use without sharing your personal email address. It is useful for low-risk registrations, trials and receiving verification messages."}},
+          {"@type":"Question","name":"Do I need to register?","acceptedAnswer":{"@type":"Answer","text":"No. GetOpenInbox creates an address immediately without asking for an account, password or personal email address."}},
+          {"@type":"Question","name":"How long does the inbox remain active?","acceptedAnswer":{"@type":"Answer","text":"The current inbox session is active for 10 minutes. Create a new address when the timer expires."}},
+          {"@type":"Question","name":"Should I use it for sensitive accounts?","acceptedAnswer":{"@type":"Answer","text":"No. Temporary email is not suitable for banking, healthcare, password recovery or any account you may need to recover later."}},
+          {"@type":"Question","name":"Does the security score guarantee that an email is safe?","acceptedAnswer":{"@type":"Answer","text":"No. The score explains common authentication, sender, link and attachment signals. A low-risk result cannot prove that the sender or message content is trustworthy."}}
+        ]}
+      ]}
+    </script>
   </head>
   <body>
     <header class="site-header">
@@ -31,6 +54,7 @@
         <a href="/developers/">Developers</a>
         <a href="/guides/">Guides</a>
         <a href="/tools/">Tools</a>
+        <label class="language-picker"><span class="sr-only">Language</span><select id="language" aria-label="Language"><option value="en">English</option><option value="ja">日本語</option><option value="zh">中文</option></select></label>
       </nav>
     </header>
     <main itemscope itemtype="https://schema.org/WebSite">

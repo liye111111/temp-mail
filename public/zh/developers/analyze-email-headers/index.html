@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>如何逐步分析邮件头 — GetOpenInbox</title>
+  <meta name="description" content="学习追踪投递路径、解释认证结果、识别警告信号，并避免过度断言。">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+  <meta name="theme-color" content="#197c4d">
+  <link rel="canonical" href="https://getopeninbox.com/zh/developers/analyze-email-headers/">
+  <link rel="alternate" hreflang="en" href="https://getopeninbox.com/developers/analyze-email-headers/">
+  <link rel="alternate" hreflang="ja" href="https://getopeninbox.com/ja/developers/analyze-email-headers/">
+  <link rel="alternate" hreflang="zh-CN" href="https://getopeninbox.com/zh/developers/analyze-email-headers/">
+  <link rel="alternate" hreflang="x-default" href="https://getopeninbox.com/developers/analyze-email-headers/">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="GetOpenInbox">
+  <meta property="og:title" content="如何逐步分析邮件头 — GetOpenInbox">
+  <meta property="og:description" content="学习追踪投递路径、解释认证结果、识别警告信号，并避免过度断言。">
+  <meta property="og:url" content="https://getopeninbox.com/zh/developers/analyze-email-headers/">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:image" content="https://getopeninbox.com/og.jpg">
+  <meta property="og:image:alt" content="GetOpenInbox">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://getopeninbox.com/og.jpg">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
+  <link rel="stylesheet" href="/content.min.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@context":"https://schema.org","@type":"Article","inLanguage":"zh-CN","headline":"如何逐步分析邮件头","description":"学习追踪投递路径、解释认证结果、识别警告信号，并避免过度断言。","datePublished":"2026-08-17","dateModified":"2026-08-17","author":{"@type":"Organization","name":"GetOpenInbox"},"publisher":{"@type":"Organization","name":"GetOpenInbox","url":"https://getopeninbox.com/"},"mainEntityOfPage":"https://getopeninbox.com/zh/developers/analyze-email-headers/"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://getopeninbox.com/zh/"},{"@type":"ListItem","position":2,"name":"开发者","item":"https://getopeninbox.com/zh/developers/"},{"@type":"ListItem","position":3,"name":"如何逐步分析邮件头","item":"https://getopeninbox.com/zh/developers/analyze-email-headers/"}]}]}</script>
+</head>
+<body>
+  <header class="site-header"><a class="brand" href="/zh/">GetOpenInbox</a><nav aria-label="Primary"><a href="/zh/">临时邮箱</a><a href="/zh/guides/">指南</a><a href="/zh/comparisons/">对比</a><a href="/zh/developers/">开发者</a><a href="/zh/tools/">工具</a><label class="language-picker"><span hidden>Language</span><select class="language-select" aria-label="Language"><option value="en">English</option><option value="ja">日本語</option><option value="zh">中文</option></select></label></nav></header>
+  <main class="content-shell">
+  <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/zh/">首页</a><span>›</span><a href="/zh/developers/">开发者</a></nav>
+  <article class="article">
+    <header class="article-header"><span class="eyebrow">开发者</span><h1>如何逐步分析邮件头</h1><p class="dek">学习追踪投递路径、解释认证结果、识别警告信号，并避免过度断言。</p><time datetime="2026-08-17">更新于 2026-08-17</time></header>
+    <div class="article-body"><p>邮件头分析用于检查邮件从发件方到收件箱过程中添加的元数据。路由、认证、日期和标识符需要结合解读，不能把单独一行当成决定性证据。</p>
+<h2>1. 保存原始源码</h2>
+<p>使用邮箱服务的“显示原文”功能。转发邮件可能增加或修改邮件头。</p>
+<h2>2. 比较显示身份与技术身份</h2>
+<p>检查 From、Return-Path 以及 DKIM、DMARC 使用的域名。代发服务可能造成合理差异，但无法解释的不一致值得注意。</p>
+<h2>3. 追踪 Received 与认证结果</h2>
+<p>邮件服务器通常把 Received 添加到顶部，因此从下向上可追踪较早的节点。查看 Authentication-Results 中的 SPF、DKIM、DMARC 及其评估域名。</p>
+<h2>4. 检查链接和附件</h2>
+<p>警惕短链接、IP 地址、Punycode 域名、异常压缩包和可执行附件。结论应限定在证据支持的范围内，不要仅凭自动结果断言“安全”或“确定伪造”。</p>
+</div>
+    
+  </article>
+  <aside class="related"><h2>相关阅读</h2><ul><li><a href="/zh/tools/email-header-analyzer/">邮件头分析器 — 在线分析原始邮件头</a></li><li><a href="/zh/developers/spf-dkim-dmarc-email-headers/">如何解读邮件头中的 SPF、DKIM 和 DMARC</a></li><li><a href="/zh/developers/temporary-email-for-testing/">用于测试的临时邮箱：开发与 QA 实用指南</a></li></ul></aside>
+</main>
+
+  <footer class="site-footer"><p>GetOpenInbox 为低风险、短期用途提供临时邮箱。</p><a href="/zh/">创建临时邮箱</a></footer>
+  <script src="/language.min.js" type="module"></script>
+</body>
+</html>

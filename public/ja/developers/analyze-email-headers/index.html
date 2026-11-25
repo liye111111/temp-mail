@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>メールヘッダーを分析する手順 — GetOpenInbox</title>
+  <meta name="description" content="配信経路、認証結果、警告サインを順番に読み、根拠の範囲内で判断する方法を解説します。">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+  <meta name="theme-color" content="#197c4d">
+  <link rel="canonical" href="https://getopeninbox.com/ja/developers/analyze-email-headers/">
+  <link rel="alternate" hreflang="en" href="https://getopeninbox.com/developers/analyze-email-headers/">
+  <link rel="alternate" hreflang="ja" href="https://getopeninbox.com/ja/developers/analyze-email-headers/">
+  <link rel="alternate" hreflang="zh-CN" href="https://getopeninbox.com/zh/developers/analyze-email-headers/">
+  <link rel="alternate" hreflang="x-default" href="https://getopeninbox.com/developers/analyze-email-headers/">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="GetOpenInbox">
+  <meta property="og:title" content="メールヘッダーを分析する手順 — GetOpenInbox">
+  <meta property="og:description" content="配信経路、認証結果、警告サインを順番に読み、根拠の範囲内で判断する方法を解説します。">
+  <meta property="og:url" content="https://getopeninbox.com/ja/developers/analyze-email-headers/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://getopeninbox.com/og.jpg">
+  <meta property="og:image:alt" content="GetOpenInbox">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://getopeninbox.com/og.jpg">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
+  <link rel="stylesheet" href="/content.min.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@context":"https://schema.org","@type":"Article","inLanguage":"ja","headline":"メールヘッダーを分析する手順","description":"配信経路、認証結果、警告サインを順番に読み、根拠の範囲内で判断する方法を解説します。","datePublished":"2026-08-17","dateModified":"2026-08-17","author":{"@type":"Organization","name":"GetOpenInbox"},"publisher":{"@type":"Organization","name":"GetOpenInbox","url":"https://getopeninbox.com/"},"mainEntityOfPage":"https://getopeninbox.com/ja/developers/analyze-email-headers/"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"ホーム","item":"https://getopeninbox.com/ja/"},{"@type":"ListItem","position":2,"name":"開発者向け","item":"https://getopeninbox.com/ja/developers/"},{"@type":"ListItem","position":3,"name":"メールヘッダーを分析する手順","item":"https://getopeninbox.com/ja/developers/analyze-email-headers/"}]}]}</script>
+</head>
+<body>
+  <header class="site-header"><a class="brand" href="/ja/">GetOpenInbox</a><nav aria-label="Primary"><a href="/ja/">一時受信箱</a><a href="/ja/guides/">ガイド</a><a href="/ja/comparisons/">比較</a><a href="/ja/developers/">開発者向け</a><a href="/ja/tools/">ツール</a><label class="language-picker"><span hidden>Language</span><select class="language-select" aria-label="Language"><option value="en">English</option><option value="ja">日本語</option><option value="zh">中文</option></select></label></nav></header>
+  <main class="content-shell">
+  <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/ja/">ホーム</a><span>›</span><a href="/ja/developers/">開発者向け</a></nav>
+  <article class="article">
+    <header class="article-header"><span class="eyebrow">開発者向け</span><h1>メールヘッダーを分析する手順</h1><p class="dek">配信経路、認証結果、警告サインを順番に読み、根拠の範囲内で判断する方法を解説します。</p><time datetime="2026-08-17">更新日 2026-08-17</time></header>
+    <div class="article-body"><p>メールヘッダー分析では、送信から受信までに追加されたメタデータを調べます。個々の行を決定的な証拠とせず、経路、認証、日時、識別子を組み合わせて読みます。</p>
+<h2>1. 元のソースを保存</h2>
+<p>メールサービスの「原文を表示」機能を使います。転送するとヘッダーが追加または変更されることがあります。</p>
+<h2>2. 表示上と技術上の送信者を比較</h2>
+<p>From、Return-Path、DKIM、DMARCのドメインを比較します。配信代行では違いが正当な場合もありますが、説明できない不一致には注意します。</p>
+<h2>3. Receivedと認証結果を読む</h2>
+<p>Receivedは通常、下から上へ読むと古い経路から受信側まで追跡できます。Authentication-ResultsのSPF、DKIM、DMARCと評価対象ドメインも確認します。</p>
+<h2>4. リンクと添付ファイルを確認</h2>
+<p>短縮URL、IPアドレス、Punycode、予期しない実行形式に注意します。「安全」「確実に偽装」と断定せず、証拠が示す範囲で結論を記述してください。</p>
+</div>
+    
+  </article>
+  <aside class="related"><h2>関連記事</h2><ul><li><a href="/ja/tools/email-header-analyzer/">メールヘッダー解析ツール — オンラインで確認</a></li><li><a href="/ja/developers/spf-dkim-dmarc-email-headers/">メールヘッダーのSPF・DKIM・DMARC結果の読み方</a></li><li><a href="/ja/developers/temporary-email-for-testing/">テスト用一時メール：開発者とQAの実践ガイド</a></li></ul></aside>
+</main>
+
+  <footer class="site-footer"><p>GetOpenInboxは、低リスクで短期間の用途に一時メールを提供します。</p><a href="/ja/">一時受信箱を作成</a></footer>
+  <script src="/language.min.js" type="module"></script>
+</body>
+</html>

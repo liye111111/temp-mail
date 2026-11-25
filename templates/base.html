@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="{{LANG}}">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,21 +8,27 @@
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
   <meta name="theme-color" content="#197c4d">
   <link rel="canonical" href="{{CANONICAL}}">
-  <link rel="alternate" hreflang="en" href="{{CANONICAL}}">
-  <link rel="alternate" hreflang="x-default" href="{{CANONICAL}}">
+  {{ALTERNATES}}
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="GetOpenInbox">
   <meta property="og:title" content="{{TITLE}}">
   <meta property="og:description" content="{{DESCRIPTION}}">
   <meta property="og:url" content="{{CANONICAL}}">
-  <meta property="og:locale" content="en_US">
-  <meta name="twitter:card" content="summary">
+  <meta property="og:locale" content="{{OG_LOCALE}}">
+  <meta property="og:image" content="https://getopeninbox.com/og.jpg">
+  <meta property="og:image:alt" content="GetOpenInbox">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://getopeninbox.com/og.jpg">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
   <link rel="stylesheet" href="/content.min.css">
   {{STRUCTURED_DATA}}
 </head>
 <body>
-  <header class="site-header"><a class="brand" href="/">GetOpenInbox</a><nav aria-label="Primary">{{NAV}}</nav></header>
+  <header class="site-header"><a class="brand" href="{{HOME_PATH}}">GetOpenInbox</a><nav aria-label="Primary">{{NAV}}<label class="language-picker"><span hidden>Language</span><select class="language-select" aria-label="Language"><option value="en">English</option><option value="ja">日本語</option><option value="zh">中文</option></select></label></nav></header>
   {{BODY}}
-  <footer class="site-footer"><p>GetOpenInbox provides temporary email for low-risk, short-term use.</p><a href="/">Create a temporary inbox</a></footer>
+  <footer class="site-footer"><p>{{FOOTER}}</p><a href="{{HOME_PATH}}">{{CREATE_INBOX}}</a></footer>
+  <script src="/language.min.js" type="module"></script>
 </body>
 </html>

@@ -30,6 +30,7 @@ Temporary email content expires automatically from object storage. Limited opera
 
 ## Published resources
 
+- [How Long Does a Temporary Email Address Last?](https://getopeninbox.com/guides/how-long-does-temporary-email-last/): Learn how long temporary email sessions last, what happens when they expire, and how to choose a lifespan that matches your task.
 - [Burner Email vs Temporary Email: What’s the Difference?](https://getopeninbox.com/comparisons/burner-email-vs-temporary-email/): Compare burner email, temporary inboxes, aliases, and secondary accounts by lifespan, privacy, recovery, and appropriate use.
 - [How to Analyze an Email Header Step by Step](https://getopeninbox.com/developers/analyze-email-headers/): Learn how to read an email header, trace delivery hops, interpret authentication results, and identify warning signs without overclaiming certainty.
 - [How to Read SPF, DKIM, and DMARC Results in Email Headers](https://getopeninbox.com/developers/spf-dkim-dmarc-email-headers/): Interpret SPF, DKIM, and DMARC results, understand domain alignment, and learn why authentication passes do not guarantee a safe message.
@@ -38,10 +39,36 @@ Temporary email content expires automatically from object storage. Limited opera
 - [What Is a Burner Email? Uses, Benefits, and Limitations](https://getopeninbox.com/guides/what-is-a-burner-email/): Understand what a burner email is, how it differs from a permanent inbox, and when a disposable address is or is not appropriate.
 - [What Is a Disposable Email and How Does It Work?](https://getopeninbox.com/guides/what-is-temporary-email/): Learn how disposable email works, when a temporary inbox is useful, and when you should use a permanent email address instead.
 - [Email Header Analyzer — Analyze Email Headers Online](https://getopeninbox.com/tools/email-header-analyzer/): Receive a message, inspect its raw email headers, and review SPF, DKIM, DMARC, sender, link, and attachment warning signals online.
+- [一時メールはどのくらい使えますか？](https://getopeninbox.com/ja/guides/how-long-does-temporary-email-last/): 一時メールの有効期間、期限切れ後に起きること、用途に合った期間の選び方を説明します。
+- [バーナーメールと一時メールの違い](https://getopeninbox.com/ja/comparisons/burner-email-vs-temporary-email/): バーナーメール、一時受信箱、エイリアス、サブアカウントを期間、復旧、用途で比較します。
+- [メールヘッダーを分析する手順](https://getopeninbox.com/ja/developers/analyze-email-headers/): 配信経路、認証結果、警告サインを順番に読み、根拠の範囲内で判断する方法を解説します。
+- [メールヘッダーのSPF・DKIM・DMARC結果の読み方](https://getopeninbox.com/ja/developers/spf-dkim-dmarc-email-headers/): SPF、DKIM、DMARC、ドメイン整合性、認証成功が安全を保証しない理由を説明します。
+- [テスト用一時メール：開発者とQAの実践ガイド](https://getopeninbox.com/ja/developers/temporary-email-for-testing/): メールテストで一時受信箱が役立つ範囲と、専用テスト環境が必要な場面を解説します。
+- [一時メールは安全？プライバシーと主なリスク](https://getopeninbox.com/ja/guides/is-temporary-email-safe/): 一時メールが保護できること、隠せない情報、重要な用途に適さない理由を説明します。
+- [バーナーメールとは？用途、利点、制限](https://getopeninbox.com/ja/guides/what-is-a-burner-email/): バーナーメールの意味、恒久的な受信箱との違い、適切な用途を解説します。
+- [使い捨てメールとは？仕組みと使い方](https://getopeninbox.com/ja/guides/what-is-temporary-email/): 使い捨てメールの仕組み、一時受信箱が役立つ場面、恒久的なメールを選ぶべき場面を解説します。
+- [メールヘッダー解析ツール — オンラインで確認](https://getopeninbox.com/ja/tools/email-header-analyzer/): 受信メールの生ヘッダー、SPF、DKIM、DMARC、送信者、リンク、添付ファイルの警告を確認します。
+- [临时邮箱能用多久？](https://getopeninbox.com/zh/guides/how-long-does-temporary-email-last/): 了解临时邮箱会话时长、过期后会发生什么，以及如何按任务选择合适的有效期。
+- [备用邮箱与临时邮箱有什么区别？](https://getopeninbox.com/zh/comparisons/burner-email-vs-temporary-email/): 从使用期限、隐私、找回和用途对比备用邮箱、临时收件箱、别名与永久账户。
+- [如何逐步分析邮件头](https://getopeninbox.com/zh/developers/analyze-email-headers/): 学习追踪投递路径、解释认证结果、识别警告信号，并避免过度断言。
+- [如何解读邮件头中的 SPF、DKIM 和 DMARC](https://getopeninbox.com/zh/developers/spf-dkim-dmarc-email-headers/): 了解 SPF、DKIM、DMARC、域名对齐，以及认证通过为何不能保证邮件安全。
+- [用于测试的临时邮箱：开发与 QA 实用指南](https://getopeninbox.com/zh/developers/temporary-email-for-testing/): 了解临时收件箱可以验证哪些邮件流程，以及何时需要专用测试环境。
+- [临时邮箱安全吗？隐私、安全与常见风险](https://getopeninbox.com/zh/guides/is-temporary-email-safe/): 了解临时邮箱能保护什么、不能隐藏什么，以及不应使用它的场景。
+- [什么是备用一次性邮箱？用途、优势与限制](https://getopeninbox.com/zh/guides/what-is-a-burner-email/): 了解 burner email 的含义、它与永久邮箱的区别以及适用范围。
+- [什么是一次性邮箱？它如何工作？](https://getopeninbox.com/zh/guides/what-is-temporary-email/): 了解一次性邮箱的工作方式、适用场景，以及何时应该改用长期邮箱。
+- [邮件头分析器 — 在线分析原始邮件头](https://getopeninbox.com/zh/tools/email-header-analyzer/): 接收邮件并检查原始邮件头、SPF、DKIM、DMARC、发件人、链接和附件警告。
+- [Guides](https://getopeninbox.com/guides/): Practical guides to temporary email, privacy and safer sign-ups.
 - [Comparisons](https://getopeninbox.com/comparisons/): Clear comparisons of disposable email and other privacy tools.
 - [Developers](https://getopeninbox.com/developers/): Technical guides for email routing, testing and Cloudflare Workers.
-- [Guides](https://getopeninbox.com/guides/): Practical guides to temporary email, privacy and safer sign-ups.
 - [Tools](https://getopeninbox.com/tools/): Free tools for email privacy, deliverability and development.
+- [ガイド](https://getopeninbox.com/ja/guides/): 一時メール、プライバシー、安全な登録に関する実用ガイド。
+- [比較](https://getopeninbox.com/ja/comparisons/): 使い捨てメールとその他のプライバシーツールを分かりやすく比較します。
+- [開発者向け](https://getopeninbox.com/ja/developers/): メールルーティング、テスト、Cloudflare Workersの技術ガイド。
+- [ツール](https://getopeninbox.com/ja/tools/): メールプライバシー、配信、開発のための無料ツール。
+- [指南](https://getopeninbox.com/zh/guides/): 关于临时邮箱、隐私和安全注册的实用指南。
+- [对比](https://getopeninbox.com/zh/comparisons/): 清晰对比一次性邮箱与其他隐私工具。
+- [开发者](https://getopeninbox.com/zh/developers/): 邮件路由、测试和 Cloudflare Workers 技术指南。
+- [工具](https://getopeninbox.com/zh/tools/): 用于邮件隐私、送达和开发的免费工具。
 
 ## Canonical source
 

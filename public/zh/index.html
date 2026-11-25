@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>带安全检查的免费临时邮箱 — GetOpenInbox</title>
+    <meta name="description" content="免费创建临时收件箱，内置 SPF、DKIM、DMARC 检查、可疑链接检测和原始邮件头查看，无需注册。" />
+    <meta name="keywords" content="temporary email, email security check, SMTP email authentication check, email header analyzer, SPF checker, DKIM checker, DMARC checker, raw email viewer, incoming email risk analysis" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="theme-color" content="#197c4d" />
+    <link rel="canonical" href="https://getopeninbox.com/zh/" />
+    <link rel="alternate" hreflang="en" href="https://getopeninbox.com/" />
+    <link rel="alternate" hreflang="ja" href="https://getopeninbox.com/ja/" />
+    <link rel="alternate" hreflang="zh-CN" href="https://getopeninbox.com/zh/" />
+    <link rel="alternate" hreflang="x-default" href="https://getopeninbox.com/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="GetOpenInbox" />
+    <meta property="og:title" content="带安全检查的免费临时邮箱 — GetOpenInbox" />
+    <meta property="og:description" content="接收临时邮件并检查 SPF、DKIM、DMARC 和可疑链接，也可查看原始邮件源码。" />
+    <meta property="og:url" content="https://getopeninbox.com/zh/" />
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:image" content="https://getopeninbox.com/og.jpg" />
+    <meta property="og:image:width" content="1280" />
+    <meta property="og:image:height" content="720" />
+    <meta property="og:image:alt" content="GetOpenInbox — temporary email with security checks" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="带安全检查的免费临时邮箱 — GetOpenInbox" />
+    <meta name="twitter:description" content="支持邮件认证检查和原始邮件头分析的一次性收件箱。" />
+    <meta name="twitter:image" content="https://getopeninbox.com/og.jpg" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
+    <link rel="stylesheet" href="/site.min.css" />
+    <script type="application/ld+json">
+      {"@context":"https://schema.org","@graph":[
+        {"@type":"WebSite","name":"GetOpenInbox","url":"https://getopeninbox.com/","description":"Free temporary email with SPF, DKIM, DMARC checks and raw email header inspection.","in语言":["en","ja","zh-CN"]},
+        {"@type":"Organization","name":"GetOpenInbox","url":"https://getopeninbox.com/","logo":"https://getopeninbox.com/apple-touch-icon.png"},
+        {"@type":"FAQPage","mainEntity":[
+          {"@type":"Question","name":"什么是临时邮箱地址？","acceptedAnswer":{"@type":"Answer","text":"这是一种无需分享个人邮箱即可使用的短期收件箱，适合低风险注册、试用和接收验证邮件。"}},
+          {"@type":"Question","name":"需要注册吗？","acceptedAnswer":{"@type":"Answer","text":"不需要。GetOpenInbox 会立即创建地址，无需账户、密码或个人邮箱。"}},
+          {"@type":"Question","name":"收件箱可以使用多久？","acceptedAnswer":{"@type":"Answer","text":"当前收件箱会话有效期为 10 分钟，计时结束后请创建新地址。"}},
+          {"@type":"Question","name":"可以用于敏感账户吗？","acceptedAnswer":{"@type":"Answer","text":"不可以。临时邮箱不适用于银行、医疗、密码找回或以后可能需要恢复的账户。"}},
+          {"@type":"Question","name":"安全评分能保证邮件安全吗？","acceptedAnswer":{"@type":"Answer","text":"不能。评分只说明常见认证、发件人、链接和附件信号；低风险结果不能证明发件人或内容可信。"}}
+        ]}
+      ]}
+    </script>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="/zh/">GetOpenInbox</a>
+      <nav aria-label="Primary">
+        <a href="/zh/">临时邮箱</a>
+        <a href="/zh/comparisons/">对比</a>
+        <a href="/zh/developers/">开发者</a>
+        <a href="/zh/guides/">指南</a>
+        <a href="/zh/tools/">工具</a>
+        <label class="language-picker"><span class="sr-only">语言</span><select id="language" aria-label="语言"><option value="en">English</option><option value="ja">日本語</option><option value="zh">中文</option></select></label>
+      </nav>
+    </header>
+    <main itemscope itemtype="https://schema.org/WebSite">
+      <meta itemprop="name" content="GetOpenInbox" />
+      <meta itemprop="url" content="https://getopeninbox.com/" />
+      <section class="hero">
+        <h1>带安全检查的免费临时邮箱</h1>
+        <p class="lead" itemprop="description">立即获得一次性收件箱，检查 SPF、DKIM 和 DMARC 结果，并查看原始邮件头，无需注册。</p>
+        <div class="address-card">
+          <div>
+            <span class="label">你的临时邮箱</span>
+            <strong id="address">正在创建收件箱…</strong>
+          </div>
+          <button id="copy" type="button" disabled>复制</button>
+        </div>
+        <div class="meta">
+          <span id="expires">有效期 10 分钟</span>
+          <button id="new-inbox" class="link-button" type="button">新地址</button>
+        </div>
+      </section>
+
+      <section class="inbox">
+        <header>
+          <div>
+            <span class="eyebrow">收件箱</span>
+            <h2>收到的邮件</h2>
+            <p id="poll-status" class="poll-status" aria-live="polite">正在自动检查新邮件…</p>
+          </div>
+          <button id="check-mail" class="check-mail" type="button">检查新邮件</button>
+        </header>
+        <div id="messages" class="messages">
+          <div class="empty">
+            <div class="empty-icon">✉</div>
+            <h3>收件箱已准备好</h3>
+            <p>使用上方地址，然后选择“检查新邮件”收取邮件。</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-section" aria-labelledby="how-it-works">
+        <span class="eyebrow">使用方式</span>
+        <h2 id="how-it-works">几秒钟获得一次性收件箱</h2>
+        <div class="steps">
+          <article><strong>1</strong><h3>复制地址</h3><p>打开页面即会创建临时地址，无需账户或个人信息。</p></article>
+          <article><strong>2</strong><h3>在线使用</h3><p>网站要求填写邮箱时输入该地址，可用于注册和接收验证码。</p></article>
+          <article><strong>3</strong><h3>查看邮件</h3><p>打开收到的邮件，查看风险评分、认证结果、可疑链接警告和原始源码。</p></article>
+        </div>
+      </section>
+
+      <section class="content-section" aria-labelledby="email-security-checks">
+        <span class="eyebrow">内置分析</span>
+        <h2 id="email-security-checks">收件安全与 SMTP 认证结果</h2>
+        <div class="benefits">
+          <article><h3>SPF、DKIM 和 DMARC 结果</h3><p>查看收件头中的认证结果，了解常见发件人验证是通过、失败还是不可用。</p></article>
+          <article><h3>可疑链接与发件人检查</h3><p>提示发件人域名不匹配、短链接、IP 地址链接、Punycode 域名以及可能危险的附件名称。</p></article>
+          <article><h3>原始邮件源码查看器</h3><p>直接在已认证的收件箱会话中检查原始 RFC 5322 邮件，包括投递头和 MIME 结构。</p></article>
+        </div>
+      </section>
+
+      <section class="content-section" aria-labelledby="why-use-temp-mail">
+        <span class="eyebrow">默认保护隐私</span>
+        <h2 id="why-use-temp-mail">为什么使用临时邮箱？</h2>
+        <div class="benefits">
+          <article><h3>隔离日常注册</h3><p>通过一次性地址订阅简报、试用产品、下载资源或进行短期注册，把个人邮箱留给信任的人和服务。</p></article>
+          <article><h3>无需账户即可接收验证码</h3><p>GetOpenInbox 可在现代浏览器中使用，无需创建个人资料。复制生成的地址，在其他网站使用后返回这里查看邮件。</p></article>
+          <article><h3>负责任地使用临时邮箱</h3><p>任何能访问收件箱会话的人都可能读取邮件。不要将临时邮箱用于银行、医疗、机密文件或以后需要找回的账户。</p></article>
+        </div>
+      </section>
+
+      <section class="content-section" aria-labelledby="email-resources">
+        <span class="eyebrow">学习与分析</span>
+        <h2 id="email-resources">临时邮箱与邮件安全资料</h2>
+        <p class="lead">了解何时使用一次性收件箱、如何分析收件头以及常见邮件认证结果。</p>
+        <div class="benefits">
+          <article>
+            <h3><a href="/zh/guides/">临时邮箱指南</a></h3>
+            <p>了解<a href="/zh/guides/what-is-temporary-email/">一次性邮箱如何工作</a>、隐私限制，以及<a href="/zh/guides/is-temporary-email-safe/">临时邮箱对你的用途是否安全</a>。</p>
+          </article>
+          <article>
+            <h3><a href="/zh/tools/email-header-analyzer/">邮件头分析器</a></h3>
+            <p>接收测试邮件，查看原始源码，并检查发件人、链接、SPF、DKIM 和 DMARC 警告信号。</p>
+          </article>
+          <article>
+            <h3><a href="/zh/developers/">开发者邮件测试</a></h3>
+            <p>了解如何<a href="/zh/developers/temporary-email-for-testing/">在手动 QA 中使用临时邮箱</a>，并学习<a href="/zh/developers/analyze-email-headers/">逐步分析邮件头</a>。</p>
+          </article>
+        </div>
+        <p>不确定哪种地址适合？请对比<a href="/zh/comparisons/burner-email-vs-temporary-email/">备用邮箱、临时收件箱、邮箱别名和永久账户</a>。</p>
+      </section>
+
+      <section class="content-section faq" aria-labelledby="faq">
+        <span class="eyebrow">FAQ</span>
+        <h2 id="faq">临时邮箱常见问题</h2>
+        <details><summary>什么是临时邮箱地址？</summary><p>这是一种无需分享个人邮箱即可使用的短期收件箱，适合低风险注册、试用和接收验证邮件。</p></details>
+        <details><summary>需要注册吗？</summary><p>不需要。GetOpenInbox 会立即创建地址，无需账户、密码或个人邮箱。</p></details>
+        <details><summary>收件箱可以使用多久？</summary><p>当前收件箱会话有效期为 10 分钟，计时结束后请创建新地址。</p></details>
+        <details><summary>可以用于敏感账户吗？</summary><p>不可以。临时邮箱不适用于银行、医疗、密码找回或以后可能需要恢复的账户。</p></details>
+        <details><summary>安全评分能保证邮件安全吗？</summary><p>不能。评分只说明常见认证、发件人、链接和附件信号；低风险结果不能证明发件人或内容可信。</p></details>
+      </section>
+    </main>
+
+    <dialog id="message-dialog">
+      <button id="close-dialog" class="close" aria-label="关闭">×</button>
+      <div id="message-detail"></div>
+    </dialog>
+
+    <footer>临时邮件内容会自动从对象存储中到期删除，请勿用于敏感信息。</footer>
+    <script src="/app.min.js" type="module"></script>
+  </body>
+</html>

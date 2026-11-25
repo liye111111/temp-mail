@@ -6,9 +6,10 @@
   "scripts": {
     "content:validate": "node scripts/validate-content.mjs",
     "content:build": "node scripts/build-content.mjs",
+    "locales:build": "node scripts/build-localized-home.mjs",
     "content:sitemap": "node scripts/build-sitemap.mjs",
     "assets:minify": "node scripts/minify-assets.mjs",
-    "build": "npm run content:validate && npm run content:build && npm run assets:minify && npm run content:sitemap && npm run config && npm run typecheck",
+    "build": "npm run content:validate && npm run content:build && npm run locales:build && npm run assets:minify && npm run content:sitemap && npm run config && npm run typecheck",
     "config": "node scripts/render-config.mjs",
     "typecheck": "tsc --noEmit",
     "check": "npm run build",

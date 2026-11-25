@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>メールヘッダー解析ツール — オンラインで確認 — GetOpenInbox</title>
+  <meta name="description" content="受信メールの生ヘッダー、SPF、DKIM、DMARC、送信者、リンク、添付ファイルの警告を確認します。">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+  <meta name="theme-color" content="#197c4d">
+  <link rel="canonical" href="https://getopeninbox.com/ja/tools/email-header-analyzer/">
+  <link rel="alternate" hreflang="en" href="https://getopeninbox.com/tools/email-header-analyzer/">
+  <link rel="alternate" hreflang="ja" href="https://getopeninbox.com/ja/tools/email-header-analyzer/">
+  <link rel="alternate" hreflang="zh-CN" href="https://getopeninbox.com/zh/tools/email-header-analyzer/">
+  <link rel="alternate" hreflang="x-default" href="https://getopeninbox.com/tools/email-header-analyzer/">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="GetOpenInbox">
+  <meta property="og:title" content="メールヘッダー解析ツール — オンラインで確認 — GetOpenInbox">
+  <meta property="og:description" content="受信メールの生ヘッダー、SPF、DKIM、DMARC、送信者、リンク、添付ファイルの警告を確認します。">
+  <meta property="og:url" content="https://getopeninbox.com/ja/tools/email-header-analyzer/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://getopeninbox.com/og.jpg">
+  <meta property="og:image:alt" content="GetOpenInbox">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://getopeninbox.com/og.jpg">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
+  <link rel="stylesheet" href="/content.min.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@context":"https://schema.org","@type":"Article","inLanguage":"ja","headline":"メールヘッダー解析ツール — オンラインで確認","description":"受信メールの生ヘッダー、SPF、DKIM、DMARC、送信者、リンク、添付ファイルの警告を確認します。","datePublished":"2026-08-17","dateModified":"2026-08-17","author":{"@type":"Organization","name":"GetOpenInbox"},"publisher":{"@type":"Organization","name":"GetOpenInbox","url":"https://getopeninbox.com/"},"mainEntityOfPage":"https://getopeninbox.com/ja/tools/email-header-analyzer/"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"ホーム","item":"https://getopeninbox.com/ja/"},{"@type":"ListItem","position":2,"name":"ツール","item":"https://getopeninbox.com/ja/tools/"},{"@type":"ListItem","position":3,"name":"メールヘッダー解析ツール — オンラインで確認","item":"https://getopeninbox.com/ja/tools/email-header-analyzer/"}]}]}</script>
+</head>
+<body>
+  <header class="site-header"><a class="brand" href="/ja/">GetOpenInbox</a><nav aria-label="Primary"><a href="/ja/">一時受信箱</a><a href="/ja/guides/">ガイド</a><a href="/ja/comparisons/">比較</a><a href="/ja/developers/">開発者向け</a><a href="/ja/tools/">ツール</a><label class="language-picker"><span hidden>Language</span><select class="language-select" aria-label="Language"><option value="en">English</option><option value="ja">日本語</option><option value="zh">中文</option></select></label></nav></header>
+  <main class="content-shell">
+  <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/ja/">ホーム</a><span>›</span><a href="/ja/tools/">ツール</a></nav>
+  <article class="article">
+    <header class="article-header"><span class="eyebrow">ツール</span><h1>メールヘッダー解析ツール — オンラインで確認</h1><p class="dek">受信メールの生ヘッダー、SPF、DKIM、DMARC、送信者、リンク、添付ファイルの警告を確認します。</p><time datetime="2026-08-17">更新日 2026-08-17</time></header>
+    <div class="article-body"><p>GetOpenInboxは、<strong>一時受信箱に届いたメールをオンラインで分析</strong>します。RFC 5322形式の元ソース、SPF・DKIM・DMARC、送信者やリンク、添付ファイル名に関する一般的な警告を表示します。</p>
+<h2>使い方</h2>
+<ol>
+<li>一時受信箱を開き、生成されたアドレスをコピーします。</li>
+<li>テストメールをそのアドレスに送信します。</li>
+<li>受信したメールを開きます。</li>
+<li>認証結果とリスク情報を確認します。</li>
+<li>元のソースで配信ヘッダーとMIME構造を調べます。</li>
+</ol>
+<h2>レポートの範囲</h2>
+<p>送信者ドメインの不一致、短縮URL、IPアドレスリンク、Punycode、危険な可能性がある添付ファイル名を確認します。任意のヘッダー貼り付け、メールアカウントのスキャン、SMTPポートテストには対応しません。自動分析は安全性を保証するものではありません。</p>
+</div>
+    
+  </article>
+  <aside class="related"><h2>関連記事</h2><ul><li><a href="/ja/developers/analyze-email-headers/">メールヘッダーを分析する手順</a></li><li><a href="/ja/developers/spf-dkim-dmarc-email-headers/">メールヘッダーのSPF・DKIM・DMARC結果の読み方</a></li><li><a href="/ja/developers/temporary-email-for-testing/">テスト用一時メール：開発者とQAの実践ガイド</a></li></ul></aside>
+</main>
+
+  <footer class="site-footer"><p>GetOpenInboxは、低リスクで短期間の用途に一時メールを提供します。</p><a href="/ja/">一時受信箱を作成</a></footer>
+  <script src="/language.min.js" type="module"></script>
+</body>
+</html>

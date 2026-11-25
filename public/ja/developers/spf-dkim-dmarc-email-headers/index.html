@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>メールヘッダーのSPF・DKIM・DMARC結果の読み方 — GetOpenInbox</title>
+  <meta name="description" content="SPF、DKIM、DMARC、ドメイン整合性、認証成功が安全を保証しない理由を説明します。">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+  <meta name="theme-color" content="#197c4d">
+  <link rel="canonical" href="https://getopeninbox.com/ja/developers/spf-dkim-dmarc-email-headers/">
+  <link rel="alternate" hreflang="en" href="https://getopeninbox.com/developers/spf-dkim-dmarc-email-headers/">
+  <link rel="alternate" hreflang="ja" href="https://getopeninbox.com/ja/developers/spf-dkim-dmarc-email-headers/">
+  <link rel="alternate" hreflang="zh-CN" href="https://getopeninbox.com/zh/developers/spf-dkim-dmarc-email-headers/">
+  <link rel="alternate" hreflang="x-default" href="https://getopeninbox.com/developers/spf-dkim-dmarc-email-headers/">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="GetOpenInbox">
+  <meta property="og:title" content="メールヘッダーのSPF・DKIM・DMARC結果の読み方 — GetOpenInbox">
+  <meta property="og:description" content="SPF、DKIM、DMARC、ドメイン整合性、認証成功が安全を保証しない理由を説明します。">
+  <meta property="og:url" content="https://getopeninbox.com/ja/developers/spf-dkim-dmarc-email-headers/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://getopeninbox.com/og.jpg">
+  <meta property="og:image:alt" content="GetOpenInbox">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://getopeninbox.com/og.jpg">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
+  <link rel="stylesheet" href="/content.min.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@context":"https://schema.org","@type":"Article","inLanguage":"ja","headline":"メールヘッダーのSPF・DKIM・DMARC結果の読み方","description":"SPF、DKIM、DMARC、ドメイン整合性、認証成功が安全を保証しない理由を説明します。","datePublished":"2026-08-17","dateModified":"2026-08-17","author":{"@type":"Organization","name":"GetOpenInbox"},"publisher":{"@type":"Organization","name":"GetOpenInbox","url":"https://getopeninbox.com/"},"mainEntityOfPage":"https://getopeninbox.com/ja/developers/spf-dkim-dmarc-email-headers/"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"ホーム","item":"https://getopeninbox.com/ja/"},{"@type":"ListItem","position":2,"name":"開発者向け","item":"https://getopeninbox.com/ja/developers/"},{"@type":"ListItem","position":3,"name":"メールヘッダーのSPF・DKIM・DMARC結果の読み方","item":"https://getopeninbox.com/ja/developers/spf-dkim-dmarc-email-headers/"}]}]}</script>
+</head>
+<body>
+  <header class="site-header"><a class="brand" href="/ja/">GetOpenInbox</a><nav aria-label="Primary"><a href="/ja/">一時受信箱</a><a href="/ja/guides/">ガイド</a><a href="/ja/comparisons/">比較</a><a href="/ja/developers/">開発者向け</a><a href="/ja/tools/">ツール</a><label class="language-picker"><span hidden>Language</span><select class="language-select" aria-label="Language"><option value="en">English</option><option value="ja">日本語</option><option value="zh">中文</option></select></label></nav></header>
+  <main class="content-shell">
+  <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/ja/">ホーム</a><span>›</span><a href="/ja/developers/">開発者向け</a></nav>
+  <article class="article">
+    <header class="article-header"><span class="eyebrow">開発者向け</span><h1>メールヘッダーのSPF・DKIM・DMARC結果の読み方</h1><p class="dek">SPF、DKIM、DMARC、ドメイン整合性、認証成功が安全を保証しない理由を説明します。</p><time datetime="2026-08-17">更新日 2026-08-17</time></header>
+    <div class="article-body"><p>SPF、DKIM、DMARCは関連するメール認証技術ですが、それぞれ異なる問いに答えます。結果の単語だけでなく、評価されたドメインと整合性も確認してください。</p>
+<h2>SPF</h2>
+<p>接続したメールサーバーがエンベロープ送信者ドメインからの送信を許可されているか確認します。転送で失敗する場合があり、本文の意図は判定しません。</p>
+<h2>DKIM</h2>
+<p>暗号署名とDNS公開鍵を使い、署名対象部分が変更されていないか確認します。成功は署名ドメインの鍵を管理していることを示しますが、ブランドの信頼性は保証しません。</p>
+<h2>DMARC</h2>
+<p>SPFまたはDKIMで認証されたドメインが表示上のFromドメインと整合するか評価します。少なくとも一つの整合した経路が成功すればDMARCは成功できます。</p>
+<p>passは技術的チェックの成功であり、安全な内容や善意の証明ではありません。failやerrorには設定不備、転送、一時的な問題など複数の原因があります。</p>
+</div>
+    
+  </article>
+  <aside class="related"><h2>関連記事</h2><ul><li><a href="/ja/tools/email-header-analyzer/">メールヘッダー解析ツール — オンラインで確認</a></li><li><a href="/ja/developers/analyze-email-headers/">メールヘッダーを分析する手順</a></li><li><a href="/ja/developers/temporary-email-for-testing/">テスト用一時メール：開発者とQAの実践ガイド</a></li></ul></aside>
+</main>
+
+  <footer class="site-footer"><p>GetOpenInboxは、低リスクで短期間の用途に一時メールを提供します。</p><a href="/ja/">一時受信箱を作成</a></footer>
+  <script src="/language.min.js" type="module"></script>
+</body>
+</html>
