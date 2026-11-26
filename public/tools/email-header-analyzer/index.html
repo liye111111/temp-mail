@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Email Header Analyzer — Analyze Email Headers Online — GetOpenInbox</title>
-  <meta name="description" content="Receive a message, inspect its raw email headers, and review SPF, DKIM, DMARC, sender, link, and attachment warning signals online.">
+  <title>Email Header Analyzer Online — SPF, DKIM, DMARC &amp; Raw Source — GetOpenInbox</title>
+  <meta name="description" content="Analyze email headers online: receive a test message in a temporary inbox, review SPF, DKIM, and DMARC, and inspect raw source. No paste-in headers; ~10 min session.">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
   <meta name="theme-color" content="#197c4d">
   <link rel="canonical" href="https://getopeninbox.com/tools/email-header-analyzer/">
@@ -14,8 +14,8 @@
   <link rel="alternate" hreflang="x-default" href="https://getopeninbox.com/tools/email-header-analyzer/">
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="GetOpenInbox">
-  <meta property="og:title" content="Email Header Analyzer — Analyze Email Headers Online — GetOpenInbox">
-  <meta property="og:description" content="Receive a message, inspect its raw email headers, and review SPF, DKIM, DMARC, sender, link, and attachment warning signals online.">
+  <meta property="og:title" content="Email Header Analyzer Online — SPF, DKIM, DMARC &amp; Raw Source — GetOpenInbox">
+  <meta property="og:description" content="Analyze email headers online: receive a test message in a temporary inbox, review SPF, DKIM, and DMARC, and inspect raw source. No paste-in headers; ~10 min session.">
   <meta property="og:url" content="https://getopeninbox.com/tools/email-header-analyzer/">
   <meta property="og:locale" content="en_US">
   <meta property="og:image" content="https://getopeninbox.com/og.jpg">
@@ -26,45 +26,96 @@
   <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
   <link rel="stylesheet" href="/content.min.css">
-  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@context":"https://schema.org","@type":"Article","inLanguage":"en","headline":"Email Header Analyzer — Analyze Email Headers Online","description":"Receive a message, inspect its raw email headers, and review SPF, DKIM, DMARC, sender, link, and attachment warning signals online.","datePublished":"2026-08-17","dateModified":"2026-08-17","author":{"@type":"Organization","name":"GetOpenInbox"},"publisher":{"@type":"Organization","name":"GetOpenInbox","url":"https://getopeninbox.com/"},"mainEntityOfPage":"https://getopeninbox.com/tools/email-header-analyzer/"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://getopeninbox.com/"},{"@type":"ListItem","position":2,"name":"Tools","item":"https://getopeninbox.com/tools/"},{"@type":"ListItem","position":3,"name":"Email Header Analyzer — Analyze Email Headers Online","item":"https://getopeninbox.com/tools/email-header-analyzer/"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How do I analyze an email header with GetOpenInbox?","acceptedAnswer":{"@type":"Answer","text":"Create a temporary inbox, send the test message to it, open the message, and review the authentication report and raw source."}},{"@type":"Question","name":"Does GetOpenInbox analyze headers pasted from another mailbox?","acceptedAnswer":{"@type":"Answer","text":"No. The current tool analyzes messages received by your active GetOpenInbox session rather than arbitrary pasted headers."}},{"@type":"Question","name":"Can the analyzer prove that an email is safe?","acceptedAnswer":{"@type":"Answer","text":"No. It explains common technical signals and warnings, but no automated header check can guarantee sender identity or harmless content."}}]}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@context":"https://schema.org","@type":"Article","inLanguage":"en","headline":"Email Header Analyzer Online — SPF, DKIM, DMARC & Raw Source","description":"Analyze email headers online: receive a test message in a temporary inbox, review SPF, DKIM, and DMARC, and inspect raw source. No paste-in headers; ~10 min session.","datePublished":"2026-08-17","dateModified":"2026-11-26","author":{"@type":"Organization","name":"GetOpenInbox"},"publisher":{"@type":"Organization","name":"GetOpenInbox","url":"https://getopeninbox.com/"},"mainEntityOfPage":"https://getopeninbox.com/tools/email-header-analyzer/"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://getopeninbox.com/"},{"@type":"ListItem","position":2,"name":"Tools","item":"https://getopeninbox.com/tools/"},{"@type":"ListItem","position":3,"name":"Email Header Analyzer Online — SPF, DKIM, DMARC & Raw Source","item":"https://getopeninbox.com/tools/email-header-analyzer/"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How do I analyze an email header with GetOpenInbox?","acceptedAnswer":{"@type":"Answer","text":"Create a temporary inbox, send the test message to it, open the message, and review the authentication report and raw source."}},{"@type":"Question","name":"Does GetOpenInbox analyze headers pasted from another mailbox?","acceptedAnswer":{"@type":"Answer","text":"No. The current tool analyzes messages received by your active GetOpenInbox session rather than arbitrary pasted headers."}},{"@type":"Question","name":"Can the analyzer prove that an email is safe?","acceptedAnswer":{"@type":"Answer","text":"No. It explains common technical signals and warnings, but no automated header check can guarantee sender identity or harmless content."}},{"@type":"Question","name":"How long do I have to finish the analysis?","acceptedAnswer":{"@type":"Answer","text":"The current inbox session lasts about 10 minutes. Create a new address if the timer expires before you finish."}},{"@type":"Question","name":"Why might SPF fail on a legitimate message?","acceptedAnswer":{"@type":"Answer","text":"Forwarding, shared sending infrastructure, or temporary DNS issues can fail SPF even when the original message was legitimate. Read the evaluated domain and alignment before drawing conclusions."}}]}]}</script>
 </head>
 <body>
-  <header class="site-header"><a class="brand" href="/">GetOpenInbox</a><nav aria-label="Primary"><a href="/">Temporary inbox</a><a href="/guides/">Guides</a><a href="/comparisons/">Comparisons</a><a href="/developers/">Developers</a><a href="/tools/">Tools</a><label class="language-picker"><span hidden>Language</span><select class="language-select" aria-label="Language"><option value="en">English</option><option value="ja">日本語</option><option value="zh">中文</option></select></label></nav></header>
+  <header class="site-header"><a class="brand" href="/">GetOpenInbox</a><nav aria-label="Primary"><a href="/">Temporary inbox</a><a href="/tools/">Tools</a><a href="/guides/">Guides</a><a href="/comparisons/">Comparisons</a><a href="/developers/">Developers</a><label class="language-picker"><span hidden>Language</span><select class="language-select" aria-label="Language"><option value="en">English</option><option value="ja">日本語</option><option value="zh">中文</option></select></label></nav></header>
   <main class="content-shell">
   <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span>›</span><a href="/tools/">Tools</a></nav>
   <article class="article">
-    <header class="article-header"><span class="eyebrow">Tools</span><h1>Email Header Analyzer — Analyze Email Headers Online</h1><p class="dek">Receive a message, inspect its raw email headers, and review SPF, DKIM, DMARC, sender, link, and attachment warning signals online.</p><time datetime="2026-08-17">Updated 2026-08-17</time></header>
-    <div class="article-body"><p>GetOpenInbox provides an <strong>online email header analyzer for messages received by a temporary inbox</strong>. It displays raw source using the message format defined by <a href="https://www.rfc-editor.org/info/rfc5322/" rel="noopener noreferrer">RFC 5322</a>, reported SPF, DKIM, and DMARC results, and common sender, link, and attachment-name warning signals.</p>
+    <header class="article-header"><span class="eyebrow">Tools</span><h1>Email Header Analyzer Online — SPF, DKIM, DMARC &amp; Raw Source</h1><p class="dek">Analyze email headers online: receive a test message in a temporary inbox, review SPF, DKIM, and DMARC, and inspect raw source. No paste-in headers; ~10 min session.</p><time datetime="2026-11-26">Updated 2026-11-26</time></header>
+    <div class="article-body"><p>GetOpenInbox provides an <strong>online email header analyzer for messages you receive in a temporary inbox</strong>. After a test or verification message arrives, you can inspect the raw source in the format defined by <a href="https://www.rfc-editor.org/info/rfc5322/" rel="noopener noreferrer">RFC 5322</a>, review reported SPF, DKIM, and DMARC results, and scan common sender, link, and attachment-name warning signals. The tool does <strong>not</strong> accept headers pasted from another mailbox, and a green authentication result is <strong>not</strong> proof that a message is safe.</p>
 <p><a href="/">Create a temporary inbox to analyze an incoming message</a>.</p>
-<h2>How to use the analyzer</h2>
+<h2>How to analyze an email header with GetOpenInbox</h2>
 <ol>
-<li>Open GetOpenInbox and copy the generated address.</li>
-<li>Send the test or verification message to that address.</li>
-<li>Open the message after it appears in the inbox.</li>
-<li>Review its authentication and risk sections.</li>
-<li>Open the raw source to inspect delivery headers and MIME structure.</li>
+<li>Open GetOpenInbox and copy the generated temporary address.</li>
+<li>Send the test or verification message to that address from your app, staging environment, or mail provider.</li>
+<li>When the message appears in the inbox, open it.</li>
+<li>Review the authentication and risk sections shown for that message.</li>
+<li>Open the raw source to inspect delivery headers, <code>Authentication-Results</code>, and MIME structure.</li>
 </ol>
-<p>The inbox session currently lasts 10 minutes. Use non-sensitive test data and analyze the message before the session expires.</p>
-<h2>What the report covers</h2>
+<p>The inbox session currently lasts about <strong>10 minutes</strong>. Use non-sensitive test data and finish the review before the timer expires. If the session ends, create a <a href="/">new temporary inbox</a> and resend the test message.</p>
+<h2>What the report shows</h2>
+<table>
+<thead>
+<tr>
+<th>Signal</th>
+<th>What it helps you see</th>
+<th>Limit</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SPF, DKIM, DMARC</td>
+<td>Whether common authentication checks passed, failed, or were unavailable for the domains the receiver evaluated</td>
+<td>Pass/fail is not a safety verdict</td>
+</tr>
+<tr>
+<td>Visible vs technical sender</td>
+<td>Differences between the displayed <code>From</code> domain and technical sender domains</td>
+<td>Mismatches can be legitimate (for example, a delivery provider)</td>
+</tr>
+<tr>
+<td>Links</td>
+<td>Shortened URLs, IP-address links, Punycode domains, and similar patterns</td>
+<td>Warnings need human context</td>
+</tr>
+<tr>
+<td>Attachments</td>
+<td>Potentially dangerous attachment filenames</td>
+<td>Filename checks are not malware scanning</td>
+</tr>
+<tr>
+<td>Raw source</td>
+<td>Original headers and MIME parts for manual investigation</td>
+<td>Earlier hops may be forged before a trusted receiver</td>
+</tr>
+</tbody></table>
+<h2>Authentication results are not a safety verdict</h2>
+<p>SPF, DKIM, and DMARC answer different technical questions about sending authorization, signatures, and domain alignment. A pass means a specific check succeeded for an evaluated domain. It does not prove good intent, and phishing can still arrive from a compromised but authenticated account. A fail can also have benign causes such as forwarding.</p>
+<p>For interpretation details, read <a href="/developers/spf-dkim-dmarc-email-headers/">How to Read SPF, DKIM, and DMARC Results</a> and the <a href="/developers/analyze-email-headers/">step-by-step email header analysis guide</a>.</p>
+<h2>What this analyzer does not do</h2>
 <ul>
-<li>SPF, DKIM, and DMARC results reported in the received headers.</li>
-<li>Differences between visible sender and technical sender domains.</li>
-<li>Shortened links, IP-address links, Punycode domains, and other suspicious URL patterns.</li>
-<li>Potentially dangerous attachment filenames.</li>
-<li>Original headers and MIME source for manual investigation.</li>
+<li>It does <strong>not</strong> accept arbitrary pasted headers from Gmail, Outlook, or other mailboxes.</li>
+<li>It does <strong>not</strong> scan third-party accounts, crawl mailboxes, or probe SMTP ports.</li>
+<li>It does <strong>not</strong> guarantee that a message is safe, legitimate, or free of phishing.</li>
+<li>It does <strong>not</strong> replace incident-response tooling or a full forensic review.</li>
 </ul>
-<h2>What the analyzer does not do</h2>
-<p>The tool does not accept arbitrary pasted headers, scan mailbox accounts, test SMTP ports, or guarantee that a message is safe. Authentication passes can coexist with phishing or a compromised sender. A warning may also have a legitimate explanation.</p>
-<p>For careful interpretation, follow the <a href="/developers/analyze-email-headers/">step-by-step email header analysis guide</a> and the explanation of <a href="/developers/spf-dkim-dmarc-email-headers/">SPF, DKIM, and DMARC results</a>.</p>
+<p>Use the analyzer as a fast starting point for messages that land in your GetOpenInbox session—not as a complete security product.</p>
+<h2>When to use a temporary inbox for header checks</h2>
+<p>A temporary inbox is useful when you need to:</p>
+<ul>
+<li>Trigger a verification or notification email from a staging app and inspect how it looks on arrival.</li>
+<li>Compare authentication results across test sends without exposing your personal mailbox.</li>
+<li>Practice reading raw headers on low-risk sample messages.</li>
+</ul>
+<p>Do not use temporary email for banking, healthcare, password recovery, confidential documents, or any account you may need to recover later. Anyone with access to the active inbox session may be able to read its messages. Temporary email also does not guarantee that third-party sites will accept the address at signup.</p>
+<p>For developer and QA workflows, see <a href="/developers/temporary-email-for-testing/">Temporary Email for Testing</a>.</p>
+<h2>Next steps</h2>
+<ol>
+<li><a href="/">Open a temporary inbox</a> and send a non-sensitive test message.</li>
+<li>Follow <a href="/developers/analyze-email-headers/">How to Analyze an Email Header Step by Step</a> if you need a structured reading order.</li>
+<li>Use <a href="/developers/spf-dkim-dmarc-email-headers/">How to Read SPF, DKIM, and DMARC Results</a> when authentication outcomes look unexpected.</li>
+</ol>
 <h2>References</h2>
 <ul>
 <li><a href="https://www.rfc-editor.org/info/rfc5322/" rel="noopener noreferrer">RFC 5322: Internet Message Format</a> — message and header-field syntax.</li>
 <li><a href="https://www.rfc-editor.org/info/rfc8601/" rel="noopener noreferrer">RFC 8601: Authentication-Results</a> — how receiving systems record authentication results.</li>
 <li><a href="https://www.rfc-editor.org/info/rfc7208/" rel="noopener noreferrer">RFC 7208: SPF</a>, <a href="https://www.rfc-editor.org/info/rfc6376/" rel="noopener noreferrer">RFC 6376: DKIM</a>, and <a href="https://www.rfc-editor.org/info/rfc9989/" rel="noopener noreferrer">RFC 9989: DMARC</a> — the relevant authentication standards.</li>
+<li><a href="https://www.cisa.gov/secure-our-world" rel="noopener noreferrer">CISA Secure Our World</a> — recognizing phishing and handling suspicious messages.</li>
 <li><a href="https://developers.cloudflare.com/email-service/configuration/email-routing-addresses/" rel="noopener noreferrer">Cloudflare Email Routing</a> — routing documentation for the underlying inbound-email platform.</li>
 </ul>
 </div>
-    <section class="article-faq"><h2>Frequently asked questions</h2><details><summary>How do I analyze an email header with GetOpenInbox?</summary><p>Create a temporary inbox, send the test message to it, open the message, and review the authentication report and raw source.</p></details><details><summary>Does GetOpenInbox analyze headers pasted from another mailbox?</summary><p>No. The current tool analyzes messages received by your active GetOpenInbox session rather than arbitrary pasted headers.</p></details><details><summary>Can the analyzer prove that an email is safe?</summary><p>No. It explains common technical signals and warnings, but no automated header check can guarantee sender identity or harmless content.</p></details></section>
+    <section class="article-faq"><h2>Frequently asked questions</h2><details><summary>How do I analyze an email header with GetOpenInbox?</summary><p>Create a temporary inbox, send the test message to it, open the message, and review the authentication report and raw source.</p></details><details><summary>Does GetOpenInbox analyze headers pasted from another mailbox?</summary><p>No. The current tool analyzes messages received by your active GetOpenInbox session rather than arbitrary pasted headers.</p></details><details><summary>Can the analyzer prove that an email is safe?</summary><p>No. It explains common technical signals and warnings, but no automated header check can guarantee sender identity or harmless content.</p></details><details><summary>How long do I have to finish the analysis?</summary><p>The current inbox session lasts about 10 minutes. Create a new address if the timer expires before you finish.</p></details><details><summary>Why might SPF fail on a legitimate message?</summary><p>Forwarding, shared sending infrastructure, or temporary DNS issues can fail SPF even when the original message was legitimate. Read the evaluated domain and alignment before drawing conclusions.</p></details></section>
   </article>
   <aside class="related"><h2>Related reading</h2><ul><li><a href="/developers/analyze-email-headers/">How to Analyze an Email Header Step by Step</a></li><li><a href="/developers/spf-dkim-dmarc-email-headers/">How to Read SPF, DKIM, and DMARC Results in Email Headers</a></li><li><a href="/developers/temporary-email-for-testing/">Temporary Email for Testing: A Practical Guide for Developers and QA</a></li></ul></aside>
 </main>

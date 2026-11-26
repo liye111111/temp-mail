@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>邮件头分析器 — 在线分析原始邮件头 — GetOpenInbox</title>
-  <meta name="description" content="接收邮件并检查原始邮件头、SPF、DKIM、DMARC、发件人、链接和附件警告。">
+  <title>在线邮件头分析器 — SPF、DKIM、DMARC 与原始源码 — GetOpenInbox</title>
+  <meta name="description" content="用临时收件箱接收测试邮件，查看 SPF、DKIM、DMARC 与原始源码。不支持粘贴外部邮件头；会话约 10 分钟。">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
   <meta name="theme-color" content="#197c4d">
   <link rel="canonical" href="https://getopeninbox.com/zh/tools/email-header-analyzer/">
@@ -14,8 +14,8 @@
   <link rel="alternate" hreflang="x-default" href="https://getopeninbox.com/tools/email-header-analyzer/">
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="GetOpenInbox">
-  <meta property="og:title" content="邮件头分析器 — 在线分析原始邮件头 — GetOpenInbox">
-  <meta property="og:description" content="接收邮件并检查原始邮件头、SPF、DKIM、DMARC、发件人、链接和附件警告。">
+  <meta property="og:title" content="在线邮件头分析器 — SPF、DKIM、DMARC 与原始源码 — GetOpenInbox">
+  <meta property="og:description" content="用临时收件箱接收测试邮件，查看 SPF、DKIM、DMARC 与原始源码。不支持粘贴外部邮件头；会话约 10 分钟。">
   <meta property="og:url" content="https://getopeninbox.com/zh/tools/email-header-analyzer/">
   <meta property="og:locale" content="zh_CN">
   <meta property="og:image" content="https://getopeninbox.com/og.jpg">
@@ -26,25 +26,87 @@
   <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
   <link rel="stylesheet" href="/content.min.css">
-  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@context":"https://schema.org","@type":"Article","inLanguage":"zh-CN","headline":"邮件头分析器 — 在线分析原始邮件头","description":"接收邮件并检查原始邮件头、SPF、DKIM、DMARC、发件人、链接和附件警告。","datePublished":"2026-08-17","dateModified":"2026-08-17","author":{"@type":"Organization","name":"GetOpenInbox"},"publisher":{"@type":"Organization","name":"GetOpenInbox","url":"https://getopeninbox.com/"},"mainEntityOfPage":"https://getopeninbox.com/zh/tools/email-header-analyzer/"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://getopeninbox.com/zh/"},{"@type":"ListItem","position":2,"name":"工具","item":"https://getopeninbox.com/zh/tools/"},{"@type":"ListItem","position":3,"name":"邮件头分析器 — 在线分析原始邮件头","item":"https://getopeninbox.com/zh/tools/email-header-analyzer/"}]}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@context":"https://schema.org","@type":"Article","inLanguage":"zh-CN","headline":"在线邮件头分析器 — SPF、DKIM、DMARC 与原始源码","description":"用临时收件箱接收测试邮件，查看 SPF、DKIM、DMARC 与原始源码。不支持粘贴外部邮件头；会话约 10 分钟。","datePublished":"2026-08-17","dateModified":"2026-11-26","author":{"@type":"Organization","name":"GetOpenInbox"},"publisher":{"@type":"Organization","name":"GetOpenInbox","url":"https://getopeninbox.com/"},"mainEntityOfPage":"https://getopeninbox.com/zh/tools/email-header-analyzer/"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://getopeninbox.com/zh/"},{"@type":"ListItem","position":2,"name":"工具","item":"https://getopeninbox.com/zh/tools/"},{"@type":"ListItem","position":3,"name":"在线邮件头分析器 — SPF、DKIM、DMARC 与原始源码","item":"https://getopeninbox.com/zh/tools/email-header-analyzer/"}]}]}</script>
 </head>
 <body>
-  <header class="site-header"><a class="brand" href="/zh/">GetOpenInbox</a><nav aria-label="Primary"><a href="/zh/">临时邮箱</a><a href="/zh/guides/">指南</a><a href="/zh/comparisons/">对比</a><a href="/zh/developers/">开发者</a><a href="/zh/tools/">工具</a><label class="language-picker"><span hidden>Language</span><select class="language-select" aria-label="Language"><option value="en">English</option><option value="ja">日本語</option><option value="zh">中文</option></select></label></nav></header>
+  <header class="site-header"><a class="brand" href="/zh/">GetOpenInbox</a><nav aria-label="Primary"><a href="/zh/">临时邮箱</a><a href="/zh/tools/">工具</a><a href="/zh/guides/">指南</a><a href="/zh/comparisons/">对比</a><a href="/zh/developers/">开发者</a><label class="language-picker"><span hidden>Language</span><select class="language-select" aria-label="Language"><option value="en">English</option><option value="ja">日本語</option><option value="zh">中文</option></select></label></nav></header>
   <main class="content-shell">
   <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/zh/">首页</a><span>›</span><a href="/zh/tools/">工具</a></nav>
   <article class="article">
-    <header class="article-header"><span class="eyebrow">工具</span><h1>邮件头分析器 — 在线分析原始邮件头</h1><p class="dek">接收邮件并检查原始邮件头、SPF、DKIM、DMARC、发件人、链接和附件警告。</p><time datetime="2026-08-17">更新于 2026-08-17</time></header>
-    <div class="article-body"><p>GetOpenInbox 可以<strong>在线分析临时收件箱收到的邮件</strong>，显示 RFC 5322 原始源码、SPF、DKIM、DMARC，以及常见的发件人、链接和附件名称警告。</p>
-<h2>使用方法</h2>
+    <header class="article-header"><span class="eyebrow">工具</span><h1>在线邮件头分析器 — SPF、DKIM、DMARC 与原始源码</h1><p class="dek">用临时收件箱接收测试邮件，查看 SPF、DKIM、DMARC 与原始源码。不支持粘贴外部邮件头；会话约 10 分钟。</p><time datetime="2026-11-26">更新于 2026-11-26</time></header>
+    <div class="article-body"><p>GetOpenInbox 提供面向<strong>临时收件箱已收邮件</strong>的<strong>在线邮件头分析</strong>。测试或验证邮件到达后，可查看 <a href="https://www.rfc-editor.org/info/rfc5322/" rel="noopener noreferrer">RFC 5322</a> 格式的原始源码、报告的 SPF/DKIM/DMARC，以及常见的发件人、链接与附件名警告。<strong>不支持</strong>从其他邮箱粘贴邮件头；认证结果为 pass <strong>不能</strong>证明邮件安全。</p>
+<p><a href="/zh/">创建临时收件箱以分析收到的邮件</a></p>
+<h2>用 GetOpenInbox 分析邮件头的步骤</h2>
 <ol>
-<li>打开临时收件箱并复制生成的地址。</li>
-<li>把测试邮件发送到该地址。</li>
-<li>邮件出现后打开它。</li>
-<li>查看认证和风险部分。</li>
-<li>打开原始源码，检查投递邮件头和 MIME 结构。</li>
+<li>打开 GetOpenInbox 并复制生成的临时地址。</li>
+<li>从应用、预发环境或邮件服务向该地址发送测试/验证邮件。</li>
+<li>邮件出现在收件箱后打开。</li>
+<li>查看该邮件的认证与风险信息。</li>
+<li>打开原始源码，检查投递头、<code>Authentication-Results</code> 与 MIME 结构。</li>
 </ol>
-<h2>报告范围</h2>
-<p>分析器会检查发件人域名不一致、短链接、IP 地址链接、Punycode 域名和可能危险的附件名称。它不接受任意粘贴的邮件头，不扫描邮箱账户，也不测试 SMTP 端口。自动分析只能解释常见信号，不能保证邮件安全。</p>
+<p>当前会话约 <strong>10 分钟</strong>。请使用非敏感测试数据，并在计时结束前完成查看。若会话过期，请<a href="/zh/">新建临时收件箱</a>并重新发送测试邮件。</p>
+<h2>报告能看到什么</h2>
+<table>
+<thead>
+<tr>
+<th>信号</th>
+<th>帮助你看到什么</th>
+<th>局限</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SPF、DKIM、DMARC</td>
+<td>接收方对评估域名给出的常见认证结果</td>
+<td>pass/fail 不是安全结论</td>
+</tr>
+<tr>
+<td>可见发件人 vs 技术发件人</td>
+<td>显示的 <code>From</code> 域与技术域差异</td>
+<td>经投递服务代发时，差异可能合理</td>
+</tr>
+<tr>
+<td>链接</td>
+<td>短链、IP 链接、Punycode 等模式</td>
+<td>警告需要人工上下文</td>
+</tr>
+<tr>
+<td>附件</td>
+<td>可能危险的文件名</td>
+<td>不是恶意软件扫描</td>
+</tr>
+<tr>
+<td>原始源码</td>
+<td>供手工排查的头字段与 MIME</td>
+<td>可信接收前的跳转可能被伪造</td>
+</tr>
+</tbody></table>
+<h2>认证结果不是安全裁决</h2>
+<p>SPF、DKIM、DMARC 分别回答发送授权、签名与域名对齐等不同技术问题。pass 只表示某项检查成功，不能证明善意；被攻陷但仍通过认证的账户仍可能发出钓鱼。fail 也可能来自转发等无害原因。</p>
+<p>解读请参阅<a href="/zh/developers/spf-dkim-dmarc-email-headers/">如何阅读 SPF、DKIM、DMARC 结果</a>与<a href="/zh/developers/analyze-email-headers/">逐步分析邮件头</a>。</p>
+<h2>本分析器不会做的事</h2>
+<ul>
+<li><strong>不接受</strong>从 Gmail、Outlook 等邮箱粘贴的任意邮件头。</li>
+<li>不扫描第三方账户、不遍历邮箱、不探测 SMTP 端口。</li>
+<li>不保证邮件安全、合法或无钓鱼。</li>
+<li>不能替代应急响应工具或完整取证。</li>
+</ul>
+<p>请把它当作查看 GetOpenInbox 会话内邮件的快速入口，而不是完整安全产品。</p>
+<h2>何时用临时收件箱做邮件头检查</h2>
+<p>适合：预发应用触发验证邮件后查看到达形态；在不暴露个人邮箱的情况下对比测试发送的认证结果；用低风险样本练习阅读原始邮件头。</p>
+<p>不要用于银行、医疗、密码找回、机密文件，或以后仍需找回的账户。能访问活动会话的人可能读到其中邮件。也不保证第三方注册会接受该地址。</p>
+<p>开发者/QA 场景见<a href="/zh/developers/temporary-email-for-testing/">用于测试的临时邮箱</a>。</p>
+<h2>下一步</h2>
+<ol>
+<li><a href="/zh/">打开临时收件箱</a></li>
+<li>需要阅读顺序时： <a href="/zh/developers/analyze-email-headers/">逐步分析邮件头</a></li>
+<li>认证结果异常时： <a href="/zh/developers/spf-dkim-dmarc-email-headers/">如何阅读 SPF、DKIM、DMARC 结果</a></li>
+</ol>
+<h2>参考</h2>
+<ul>
+<li><a href="https://www.rfc-editor.org/info/rfc5322/" rel="noopener noreferrer">RFC 5322</a>、<a href="https://www.rfc-editor.org/info/rfc8601/" rel="noopener noreferrer">RFC 8601</a>、<a href="https://www.rfc-editor.org/info/rfc7208/" rel="noopener noreferrer">RFC 7208</a>、<a href="https://www.rfc-editor.org/info/rfc6376/" rel="noopener noreferrer">RFC 6376</a>、<a href="https://www.rfc-editor.org/info/rfc9989/" rel="noopener noreferrer">RFC 9989</a></li>
+<li><a href="https://www.cisa.gov/secure-our-world" rel="noopener noreferrer">CISA Secure Our World</a></li>
+<li><a href="https://developers.cloudflare.com/email-service/configuration/email-routing-addresses/" rel="noopener noreferrer">Cloudflare Email Routing</a></li>
+</ul>
 </div>
     
   </article>

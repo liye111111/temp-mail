@@ -95,19 +95,62 @@ Receivedは通常、下から上へ読むと古い経路から受信側まで追
 SPFまたはDKIMで認証されたドメインが表示上のFromドメインと整合するか評価します。少なくとも一つの整合した経路が成功すればDMARCは成功できます。
 
 passは技術的チェックの成功であり、安全な内容や善意の証明ではありません。failやerrorには設定不備、転送、一時的な問題など複数の原因があります。` },
-    "email-header-analyzer": { title: "メールヘッダー解析ツール — オンラインで確認", description: "受信メールの生ヘッダー、SPF、DKIM、DMARC、送信者、リンク、添付ファイルの警告を確認します。", body: `GetOpenInboxは、**一時受信箱に届いたメールをオンラインで分析**します。RFC 5322形式の元ソース、SPF・DKIM・DMARC、送信者やリンク、添付ファイル名に関する一般的な警告を表示します。
+    "email-header-analyzer": { title: "メールヘッダー解析（オンライン）— SPF・DKIM・DMARCと生ソース", description: "一時受信箱でテストメールを受け取り、SPF・DKIM・DMARCと生ソースを確認。任意ヘッダー貼り付け非対応。セッションは約10分。", body: `GetOpenInboxは、**一時受信箱に届いたメール向けのオンラインメールヘッダー解析**を提供します。テストや確認メールが届いたあと、[RFC 5322](https://www.rfc-editor.org/info/rfc5322/)形式の生ソース、報告されたSPF・DKIM・DMARC、よくある送信者・リンク・添付ファイル名の警告を確認できます。**他のメールボックスから貼り付けたヘッダーには対応しません**。認証結果がpassでも、メールが安全であることの証明にはなりません。
 
-## 使い方
+[一時受信箱を作成して受信メールを分析する](/ja/)
 
-1. 一時受信箱を開き、生成されたアドレスをコピーします。
-2. テストメールをそのアドレスに送信します。
-3. 受信したメールを開きます。
-4. 認証結果とリスク情報を確認します。
-5. 元のソースで配信ヘッダーとMIME構造を調べます。
+## GetOpenInboxでメールヘッダーを分析する手順
 
-## レポートの範囲
+1. GetOpenInboxを開き、生成された一時アドレスをコピーします。
+2. アプリ、ステージング環境、またはメール提供者から、そのアドレスへテスト／確認メールを送ります。
+3. 受信箱に表示されたらメールを開きます。
+4. そのメールの認証結果とリスク表示を確認します。
+5. 生ソースを開き、配信ヘッダー、\`Authentication-Results\`、MIME構造を調べます。
 
-送信者ドメインの不一致、短縮URL、IPアドレスリンク、Punycode、危険な可能性がある添付ファイル名を確認します。任意のヘッダー貼り付け、メールアカウントのスキャン、SMTPポートテストには対応しません。自動分析は安全性を保証するものではありません。` },
+セッションは約**10分**です。機密性の低いテストデータを使い、期限前に確認を終えてください。切れたら[新しい一時受信箱](/ja/)を作り、テストメールを再送してください。
+
+## レポートで分かること
+
+| 信号 | 見えること | 限界 |
+| --- | --- | --- |
+| SPF・DKIM・DMARC | 受信側が評価したドメインについて、よくある認証チェックの結果 | pass/failは安全判定ではない |
+| 表示上の送信者と技術上の送信者 | 表示\`From\`ドメインと技術ドメインの差 | 配送プロバイダ利用など正当な不一致もあり得る |
+| リンク | 短縮URL、IPリンク、Punycodeなど | 警告には人の文脈が必要 |
+| 添付 | 危険そうなファイル名 | マルウェアスキャンではない |
+| 生ソース | 手動調査用のヘッダーとMIME | 信頼できる受信前のホップは偽造され得る |
+
+## 認証結果は安全の証明ではない
+
+SPF・DKIM・DMARCは送信認可、署名、ドメイン整合について別々の技術的問いに答えます。passは特定チェックの成功であり、善意の証明ではありません。侵害された認証済みアカウントからもフィッシングは届き得ます。failも転送など無害な原因があり得ます。
+
+解釈は[SPF・DKIM・DMARCの結果の読み方](/ja/developers/spf-dkim-dmarc-email-headers/)と[メールヘッダー分析の手順](/ja/developers/analyze-email-headers/)を参照してください。
+
+## この解析ツールがしないこと
+
+- GmailやOutlookなどからの**任意ヘッダー貼り付け**には対応しません。
+- 第三者アカウントのスキャン、メールボックス横断、SMTPポート探査はしません。
+- メールが安全・正当・フィッシング無しであることを保証しません。
+- インシデント対応や完全なフォレンジックの代替にはなりません。
+
+GetOpenInboxのセッションに届いたメールを素早く見る入口として使い、完全なセキュリティ製品としては使わないでください。
+
+## 一時受信箱でヘッダー確認する場面
+
+ステージングからの確認メール検査、個人受信箱を晒さずにテスト送信の認証結果を比較する、低リスクなサンプルで生ヘッダーを練習する用途に向きます。銀行・医療・パスワード復旧・機密文書・後で取り戻す必要のあるアカウントには使わないでください。アクティブなセッションにアクセスできる人はメールを読める可能性があります。第三者サイトがアドレスを受け入れる保証もありません。
+
+開発者／QA向けは[テスト用一時メール](/ja/developers/temporary-email-for-testing/)を参照してください。
+
+## 次のステップ
+
+1. [一時受信箱を開く](/ja/)
+2. 読み順が必要なら[メールヘッダー分析の手順](/ja/developers/analyze-email-headers/)
+3. 認証結果が予想外なら[SPF・DKIM・DMARCの結果の読み方](/ja/developers/spf-dkim-dmarc-email-headers/)
+
+## 参考
+
+- [RFC 5322](https://www.rfc-editor.org/info/rfc5322/)、[RFC 8601](https://www.rfc-editor.org/info/rfc8601/)、[RFC 7208](https://www.rfc-editor.org/info/rfc7208/)、[RFC 6376](https://www.rfc-editor.org/info/rfc6376/)、[RFC 9989](https://www.rfc-editor.org/info/rfc9989/)
+- [CISA Secure Our World](https://www.cisa.gov/secure-our-world)
+- [Cloudflare Email Routing](https://developers.cloudflare.com/email-service/configuration/email-routing-addresses/)` },
     "how-long-does-temporary-email-last": { title: "一時メールはどのくらい使えますか？", description: "一時メールの有効期間、期限切れ後に起きること、用途に合った期間の選び方を説明します。", body: `**一時メールの有効期間**とは、使い捨てアドレスがメールを受信・表示できる時間です。数分から数日までサービスごとに異なり、必要なアクセス期間と失ったときの影響で選びます。
 
 ## 一般的な期間
@@ -239,19 +282,64 @@ GetOpenInboxでは、受信箱を開くとアドレスが作られ、**現在の
 评估通过 SPF 或 DKIM 认证的域名是否与可见 From 域名对齐。只要至少一条对齐的认证路径通过，DMARC 就可以通过。
 
 pass 只表示特定技术检查成功，不代表内容或意图安全。fail、临时错误和永久错误也可能来自转发、配置问题或临时故障。` },
-    "email-header-analyzer": { title: "邮件头分析器 — 在线分析原始邮件头", description: "接收邮件并检查原始邮件头、SPF、DKIM、DMARC、发件人、链接和附件警告。", body: `GetOpenInbox 可以**在线分析临时收件箱收到的邮件**，显示 RFC 5322 原始源码、SPF、DKIM、DMARC，以及常见的发件人、链接和附件名称警告。
+    "email-header-analyzer": { title: "在线邮件头分析器 — SPF、DKIM、DMARC 与原始源码", description: "用临时收件箱接收测试邮件，查看 SPF、DKIM、DMARC 与原始源码。不支持粘贴外部邮件头；会话约 10 分钟。", body: `GetOpenInbox 提供面向**临时收件箱已收邮件**的**在线邮件头分析**。测试或验证邮件到达后，可查看 [RFC 5322](https://www.rfc-editor.org/info/rfc5322/) 格式的原始源码、报告的 SPF/DKIM/DMARC，以及常见的发件人、链接与附件名警告。**不支持**从其他邮箱粘贴邮件头；认证结果为 pass **不能**证明邮件安全。
 
-## 使用方法
+[创建临时收件箱以分析收到的邮件](/zh/)
 
-1. 打开临时收件箱并复制生成的地址。
-2. 把测试邮件发送到该地址。
-3. 邮件出现后打开它。
-4. 查看认证和风险部分。
-5. 打开原始源码，检查投递邮件头和 MIME 结构。
+## 用 GetOpenInbox 分析邮件头的步骤
 
-## 报告范围
+1. 打开 GetOpenInbox 并复制生成的临时地址。
+2. 从应用、预发环境或邮件服务向该地址发送测试/验证邮件。
+3. 邮件出现在收件箱后打开。
+4. 查看该邮件的认证与风险信息。
+5. 打开原始源码，检查投递头、\`Authentication-Results\` 与 MIME 结构。
 
-分析器会检查发件人域名不一致、短链接、IP 地址链接、Punycode 域名和可能危险的附件名称。它不接受任意粘贴的邮件头，不扫描邮箱账户，也不测试 SMTP 端口。自动分析只能解释常见信号，不能保证邮件安全。` },
+当前会话约 **10 分钟**。请使用非敏感测试数据，并在计时结束前完成查看。若会话过期，请[新建临时收件箱](/zh/)并重新发送测试邮件。
+
+## 报告能看到什么
+
+| 信号 | 帮助你看到什么 | 局限 |
+| --- | --- | --- |
+| SPF、DKIM、DMARC | 接收方对评估域名给出的常见认证结果 | pass/fail 不是安全结论 |
+| 可见发件人 vs 技术发件人 | 显示的 \`From\` 域与技术域差异 | 经投递服务代发时，差异可能合理 |
+| 链接 | 短链、IP 链接、Punycode 等模式 | 警告需要人工上下文 |
+| 附件 | 可能危险的文件名 | 不是恶意软件扫描 |
+| 原始源码 | 供手工排查的头字段与 MIME | 可信接收前的跳转可能被伪造 |
+
+## 认证结果不是安全裁决
+
+SPF、DKIM、DMARC 分别回答发送授权、签名与域名对齐等不同技术问题。pass 只表示某项检查成功，不能证明善意；被攻陷但仍通过认证的账户仍可能发出钓鱼。fail 也可能来自转发等无害原因。
+
+解读请参阅[如何阅读 SPF、DKIM、DMARC 结果](/zh/developers/spf-dkim-dmarc-email-headers/)与[逐步分析邮件头](/zh/developers/analyze-email-headers/)。
+
+## 本分析器不会做的事
+
+- **不接受**从 Gmail、Outlook 等邮箱粘贴的任意邮件头。
+- 不扫描第三方账户、不遍历邮箱、不探测 SMTP 端口。
+- 不保证邮件安全、合法或无钓鱼。
+- 不能替代应急响应工具或完整取证。
+
+请把它当作查看 GetOpenInbox 会话内邮件的快速入口，而不是完整安全产品。
+
+## 何时用临时收件箱做邮件头检查
+
+适合：预发应用触发验证邮件后查看到达形态；在不暴露个人邮箱的情况下对比测试发送的认证结果；用低风险样本练习阅读原始邮件头。
+
+不要用于银行、医疗、密码找回、机密文件，或以后仍需找回的账户。能访问活动会话的人可能读到其中邮件。也不保证第三方注册会接受该地址。
+
+开发者/QA 场景见[用于测试的临时邮箱](/zh/developers/temporary-email-for-testing/)。
+
+## 下一步
+
+1. [打开临时收件箱](/zh/)
+2. 需要阅读顺序时： [逐步分析邮件头](/zh/developers/analyze-email-headers/)
+3. 认证结果异常时： [如何阅读 SPF、DKIM、DMARC 结果](/zh/developers/spf-dkim-dmarc-email-headers/)
+
+## 参考
+
+- [RFC 5322](https://www.rfc-editor.org/info/rfc5322/)、[RFC 8601](https://www.rfc-editor.org/info/rfc8601/)、[RFC 7208](https://www.rfc-editor.org/info/rfc7208/)、[RFC 6376](https://www.rfc-editor.org/info/rfc6376/)、[RFC 9989](https://www.rfc-editor.org/info/rfc9989/)
+- [CISA Secure Our World](https://www.cisa.gov/secure-our-world)
+- [Cloudflare Email Routing](https://developers.cloudflare.com/email-service/configuration/email-routing-addresses/)` },
     "how-long-does-temporary-email-last": { title: "临时邮箱能用多久？", description: "了解临时邮箱会话时长、过期后会发生什么，以及如何按任务选择合适的有效期。", body: `**临时邮箱有效期**是一次性地址仍能接收并显示邮件的时间窗口。不同服务从几分钟到数天不等，应结合你需要访问多久、以及丢失收件箱的影响来选择。
 
 ## 常见时长
