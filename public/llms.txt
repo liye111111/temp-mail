@@ -30,7 +30,7 @@ Temporary email content expires automatically from object storage. Limited opera
 
 ## Published resources
 
-- [Email Header Analyzer Online — SPF, DKIM, DMARC & Raw Source](https://getopeninbox.com/tools/email-header-analyzer/): Analyze email headers online: receive a test message in a temporary inbox, review SPF, DKIM, and DMARC, and inspect raw source. No paste-in headers; ~10 min session.
+- [Email Header Analyzer Online — SPF, DKIM, DMARC & Raw Source](https://getopeninbox.com/tools/email-header-analyzer/): Paste email headers in your browser or receive a test message in a temporary inbox. Review SPF, DKIM, DMARC, and raw source. Pass ≠ safe.
 - [How Long Does a Temporary Email Address Last?](https://getopeninbox.com/guides/how-long-does-temporary-email-last/): Learn how long temporary email sessions last, what happens when they expire, and how to choose a lifespan that matches your task.
 - [How Websites Detect Temporary Email — Why Signups Get Blocked](https://getopeninbox.com/guides/how-websites-detect-temporary-email/): Learn the common signals sites use to spot disposable addresses—blocklists, DNS/MX, and behavior—and when temporary email is the wrong choice.
 - [Is Temporary Email Safe? Privacy, Security, and Common Risks](https://getopeninbox.com/guides/is-temporary-email-safe/): Learn what temporary email can protect, what it cannot hide, and when an expiring inbox is the wrong choice for security or recovery.
@@ -40,7 +40,7 @@ Temporary email content expires automatically from object storage. Limited opera
 - [Temporary Email for Testing: A Practical Guide for Developers and QA](https://getopeninbox.com/developers/temporary-email-for-testing/): Learn where temporary inboxes fit in email testing, what they can validate, and when teams need a dedicated test environment instead.
 - [What Is a Burner Email? Uses, Benefits, and Limitations](https://getopeninbox.com/guides/what-is-a-burner-email/): Understand what a burner email is, how it differs from a permanent inbox, and when a disposable address is or is not appropriate.
 - [What Is a Disposable Email and How Does It Work?](https://getopeninbox.com/guides/what-is-temporary-email/): Learn how disposable email works, when a temporary inbox is useful, and when you should use a permanent email address instead.
-- [メールヘッダー解析（オンライン）— SPF・DKIM・DMARCと生ソース](https://getopeninbox.com/ja/tools/email-header-analyzer/): 一時受信箱でテストメールを受け取り、SPF・DKIM・DMARCと生ソースを確認。任意ヘッダー貼り付け非対応。セッションは約10分。
+- [メールヘッダー解析（オンライン）— SPF・DKIM・DMARCと生ソース](https://getopeninbox.com/ja/tools/email-header-analyzer/): ブラウザーでヘッダーを貼り付けるか、一時受信箱でテストメールを受信。SPF・DKIM・DMARCと生ソースを確認。pass ≠ 安全。
 - [一時メールはどのくらい使えますか？](https://getopeninbox.com/ja/guides/how-long-does-temporary-email-last/): 一時メールの有効期間、期限切れ後に起きること、用途に合った期間の選び方を説明します。
 - [サイトは一時メールをどう検出する？登録が拒否される理由](https://getopeninbox.com/ja/guides/how-websites-detect-temporary-email/): 使い捨てアドレスを見分ける主な信号（ブロックリスト、DNS/MX、行動）と、一時メールが向かない場面を解説します。
 - [一時メールは安全？プライバシーと主なリスク](https://getopeninbox.com/ja/guides/is-temporary-email-safe/): 一時メールが保護できること、隠せない情報、重要な用途に適さない理由を説明します。
@@ -50,7 +50,7 @@ Temporary email content expires automatically from object storage. Limited opera
 - [テスト用一時メール：開発者とQAの実践ガイド](https://getopeninbox.com/ja/developers/temporary-email-for-testing/): メールテストで一時受信箱が役立つ範囲と、専用テスト環境が必要な場面を解説します。
 - [バーナーメールとは？用途、利点、制限](https://getopeninbox.com/ja/guides/what-is-a-burner-email/): バーナーメールの意味、恒久的な受信箱との違い、適切な用途を解説します。
 - [使い捨てメールとは？仕組みと使い方](https://getopeninbox.com/ja/guides/what-is-temporary-email/): 使い捨てメールの仕組み、一時受信箱が役立つ場面、恒久的なメールを選ぶべき場面を解説します。
-- [在线邮件头分析器 — SPF、DKIM、DMARC 与原始源码](https://getopeninbox.com/zh/tools/email-header-analyzer/): 用临时收件箱接收测试邮件，查看 SPF、DKIM、DMARC 与原始源码。不支持粘贴外部邮件头；会话约 10 分钟。
+- [在线邮件头分析器 — SPF、DKIM、DMARC 与原始源码](https://getopeninbox.com/zh/tools/email-header-analyzer/): 在浏览器粘贴邮件头，或用临时收件箱接收测试邮件。查看 SPF、DKIM、DMARC 与原始源码。通过 ≠ 安全。
 - [临时邮箱能用多久？](https://getopeninbox.com/zh/guides/how-long-does-temporary-email-last/): 了解临时邮箱会话时长、过期后会发生什么，以及如何按任务选择合适的有效期。
 - [网站如何检测临时邮箱？注册为何会被拒绝](https://getopeninbox.com/zh/guides/how-websites-detect-temporary-email/): 了解站点识别一次性地址的常见信号（黑名单、DNS/MX、行为），以及何时不该使用临时邮箱。
 - [临时邮箱安全吗？隐私、安全与常见风险](https://getopeninbox.com/zh/guides/is-temporary-email-safe/): 了解临时邮箱能保护什么、不能隐藏什么，以及不应使用它的场景。

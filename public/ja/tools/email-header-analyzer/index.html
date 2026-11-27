@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>メールヘッダー解析（オンライン）— SPF・DKIM・DMARCと生ソース — GetOpenInbox</title>
-  <meta name="description" content="一時受信箱でテストメールを受け取り、SPF・DKIM・DMARCと生ソースを確認。任意ヘッダー貼り付け非対応。セッションは約10分。">
+  <meta name="description" content="ブラウザーでヘッダーを貼り付けるか、一時受信箱でテストメールを受信。SPF・DKIM・DMARCと生ソースを確認。pass ≠ 安全。">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
   <meta name="theme-color" content="#197c4d">
   <link rel="canonical" href="https://getopeninbox.com/ja/tools/email-header-analyzer/">
@@ -15,7 +15,7 @@
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="GetOpenInbox">
   <meta property="og:title" content="メールヘッダー解析（オンライン）— SPF・DKIM・DMARCと生ソース — GetOpenInbox">
-  <meta property="og:description" content="一時受信箱でテストメールを受け取り、SPF・DKIM・DMARCと生ソースを確認。任意ヘッダー貼り付け非対応。セッションは約10分。">
+  <meta property="og:description" content="ブラウザーでヘッダーを貼り付けるか、一時受信箱でテストメールを受信。SPF・DKIM・DMARCと生ソースを確認。pass ≠ 安全。">
   <meta property="og:url" content="https://getopeninbox.com/ja/tools/email-header-analyzer/">
   <meta property="og:locale" content="ja_JP">
   <meta property="og:image" content="https://getopeninbox.com/og.jpg">
@@ -26,17 +26,25 @@
   <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
   <link rel="stylesheet" href="/content.min.css">
-  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@context":"https://schema.org","@type":"Article","inLanguage":"ja","headline":"メールヘッダー解析（オンライン）— SPF・DKIM・DMARCと生ソース","description":"一時受信箱でテストメールを受け取り、SPF・DKIM・DMARCと生ソースを確認。任意ヘッダー貼り付け非対応。セッションは約10分。","datePublished":"2026-08-17","dateModified":"2026-11-26","author":{"@type":"Organization","name":"GetOpenInbox"},"publisher":{"@type":"Organization","name":"GetOpenInbox","url":"https://getopeninbox.com/"},"mainEntityOfPage":"https://getopeninbox.com/ja/tools/email-header-analyzer/"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"ホーム","item":"https://getopeninbox.com/ja/"},{"@type":"ListItem","position":2,"name":"ツール","item":"https://getopeninbox.com/ja/tools/"},{"@type":"ListItem","position":3,"name":"メールヘッダー解析（オンライン）— SPF・DKIM・DMARCと生ソース","item":"https://getopeninbox.com/ja/tools/email-header-analyzer/"}]}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@context":"https://schema.org","@type":"Article","inLanguage":"ja","headline":"メールヘッダー解析（オンライン）— SPF・DKIM・DMARCと生ソース","description":"ブラウザーでヘッダーを貼り付けるか、一時受信箱でテストメールを受信。SPF・DKIM・DMARCと生ソースを確認。pass ≠ 安全。","datePublished":"2026-08-17","dateModified":"2026-11-27","author":{"@type":"Organization","name":"GetOpenInbox"},"publisher":{"@type":"Organization","name":"GetOpenInbox","url":"https://getopeninbox.com/"},"mainEntityOfPage":"https://getopeninbox.com/ja/tools/email-header-analyzer/"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"ホーム","item":"https://getopeninbox.com/ja/"},{"@type":"ListItem","position":2,"name":"ツール","item":"https://getopeninbox.com/ja/tools/"},{"@type":"ListItem","position":3,"name":"メールヘッダー解析（オンライン）— SPF・DKIM・DMARCと生ソース","item":"https://getopeninbox.com/ja/tools/email-header-analyzer/"}]}]}</script>
 </head>
 <body>
   <header class="site-header"><a class="brand" href="/ja/">GetOpenInbox</a><nav aria-label="Primary"><a href="/ja/">一時受信箱</a><a href="/ja/tools/">ツール</a><a href="/ja/guides/">ガイド</a><a href="/ja/comparisons/">比較</a><a href="/ja/developers/">開発者向け</a><label class="language-picker"><span hidden>Language</span><select class="language-select" aria-label="Language"><option value="en">English</option><option value="ja">日本語</option><option value="zh">中文</option></select></label></nav></header>
   <main class="content-shell">
   <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/ja/">ホーム</a><span>›</span><a href="/ja/tools/">ツール</a></nav>
   <article class="article">
-    <header class="article-header"><span class="eyebrow">ツール</span><h1>メールヘッダー解析（オンライン）— SPF・DKIM・DMARCと生ソース</h1><p class="dek">一時受信箱でテストメールを受け取り、SPF・DKIM・DMARCと生ソースを確認。任意ヘッダー貼り付け非対応。セッションは約10分。</p><time datetime="2026-11-26">更新日 2026-11-26</time></header>
-    <div class="article-body"><p>GetOpenInboxは、<strong>一時受信箱に届いたメール向けのオンラインメールヘッダー解析</strong>を提供します。テストや確認メールが届いたあと、<a href="https://www.rfc-editor.org/info/rfc5322/" rel="noopener noreferrer">RFC 5322</a>形式の生ソース、報告されたSPF・DKIM・DMARC、よくある送信者・リンク・添付ファイル名の警告を確認できます。<strong>他のメールボックスから貼り付けたヘッダーには対応しません</strong>。認証結果がpassでも、メールが安全であることの証明にはなりません。</p>
-<p><a href="/ja/">一時受信箱を作成して受信メールを分析する</a></p>
-<h2>GetOpenInboxでメールヘッダーを分析する手順</h2>
+    <header class="article-header"><span class="eyebrow">ツール</span><h1>メールヘッダー解析（オンライン）— SPF・DKIM・DMARCと生ソース</h1><p class="dek">ブラウザーでヘッダーを貼り付けるか、一時受信箱でテストメールを受信。SPF・DKIM・DMARCと生ソースを確認。pass ≠ 安全。</p><time datetime="2026-11-27">更新日 2026-11-27</time></header>
+    <div class="article-body"><div id="header-analyzer-app" class="header-analyzer-mount" aria-live="polite"></div><p>GetOpenInboxの<strong>オンラインメールヘッダー解析</strong>には2つの経路があります。<strong>ブラウザーでヘッダーを貼り付ける</strong>か、<strong>一時受信箱でテストメールを受信</strong>して認証と生ソースを確認します。貼り付け解析は既定でローカル処理し、ヘッダーをアップロードしません。受信箱に届いたあと、<a href="https://www.rfc-editor.org/info/rfc5322/" rel="noopener noreferrer">RFC 5322</a>形式の生ソース、報告されたSPF・DKIM・DMARC、よくある送信者・リンク・添付ファイル名の警告を確認できます。認証結果がpassでも、メールが安全であることの証明にはなりません。</p>
+<p>上のツールでヘッダーを貼り付けるか、新規配信のテストメールを調べたいときは<a href="/ja/">一時受信箱を作成</a>してください。</p>
+<h2>貼り付けヘッダーの解析手順</h2>
+<ol>
+<li>Gmail、Outlook、その他クライアントからヘッダー全体（または「メッセージのソースを表示」）をコピーします。</li>
+<li>このページの解析欄に貼り付けます。</li>
+<li><strong>解析</strong>を選び、差出人フィールド、<code>Authentication-Results</code>のSPF/DKIM/DMARC、Receivedチェーン要約を確認します。</li>
+<li>pass/failは技術信号として扱い、安全判定にはしないでください。</li>
+</ol>
+<p>貼り付け解析はブラウザー内で動作します。可能な限り機密性の低いサンプルを使ってください。</p>
+<h2>一時受信箱で受信メールを解析する手順</h2>
 <ol>
 <li>GetOpenInboxを開き、生成された一時アドレスをコピーします。</li>
 <li>アプリ、ステージング環境、またはメール提供者から、そのアドレスへテスト／確認メールを送ります。</li>
@@ -65,17 +73,22 @@
 <td>配送プロバイダ利用など正当な不一致もあり得る</td>
 </tr>
 <tr>
-<td>リンク</td>
+<td>Receivedチェーン</td>
+<td>Receivedヘッダーに記録された配信ホップ（上側が新しいことが多い）</td>
+<td>信頼できる受信前のホップは偽造され得る</td>
+</tr>
+<tr>
+<td>リンク（受信箱経路）</td>
 <td>短縮URL、IPリンク、Punycodeなど</td>
 <td>警告には人の文脈が必要</td>
 </tr>
 <tr>
-<td>添付</td>
+<td>添付（受信箱経路）</td>
 <td>危険そうなファイル名</td>
 <td>マルウェアスキャンではない</td>
 </tr>
 <tr>
-<td>生ソース</td>
+<td>生ソース（受信箱経路）</td>
 <td>手動調査用のヘッダーとMIME</td>
 <td>信頼できる受信前のホップは偽造され得る</td>
 </tr>
@@ -85,18 +98,18 @@
 <p>解釈は<a href="/ja/developers/spf-dkim-dmarc-email-headers/">SPF・DKIM・DMARCの結果の読み方</a>と<a href="/ja/developers/analyze-email-headers/">メールヘッダー分析の手順</a>を参照してください。</p>
 <h2>この解析ツールがしないこと</h2>
 <ul>
-<li>GmailやOutlookなどからの<strong>任意ヘッダー貼り付け</strong>には対応しません。</li>
+<li>貼り付けヘッダーに対するインターネット上のライブDNS/SPF再照会はしません。貼り付けられた<code>Authentication-Results</code>を読みます。</li>
 <li>第三者アカウントのスキャン、メールボックス横断、SMTPポート探査はしません。</li>
 <li>メールが安全・正当・フィッシング無しであることを保証しません。</li>
 <li>インシデント対応や完全なフォレンジックの代替にはなりません。</li>
 </ul>
-<p>GetOpenInboxのセッションに届いたメールを素早く見る入口として使い、完全なセキュリティ製品としては使わないでください。</p>
+<p>完全なセキュリティ製品ではなく、素早く信号を読む入口として使ってください。</p>
 <h2>一時受信箱でヘッダー確認する場面</h2>
 <p>ステージングからの確認メール検査、個人受信箱を晒さずにテスト送信の認証結果を比較する、低リスクなサンプルで生ヘッダーを練習する用途に向きます。銀行・医療・パスワード復旧・機密文書・後で取り戻す必要のあるアカウントには使わないでください。アクティブなセッションにアクセスできる人はメールを読める可能性があります。第三者サイトがアドレスを受け入れる保証もありません。</p>
 <p>開発者／QA向けは<a href="/ja/developers/temporary-email-for-testing/">テスト用一時メール</a>を参照してください。</p>
 <h2>次のステップ</h2>
 <ol>
-<li><a href="/ja/">一時受信箱を開く</a></li>
+<li>上でヘッダーを貼り付けるか、<a href="/ja/">一時受信箱を開く</a></li>
 <li>読み順が必要なら<a href="/ja/developers/analyze-email-headers/">メールヘッダー分析の手順</a></li>
 <li>認証結果が予想外なら<a href="/ja/developers/spf-dkim-dmarc-email-headers/">SPF・DKIM・DMARCの結果の読み方</a></li>
 </ol>
@@ -114,5 +127,6 @@
 
   <footer class="site-footer"><p>GetOpenInboxは、低リスクで短期間の用途に一時メールを提供します。</p><a href="/ja/">一時受信箱を作成</a></footer>
   <script src="/language.min.js" type="module"></script>
+  <script src="/header-analyzer.min.js" defer></script>
 </body>
 </html>

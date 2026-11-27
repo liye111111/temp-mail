@@ -60,13 +60,14 @@ function navFor(language) {
   return [`<a href="${ui.prefix}/">${escapeHtml(ui.inbox)}</a>`, ...activeCategories.map((category) => `<a href="${ui.prefix}/${category}/">${escapeHtml(ui.categories[category][0])}</a>`)].join("");
 }
 
-function shell({ title, description, pathname, basePathname, body, language, structuredData = "" }) {
+function shell({ title, description, pathname, basePathname, body, language, structuredData = "", extraScripts = "" }) {
   const ui = UI[language];
   const canonical = `${SITE_URL}${pathname}`;
   return applyTemplate(baseTemplate, {
     LANG: ui.lang, TITLE: escapeHtml(title), DESCRIPTION: escapeHtml(description), CANONICAL: canonical,
     ALTERNATES: alternates(basePathname), OG_LOCALE: ui.og, HOME_PATH: `${ui.prefix}/`, NAV: navFor(language),
     BODY: body, FOOTER: escapeHtml(ui.footer), CREATE_INBOX: escapeHtml(ui.create), STRUCTURED_DATA: structuredData,
+    EXTRA_SCRIPTS: extraScripts,
   });
 }
 
@@ -77,10 +78,13 @@ for (const page of localizedPages) {
   const relatedPages = page.related.map((slug) => localizedPages.find((candidate) => candidate.slug === slug && candidate.locale === page.locale)).filter(Boolean);
   const relatedHtml = relatedPages.length ? `<aside class="related"><h2>${escapeHtml(ui.related)}</h2><ul>${relatedPages.map((item) => `<li><a href="${item.pathname}">${escapeHtml(item.title)}</a></li>`).join("")}</ul></aside>` : "";
   const categoryPath = `${ui.prefix}/${page.category}/`;
+  const toolWidget = page.slug === "email-header-analyzer"
+    ? `<div id="header-analyzer-app" class="header-analyzer-mount" aria-live="polite"></div>`
+    : "";
   const articleBody = applyTemplate(articleTemplate, {
     HOME_PATH: `${ui.prefix}/`, HOME_LABEL: escapeHtml(ui.home), CATEGORY_LABEL: escapeHtml(categoryLabel), CATEGORY_PATH: categoryPath,
     TITLE: escapeHtml(page.title), DESCRIPTION: escapeHtml(page.description), UPDATED_LABEL: escapeHtml(ui.updated), UPDATED_AT: page.updatedAt,
-    CONTENT: renderMarkdown(page.body), FAQ: faqHtml, RELATED: relatedHtml,
+    CONTENT: `${toolWidget}${renderMarkdown(page.body)}`, FAQ: faqHtml, RELATED: relatedHtml,
   });
   const article = { "@context": "https://schema.org", "@type": "Article", inLanguage: ui.lang, headline: page.title, description: page.description, datePublished: page.publishedAt, dateModified: page.updatedAt, author: { "@type": "Organization", name: page.author }, publisher: { "@type": "Organization", name: "GetOpenInbox", url: `${SITE_URL}/` }, mainEntityOfPage: `${SITE_URL}${page.pathname}` };
   const graph = { "@context": "https://schema.org", "@graph": [article, { "@type": "BreadcrumbList", itemListElement: [
@@ -90,7 +94,19 @@ for (const page of localizedPages) {
   ] }] };
   if (page.faq.length) graph["@graph"].push({ "@type": "FAQPage", mainEntity: page.faq.map((item) => ({ "@type": "Question", name: item.question, acceptedAnswer: { "@type": "Answer", text: item.answer } })) });
   const basePathname = englishPages.find((item) => item.slug === page.slug).pathname;
-  const html = shell({ title: `${page.title} — GetOpenInbox`, description: page.description, pathname: page.pathname, basePathname, body: articleBody, language: page.locale, structuredData: `<script type="application/ld+json">${JSON.stringify(graph).replace(/</g, "\\u003c")}</script>` });
+  const toolScripts = page.slug === "email-header-analyzer"
+    ? `<script src="/header-analyzer.min.js" defer></script>`
+    : "";
+  const html = shell({
+    title: `${page.title} — GetOpenInbox`,
+    description: page.description,
+    pathname: page.pathname,
+    basePathname,
+    body: articleBody,
+    language: page.locale,
+    structuredData: `<script type="application/ld+json">${JSON.stringify(graph).replace(/</g, "\\u003c")}</script>`,
+    extraScripts: toolScripts,
+  });
   writePage(path.join("public", page.pathname, "index.html"), html, { title: page.title, description: page.description, pathname: page.pathname, basePathname, locale: page.locale, updatedAt: page.updatedAt, category: page.category });
 }
 
